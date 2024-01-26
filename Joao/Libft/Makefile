@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jovieira <jovieira@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/17 12:29:25 by jovieira          #+#    #+#              #
-#    Updated: 2022/11/02 22:08:28 by jovieira         ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: jovieira <jovieira@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/10/17 12:29:25 by jovieira      #+#    #+#                  #
+#    Updated: 2024/01/26 17:18:52 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC= ft_atoi.c\
 	 ft_itoa.c\
 	 ft_strtrim.c\
 	 ft_split.c\
+	 ft_tokenizer.c\
 	 
 BONUS_SRC=	ft_lstnew_bonus.c\
 			ft_lstadd_front_bonus.c\

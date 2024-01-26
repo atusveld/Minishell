@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 14:13:50 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/01/26 14:34:25 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/01/26 16:49:52 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ int	main(int argv, char **argc, char **envp)
 	(void)argc;
 	(void)envp;
 
+	token = malloc(sizeof(t_token));
 	while (1)
 	{
 		token->line = readline("Minishell: ");
-		add_history(token->line_history);
-		printf("%s\n", token->line);
+		add_history(token->line);
+		// printf("%s\n", token->line);
+		asign_token(token);
 	}
 	return (0);
 }
