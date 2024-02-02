@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   executor.c                                         :+:    :+:            */
+/*   shell.h                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -10,31 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+//==========[  ]==========//
+#ifndef SHELL_H
+#define SHELL_H
 
-int new_process(char **args)
-{
- pid_t pid;
- int status;
+//==========[  ]==========//
+#include <stdio.h>
+#include <unistd.h>
 
- pid = fork();
- if (pid ==  0)
- {
-  if (execvp(args[0], args) == -1)
-  {
-   perror("child error");
-  }
-  exit(EXIT_FAILURE);
- }
- else if (pid < 0)
- {
-  perror("fork error");
- }
- else
- {
-  do {
-   waitpid(pid, &status, WUNTRACED);
-  } while (!WIFEXITED(status) && !WIFSIGNALED(status));
- }
- return (-1);
-}
+//==========[  ]==========//
+void shell_interactive(void);
+void shell_no_interactive(void);
+
+#endif
