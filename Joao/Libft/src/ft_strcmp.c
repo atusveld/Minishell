@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   prompt.c                                           :+:    :+:            */
+/*   ft_strcmp.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/01/24 14:13:50 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/02/02 16:53:57 by jovieira      ########   odam.nl         */
+/*   Created: 2024/02/01 11:13:58 by jovieira      #+#    #+#                 */
+/*   Updated: 2024/02/01 12:10:59 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "token.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int	main(int argv, char **argc, char **envp)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_token	*token;
+	size_t	i;
 
-	(void)argv;
-	(void)argc;
-	(void)envp;
-
-	token = malloc(sizeof(t_token));
-	while (1)
-	{
-		token->input = readline("Minishell: ");
-		add_history(token->input);
-		// printf("%s\n", token->line);
-		asign_token(token);
-	}
-	return (0);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

@@ -6,7 +6,7 @@
 #    By: jovieira <jovieira@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/17 12:29:25 by jovieira      #+#    #+#                  #
-#    Updated: 2024/01/26 17:18:52 by jovieira      ########   odam.nl          #
+#    Updated: 2024/02/05 15:03:34 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC= ft_atoi.c\
 	 ft_strlcpy.c\
 	 ft_strlen.c\
 	 ft_strncmp.c\
+	 ft_strcmp.c\
 	 ft_strnstr.c\
 	 ft_strrchr.c\
 	 ft_tolower.c\
@@ -51,21 +52,21 @@ SRC= ft_atoi.c\
 	 ft_split.c\
 	 ft_tokenizer.c\
 	 
-BONUS_SRC=	ft_lstnew_bonus.c\
-			ft_lstadd_front_bonus.c\
-			ft_lstsize_bonus.c\
-			ft_lstlast_bonus.c\
-			ft_lstadd_back_bonus.c\
-			ft_lstdelone_bonus.c\
-			ft_lstclear_bonus.c\
-			ft_lstiter_bonus.c\
-			ft_lstmap_bonus.c\
+# BONUS_SRC=	ft_lstnew_bonus.c\
+# 			ft_lstadd_front_bonus.c\
+# 			ft_lstsize_bonus.c\
+# 			ft_lstlast_bonus.c\
+# 			ft_lstadd_back_bonus.c\
+# 			ft_lstdelone_bonus.c\
+# 			ft_lstclear_bonus.c\
+# 			ft_lstiter_bonus.c\
+# 			ft_lstmap_bonus.c\
 
 SRC			:= $(addprefix $(SRC_DIR)/,$(SRC))
-BONUS_SRC	:= $(addprefix $(SRC_DIR)/,$(BONUS_SRC))
+# BONUS_SRC	:= $(addprefix $(SRC_DIR)/,$(BONUS_SRC))
 
 OBJ_REG		:= $(notdir $(SRC:%.c=%.o))
-BONUS_OBJ	:= $(notdir $(BONUS_SRC:.c=.o))
+# BONUS_OBJ	:= $(notdir $(BONUS_SRC:.c=.o))
 
 ifdef WITH_BONUS
 OBJ_EX = $(OBJ_REG) $(BONUS_OBJ)

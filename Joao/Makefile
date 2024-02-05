@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/01/26 15:09:40 by jovieira      ########   odam.nl          #
+#    Updated: 2024/02/05 15:16:03 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ NAME		=		minishell
 SRC			=		Src/main.c\
 					Src/Prompt/prompt.c\
 					Src/Token/token.c\
+					Src/Lists/ft_lstnew.c\
+					Src/Lists/ft_lstadd_back.c\
+					Src/Lists/ft_lstdelone.c\
+					Src/Lists/ft_lstlast.c\
 
 DR_SRC		=		Src/
 DR_INC		=		Includes/

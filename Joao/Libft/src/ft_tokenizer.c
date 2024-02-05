@@ -6,30 +6,45 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 15:57:14 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/01/26 17:53:45 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/02/02 16:20:20 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// static void	dictionary(void)
-// {
-	
-// }
+static bool	check_quotes(char *s, int *i)
+{
+	if (s[*i] == '"')
+	{
+		(*i)++;
+		while (s[*i] != '"')
+		{
+			if (!s[*i])
+				break ;
+			(*i)++;
+		}
+		(*i)++;
+		return (true);
+	}
+	return (false);
+}
 
-static int	str_count(char const *s)
+static int	str_count(char *s)
 {
 	size_t	str_c;
+	int		i;
 
+	i = 0;
 	str_c = 0;
-	while (*s)
+	while (s[i])
 	{
-		while ((*s == '|' || *s == '<' || *s == '>') && *s)
-			s++;
-		if ( *s != '\0')
+		while (s[i] == ' ')
+			i++;
+		if (s[i] != '\0')
 			str_c++;
-		while ((*s != '|' || *s != '<' || *s != '>') && *s)
-			s++;
+		while (s[i] != ' ' && s[i])
+			if (!check_quotes(s, &i))
+				i++;
 	}
 	return (str_c);
 }
@@ -44,7 +59,7 @@ static void	free_mem(char **string, int j)
 	free(string);
 }
 
-char	**ft_token(char const *s)
+char	**ft_token(char *s)
 {
 	char	**string;
 	int		str_cnt;
@@ -59,10 +74,11 @@ char	**ft_token(char const *s)
 	while (j < str_cnt)
 	{
 		i = 0;
-		while ((*s == '|' || *s == '<' || *s == '>') && *s != '\0')
+		while (*s == ' ' && *s != '\0' && *s != '"')
 			s++;
-		while ((s[i] != '|' || s[i] != '<' || s[i] != '>') && s[i] != '\0')
-			i++;
+		while (s[i] != ' ' && s[i])
+			if (!check_quotes(s, &i))
+				i++;
 		string[j] = ft_substr(s, 0, i);
 		if (string[j] == NULL)
 			return (free_mem(string, j), NULL);
