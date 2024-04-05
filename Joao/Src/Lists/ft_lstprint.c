@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstdelone.c                                     :+:    :+:            */
+/*   ft_lstprint.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jovieira <jovieira@student.42.fr>            +#+                     */
+/*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/27 22:01:09 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/02/07 13:06:51 by jovieira      ########   odam.nl         */
+/*   Created: 2024/02/28 16:32:37 by jovieira      #+#    #+#                 */
+/*   Updated: 2024/03/15 11:54:07 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/token.h"
 
-// void	ft_lstdelone(t_token *lst, void (*del)(void *))
-// {
-// 	if (!lst || !del)
-// 		return ;
-// 	del(lst->content);
-// 	free(lst);
-// }
-
-void	ft_lstdelone_mod(t_token *lst)
+void	ft_lstprint(t_token *token)
 {
-	if (!lst)
-		return ;
-	free(lst);
+	while (token)
+	{
+		printf("content %s, tipo %i, operador %i, infile red %i\n", token->content, token->type, token->operator, token->infile);
+		token = token->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:04:25 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/02/05 15:03:06 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/03/26 12:16:27 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(char *s1, char *s2);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 int		ft_tolower(int c);
@@ -53,7 +54,6 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
-char	**ft_token(char *s);
 
 // typedef struct s_list
 // {

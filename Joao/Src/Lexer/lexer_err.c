@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstdelone.c                                     :+:    :+:            */
+/*   lexer_err.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jovieira <jovieira@student.42.fr>            +#+                     */
+/*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/27 22:01:09 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/02/07 13:06:51 by jovieira      ########   odam.nl         */
+/*   Created: 2024/03/13 13:00:18 by jovieira      #+#    #+#                 */
+/*   Updated: 2024/03/25 14:50:13 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/token.h"
+#include "lexer.h"
 
-// void	ft_lstdelone(t_token *lst, void (*del)(void *))
-// {
-// 	if (!lst || !del)
-// 		return ;
-// 	del(lst->content);
-// 	free(lst);
-// }
-
-void	ft_lstdelone_mod(t_token *lst)
+void	lexer_error(int error, char *word)
 {
-	if (!lst)
-		return ;
-	free(lst);
+	if (error == 2)
+	{
+		write(2, NEAR_TOKEN, ft_strlen(NEAR_TOKEN));
+		write(2, word, ft_strlen(word));
+		write(2, "'\n", 2);
+	}
 }

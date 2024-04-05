@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/02/05 15:16:03 by jovieira      ########   odam.nl          #
+#    Updated: 2024/04/03 13:50:02 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,20 @@ NAME		=		minishell
 SRC			=		Src/main.c\
 					Src/Prompt/prompt.c\
 					Src/Token/token.c\
+					Src/Token/ft_tokenizer.c\
 					Src/Lists/ft_lstnew.c\
 					Src/Lists/ft_lstadd_back.c\
+					Src/Lists/ft_lstadd_front.c\
+					Src/Lists/ft_lstprint.c\
 					Src/Lists/ft_lstdelone.c\
 					Src/Lists/ft_lstlast.c\
+					Src/Lists/ft_lstclear.c\
+					Src/Lists/ft_lstsize.c\
+					Src/Lexer/syntax.c\
+					Src/Lexer/lexer.c\
+					Src/Lexer/lexer_err.c\
+					Src/Parse/parser.c\
+					Src/Lexer/quotes_lexer.c\
 
 DR_SRC		=		Src/
 DR_INC		=		Includes/
@@ -27,8 +37,8 @@ DR_LIBFT	=		Libft/
 
 LIBFT		=		Libft/libft.a
 
-CFLAGS		=		-Wall -Wextra -Werror
-# CFLAGS		+=		-g -fsanitize=address
+CFLAGS		=		-Wall -Wextra -Werror -g
+CFLAGS		+=		-g -fsanitize=address
 
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)
@@ -57,6 +67,7 @@ fclean:		clean
 	@rm -f $(LIBFT)
 	@rm -f $(NAME)
 	@echo "- [LIBFT CLEAN]"
+	@echo "- [SHELL CLEAN]"
 
 re:			fclean all
 	@echo "- [REBUILT]"

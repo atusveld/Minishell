@@ -6,7 +6,7 @@
 #    By: jovieira <jovieira@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/17 12:29:25 by jovieira      #+#    #+#                  #
-#    Updated: 2024/02/05 15:03:34 by jovieira      ########   odam.nl          #
+#    Updated: 2024/02/22 15:13:29 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC= ft_atoi.c\
 	 ft_isascii.c\
 	 ft_isdigit.c\
 	 ft_isprint.c\
+	 ft_isspace.c\
 	 ft_memchr.c\
 	 ft_memcmp.c\
 	 ft_memcpy.c\
@@ -50,7 +51,6 @@ SRC= ft_atoi.c\
 	 ft_itoa.c\
 	 ft_strtrim.c\
 	 ft_split.c\
-	 ft_tokenizer.c\
 	 
 # BONUS_SRC=	ft_lstnew_bonus.c\
 # 			ft_lstadd_front_bonus.c\
