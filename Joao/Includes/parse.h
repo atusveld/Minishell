@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:16:56 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/03 14:22:56 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/04/08 16:58:00 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ typedef struct s_parse
 
 
 
-int	parse(t_token *token);
+t_parse	*parse(t_token *token);
+void	ft_add_redir(t_red **lst, t_red *new);
+void	ft_redir_clean(t_red **lst);
+void	ft_redir_del(t_red *lst);
+t_red	*ft_redir_last(t_red *lst);
+t_red	*ft_redir_new(char *filename, t_type type);
 
 #endif

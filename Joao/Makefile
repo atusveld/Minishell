@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/04/03 13:50:02 by jovieira      ########   odam.nl          #
+#    Updated: 2024/04/08 14:05:28 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,19 @@ SRC			=		Src/main.c\
 					Src/Prompt/prompt.c\
 					Src/Token/token.c\
 					Src/Token/ft_tokenizer.c\
-					Src/Lists/ft_lstnew.c\
-					Src/Lists/ft_lstadd_back.c\
-					Src/Lists/ft_lstadd_front.c\
-					Src/Lists/ft_lstprint.c\
-					Src/Lists/ft_lstdelone.c\
-					Src/Lists/ft_lstlast.c\
-					Src/Lists/ft_lstclear.c\
-					Src/Lists/ft_lstsize.c\
+					Src/Lists/List_token/ft_lstnew.c\
+					Src/Lists/List_token/ft_lstadd_back.c\
+					Src/Lists/List_token/ft_lstadd_front.c\
+					Src/Lists/List_token/ft_lstprint.c\
+					Src/Lists/List_token/ft_lstdelone.c\
+					Src/Lists/List_token/ft_lstlast.c\
+					Src/Lists/List_token/ft_lstclear.c\
+					Src/Lists/List_token/ft_lstsize.c\
+					Src/Lists/List_parse/ft_lstnew.c\
+					Src/Lists/List_parse/ft_lstadd_back.c\
+					Src/Lists/List_parse/ft_lstdelone.c\
+					Src/Lists/List_parse/ft_lstlast.c\
+					Src/Lists/List_parse/ft_lstclear.c\
 					Src/Lexer/syntax.c\
 					Src/Lexer/lexer.c\
 					Src/Lexer/lexer_err.c\

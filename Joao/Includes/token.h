@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:46 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/03 13:49:44 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/04/08 10:55:36 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 typedef struct s_token
 {
 	char				*content;
-	int					type;
+	t_type				type;
 	int					infile;
 	int					operator;
 	struct s_token		*next;
