@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   pipe.c                	                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -11,36 +11,18 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h>
 
-int	main(int argc, char **argv, char **envp)
+static t_pipe	*init_pipe(int size)
 {
-	char *cmd[3];
-	cmd[0] = "ls";
-	cmd[1] = "-l";
-	cmd[2] = NULL;
-	char * const one = "/bin/ls";
-	execve(one, cmd, envp);
-	
-	// t_gen	*gen;
-	// ft_init(gen);
-	// suppress_sig_output();
-	// signal(SIGINT, sig_func_parent);
-	// signal(SIGQUIT, SIG_IGN);
-	// minishell(&env);
-}
-// static void	minishell(t_env **env)
-// {
-// 	char	*line;
-	
-// 	while (1)
-// 	{
-// 		line = readline("CRLsHellO");
+	t_pipe	*new_pipe;
 
-// 		if (line[0] == '\0')
-// 		{
-// 			free (line);
-// 			continue;
-// 		}
-// 	}
-// }
+	new_pipe = (t_pipe *)malloc(1 * sizeof(t_pipe));
+	if (!new_pipe)
+		ft_error(pipe);
+	new_pipe->pid = (int *)malloc((size) * sizeof(int));
+	if (!new_pipe->pid)
+		ft_error(pipe);
+	new_pipe->in_fd = STDIN_FILENO;
+	new_pipe->i = -1;
+	return (new_pipe);
+}

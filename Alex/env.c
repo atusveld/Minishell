@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   env.c                      	                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -11,36 +11,47 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h>
 
-int	main(int argc, char **argv, char **envp)
+static char	**get_paths(t_gen *gen)
 {
-	char *cmd[3];
-	cmd[0] = "ls";
-	cmd[1] = "-l";
-	cmd[2] = NULL;
-	char * const one = "/bin/ls";
-	execve(one, cmd, envp);
-	
-	// t_gen	*gen;
-	// ft_init(gen);
-	// suppress_sig_output();
-	// signal(SIGINT, sig_func_parent);
-	// signal(SIGQUIT, SIG_IGN);
-	// minishell(&env);
-}
-// static void	minishell(t_env **env)
-// {
-// 	char	*line;
-	
-// 	while (1)
-// 	{
-// 		line = readline("CRLsHellO");
+	char	*tmp;
+	char	**paths;
 
-// 		if (line[0] == '\0')
-// 		{
-// 			free (line);
-// 			continue;
-// 		}
-// 	}
-// }
+	// tmp = getenv("PATH");
+	if (!tmp)
+	{
+		if (access(gen->cmd_args[0], X_OK) == -1)
+			exit (127);
+		return (NULL);
+	}
+	paths = ft_split(tmp, ':');
+	if (!paths)
+		ft_error("split");
+	return (paths);
+}
+
+char	*get_cmd_path(t_gen *gen)
+{
+	char	*cmd_path;
+	char	*tmp_cmd;
+	int		i;
+	
+	tmp_cmd = ft_strjoin("/", gen->cmd_args[0]);
+	if (!tmp_cmd)
+		ft_error("strjoin");
+	while (gen->env_paths[i])
+	{
+		cmd_path = ft_strjoin(gen->env_paths[i], tmp_cmd);
+		if (!cmd_path)
+			ft_error("strjoin");
+		if (access(cmd_path, X_OK) == 0)
+		{
+			free (tmp_cmd);
+			return (cmd_path);
+		}
+		free (cmd_path);
+		i++;
+	}
+	free (tmp_cmd);
+	return (NULL);
+}

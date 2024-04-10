@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   exe.c           	                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -11,36 +11,30 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h>
 
-int	main(int argc, char **argv, char **envp)
+int new_process(t_gen *gen, char **envp)
 {
-	char *cmd[3];
-	cmd[0] = "ls";
-	cmd[1] = "-l";
-	cmd[2] = NULL;
-	char * const one = "/bin/ls";
-	execve(one, cmd, envp);
-	
-	// t_gen	*gen;
-	// ft_init(gen);
-	// suppress_sig_output();
-	// signal(SIGINT, sig_func_parent);
-	// signal(SIGQUIT, SIG_IGN);
-	// minishell(&env);
-}
-// static void	minishell(t_env **env)
-// {
-// 	char	*line;
-	
-// 	while (1)
-// 	{
-// 		line = readline("CRLsHellO");
+ pid_t 	pid;
+ int 	status;
 
-// 		if (line[0] == '\0')
-// 		{
-// 			free (line);
-// 			continue;
-// 		}
-// 	}
-// }
+ pid = fork();
+ if (pid ==  0)
+ {
+  if (execve(gen->cmd_path, gen->cmd_args, envp) == -1)
+  {
+  	perror("child error");
+	exit (EXIT_FAILURE);
+  }
+ }
+ else if (pid < 0)
+ {
+	perror("fork fail");
+    exit(1);
+ }
+ else
+ {
+	while (!WIFEXITED(status) && !WIFSIGNALED(status))
+		waitpid(pid, &status, WUNTRACED);
+ }
+ return (-1);
+}
