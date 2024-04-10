@@ -6,17 +6,38 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/08 17:00:31 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/04/09 12:49:30 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/parse.h"
 
+static void	in_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
+{
+	if ((*temp)->type == IN || (*temp)->type == HEREDOC)
+	{
+		redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
+		ft_add_redir(&parse->redir_in, redir_temp);
+		(*temp) = (*temp)->next;
+	}
+}
+
+static void	out_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
+{
+	if ((*temp)->type == OUT || (*temp)->type == APPEND)
+	{
+		redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
+		ft_add_redir(&parse->redir_out, redir_temp);
+		(*temp) = (*temp)->next;
+	}
+}
+
 static void	prep_nod_array(t_token **temp, t_parse *parse)
 {
-	int i;
-	t_red *redir_temp;
+	int		i;
+	t_red	*redir_temp;
 
+	redir_temp = NULL;
 	i = 0;
 	while (*temp && (*temp)->type != PIPE)
 	{
@@ -28,18 +49,8 @@ static void	prep_nod_array(t_token **temp, t_parse *parse)
 		}
 		while (*temp && ((*temp)->type >= IN && (*temp)->type <= HEREDOC))
 		{
-			if ((*temp)->type == IN || (*temp)->type == HEREDOC)
-			{
-				redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
-				ft_add_redir(&parse->redir_in, redir_temp);
-				(*temp) = (*temp)->next;
-			}
-			else if ((*temp)->type == OUT || (*temp)->type == APPEND)
-			{
-				redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
-				ft_add_redir(&parse->redir_out, redir_temp);
-				(*temp) = (*temp)->next;
-			}
+			in_redir(temp, parse, redir_temp);
+			out_redir(temp, parse, redir_temp);
 		}
 		if ((*temp))
 			(*temp) = (*temp)->next;
@@ -62,21 +73,6 @@ t_parse	*parse(t_token *token)
 		ft_add_redir((t_red **)&parse, (t_red *)parse_temp);
 		if (token)
 			token = token->next;
-		// while (parse_temp->redir_in || parse_temp->redir_out)
-		// {
-		// 	if (parse_temp->redir_in)
-		// 	{
-		// 		printf("arg '%s' type in '%i' file in '%s' \n", *parse_temp->argv, parse_temp->redir_in->type, parse_temp->redir_in->filename);
-		// 		parse_temp->redir_in = parse_temp->redir_in->next;
-		// 	}
-		// 	else if (parse_temp->redir_out)
-		// 	{
-		// 		printf("arg '%s' type out '%i' file out '%s' \n", *parse_temp->argv, parse_temp->redir_out->type, parse_temp->redir_out->filename);
-		// 		// printf("file out %s \n", parse_temp->redir_out->filename);
-		// 		parse_temp->redir_out = parse_temp->redir_out->next;
-		// 	}
-		// 	// parse->argv++;
-		// }
 	}
 	token = token_pos;
 	while (token)
@@ -88,3 +84,23 @@ t_parse	*parse(t_token *token)
 	}
 	return (parse);
 }
+
+// while (parse_temp->redir_in || parse_temp->redir_out)
+// {
+// 	if (parse_temp->redir_in)
+// 	{
+// 		printf("arg '%s' type in '%i' file in '%s' \n", 
+//*parse_temp->argv, parse_temp->redir_in->type, 
+//parse_temp->redir_in->filename);
+// 		parse_temp->redir_in = parse_temp->redir_in->next;
+// 	}
+// 	else if (parse_temp->redir_out)
+// 	{
+// 		printf("arg '%s' type out '%i' file out '%s' \n", 
+//*parse_temp->argv, parse_temp->redir_out->type, 
+//parse_temp->redir_out->filename);
+// 		// printf("file out %s \n", parse_temp->redir_out->filename);
+// 		parse_temp->redir_out = parse_temp->redir_out->next;
+// 	}
+// 	// parse->argv++;
+// }

@@ -6,12 +6,12 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 15:57:14 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/01 14:27:02 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/04/09 11:41:17 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/token.h"
-#include "../Includes/lexer.h"
+// #include "../Includes/lexer.h"
 
 static void	meta_char(char *meta_character[5])
 {

@@ -6,16 +6,13 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 14:13:50 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/08 14:09:57 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/04/09 11:40:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "token.h"
 #include "lexer.h"
 #include "parse.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
 int	main(int argv, char **argc, char **envp)
 {

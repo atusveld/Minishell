@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/04/08 14:05:28 by jovieira      ########   odam.nl          #
+#    Updated: 2024/04/09 11:47:02 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,11 @@ SRC			=		Src/main.c\
 					Src/Lists/List_token/ft_lstlast.c\
 					Src/Lists/List_token/ft_lstclear.c\
 					Src/Lists/List_token/ft_lstsize.c\
-					Src/Lists/List_parse/ft_lstnew.c\
-					Src/Lists/List_parse/ft_lstadd_back.c\
-					Src/Lists/List_parse/ft_lstdelone.c\
-					Src/Lists/List_parse/ft_lstlast.c\
-					Src/Lists/List_parse/ft_lstclear.c\
+					Src/Lists/List_parse/ft_redir_new.c\
+					Src/Lists/List_parse/ft_add_redir.c\
+					Src/Lists/List_parse/ft_redir_del.c\
+					Src/Lists/List_parse/ft_redir_last.c\
+					Src/Lists/List_parse/ft_redir_clear.c\
 					Src/Lexer/syntax.c\
 					Src/Lexer/lexer.c\
 					Src/Lexer/lexer_err.c\

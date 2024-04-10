@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:16:56 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/08 16:58:00 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/04/09 12:43:52 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ typedef struct s_parse
 }	t_parse;
 
 
-
+// Main Parse Function
 t_parse	*parse(t_token *token);
+
+// Parse List Functions
 void	ft_add_redir(t_red **lst, t_red *new);
 void	ft_redir_clean(t_red **lst);
 void	ft_redir_del(t_red *lst);
