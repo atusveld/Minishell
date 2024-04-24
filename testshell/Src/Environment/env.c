@@ -10,49 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/env.h"
+#include "../../Includes/alex.h"
 
-char	**get_paths(t_gen *gen)
+t_env	*ft_build_env(char **envp) //setup new t_env out of main envp
 {
-	char	*tmp;
-	char	**paths;
+	t_env	*new;
 
-	tmp = getenv("PATH"); //later own env
-	if (!tmp)
+	new = NULL;
+	while(*envp)
 	{
-		if (access(gen->cmd_args[0], X_OK) == -1)
-			exit (127);
-		return (NULL);
+		ft_env_add_front(&new, ft_new_envtry(*envp));
+		envp++;
 	}
-	paths = ft_split(tmp, ':');
-	if (!paths)
-		ft_error("split");
-	return (paths);
+	return (new);
 }
 
-char	*get_cmd_path(t_gen *gen)
+char	*ft_get_env(t_env *env, char *key) //get env value
 {
-	char	*cmd_path;
-	char	*tmp_cmd;
-	int		i;
-	
-	i = 0;
-	tmp_cmd = ft_strjoin("/", gen->cmd_args[0]);
-	if (!tmp_cmd)
-		ft_error("strjoin");
-	while (gen->env_paths[i])
+	t_env	*ret;
+
+	ret = ft_find_env(env, key);
+	if (!ret)
+		return (NULL);
+	return (ret->val);
+}
+t_env	*ft_find_env(t_env *env, char *key) //find env value in env
+{
+	if (!env || !key)
+		return (NULL);
+	while (env)
 	{
-		cmd_path = ft_strjoin(gen->env_paths[i], tmp_cmd);
-		if (!cmd_path)
-			ft_error("strjoin");
-		if (access(cmd_path, X_OK) == 0)
-		{
-			free (tmp_cmd);
-			return (cmd_path);
-		}
-		free (cmd_path);
-		i++;
+		if (env->key && !ft_strncmp(env->key, key, ft_strlen(key) + 1))
+			return (env);
+		env = env->next;
 	}
-	free (tmp_cmd);
 	return (NULL);
 }

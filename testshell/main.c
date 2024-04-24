@@ -13,7 +13,7 @@
 #include "Includes/token.h"
 #include "Includes/lexer.h"
 #include "Includes/parse.h"
-#include "Includes/exec.h"
+#include "Includes/alex.h"
 
 int	main(int argv, char **argc, char **envp)
 {

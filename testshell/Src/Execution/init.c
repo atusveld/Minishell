@@ -10,22 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/exec.h"
-#include "../../Includes/env.h"
+#include "../../Includes/alex.h"
 
-void	ft_init(t_gen *gen, t_parse *parsed)
+void	ft_init(t_gen *gen, t_parse *parsed) // need to find cleaner way to init all shit
 {
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
 	gen->cmd_path = get_cmd_path(gen);
 }
-// t_env	*ft_init_env(char **envp)
-// {
-// 	t_env	*new_env;
-// 	char	*tmp;
-
-// 	new_env = ft_env_cpy(envp);
-// 	tmp = getcwd(NULL, 0);
-// 	if (!tmp)
-// 		ft_error("env");
-// }

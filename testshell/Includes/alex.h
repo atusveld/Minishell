@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.h                               		        :+:    :+:            */
+/*   alex.h                               		        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//==========[ ENV_H ]==========//
-#ifndef ENV_H
-#define ENV_H
+//==========[ ALEX_H ]==========//
+#ifndef ALEX_H
+#define ALEX_H
 //==========[ LIBRARIES ]==========//
 #include <stdio.h>
 #include <unistd.h>
@@ -22,7 +22,6 @@
 #include "token.h"
 #include "parse.h"
 #include "lexer.h"
-#include "exec.h"
 //==========[ STRUCTS ]==========//
 typedef	struct s_env
 {
@@ -32,10 +31,32 @@ typedef	struct s_env
 	char				*val;
 }	t_env;
 
-//==========[ PROTOTYPES ]==========//
-char	**get_paths(t_gen *gen);
-char	*get_cmd_path(t_gen *gen);
-// t_env	*ft_init_env(char **envp);
-// t_env	*ft_env_cpy(t_env *env);
+typedef	struct s_gen
+{
+	char	**env_paths;
+	char	**cmd_args;
+	char	*cmd_path;
+	t_env	*env;
+}	t_gen;
 
+typedef struct s_pipe
+{
+	int	tube[2];
+	int	in_fd;
+	int	*pid;
+	int	i;
+}	t_pipe;
+//==========[ PROTOTYPES ]==========//
+int	new_process(t_parse *parse, t_gen *gen, char **envp);
+void	ft_env_add_front(t_env **env, t_env *new);
+void	ft_init(t_gen *gen, t_parse *parsed);
+void	ft_error(char *str);
+char	**ft_env_back_to_array(t_env *env);
+char	*ft_get_env(t_env *env, char *key);
+char	*get_cmd_path(t_gen *gen);
+char	**get_paths(t_gen *gen);
+t_env	*ft_new_envtry(char *envp);
+t_env	*ft_build_env(char **envp);
+t_env	*ft_find_env(t_env *env, char *key);
+// static t_pipe	ft_init_pipe(int size);
 #endif
