@@ -33,6 +33,7 @@ SRC			=		main.c\
 					Src/Lexer/lexer_err.c\
 					Src/Parse/parser.c\
 					Src/Lexer/quotes_lexer.c\
+					Src/Execution/aux.c\
 					Src/Execution/exe.c\
 					Src/Execution/init.c\
 					Src/Execution/error.c\

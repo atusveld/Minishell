@@ -12,6 +12,8 @@
 
 #include "../../Includes/alex.h"
 
+// cd, exit, export, unset
+
 int	ft_if_builtin(t_gen *gen)
 {
 	if (!ft_strncmp(gen->cmd_args[0], "echo", 5))
@@ -20,6 +22,8 @@ int	ft_if_builtin(t_gen *gen)
 		return (ft_pwd(), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "env", 4))
 		return (ft_env(gen), 0);
+	if (!ft_strncmp(gen->cmd_args[0], "cd", 3))
+		return (ft_cd(gen, gen->env->val), 0);
 	return (1);
 }
 void	ft_echo(char **arr)
@@ -53,4 +57,27 @@ void	ft_pwd(void)
 void	ft_env(t_gen *gen)
 {
 	printf("%s\n", gen->env->str);
+}
+
+void	ft_cd(t_gen *gen, char *path)
+{
+	char	*old_p;
+	char	*new_p;
+	
+	if (!path || !*path)
+		path = ft_get_env(gen->env, "HOME");
+	old_p = getcwd(NULL, 0);
+	chdir(path);
+	new_p = getcwd(NULL, 0);
+	ft_cd_update_env(gen, old_p, new_p);
+	free (old_p);
+	free (new_p);
+}
+
+void	ft_cd_update_env(t_gen *gen, char *old_p, char *new_p)
+{
+	if (ft_find_env(gen->env, "OLD_PWD"))
+		ft_add_envtry(gen->env, "OLD_PWD", old_p);
+	if (ft_find_env(gen->env, "NEW_PWD"))
+		ft_add_envtry(gen->env, "NEW_PWD", new_p);
 }

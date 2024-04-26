@@ -68,22 +68,16 @@ char	**ft_env_back_to_array(t_env *env) //puts t_env env back to envp ->pointer 
 	return (arr);
 }
 
-// void	ft_add_envtry(t_env *env, char *key, char *val)
-// {
-// 	t_env	*new;
+void	ft_add_envtry(t_env *env, char *key, char *val)
+{
+	t_env	*new;
 
-// 	new = ft_find_env(key, val);
-// 	if (!new)
-// 		ft_error("envtry malloc error");
-// 	new->next = NULL;
-// 	new->str = NULL;
-// 	new->key = NULL;
-// 	new->val = NULL;
-// 	new->str = strdup(envp);
-// 	while (envp[i] && envp[i] != '=')
-// 		i++;
-// 	new->key = ft_substr(envp, 0, i);
-// 	if (envp[i])
-// 		new->val = ft_strdup(&envp[i + 1]);
-// 	return (new);
-// }
+	new = ft_find_env(env, key);
+	if (new && val)
+	{
+		free (new->val);
+		free (new->str);
+		new->val = ft_strdup(val);
+		new->str = ft_strjoin_three(key, "=", val);
+	}
+}
