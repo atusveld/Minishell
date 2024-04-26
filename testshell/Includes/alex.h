@@ -47,9 +47,11 @@ typedef struct s_pipe
 	int	i;
 }	t_pipe;
 //==========[ PROTOTYPES ]==========//
-int	new_process(t_parse *parse, t_gen *gen, char **envp);
+int	new_process(t_gen *gen, char **envp);
+int	ft_echo(char **arr);
+int	ft_if_builtin(t_gen *gen);
 void	ft_env_add_front(t_env **env, t_env *new);
-void	ft_init(t_gen *gen, t_parse *parsed);
+void	ft_init(t_parse *parsed, char **envp);
 void	ft_error(char *str);
 char	**ft_env_back_to_array(t_env *env);
 char	*ft_get_env(t_env *env, char *key);

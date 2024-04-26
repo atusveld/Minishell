@@ -17,6 +17,7 @@ void	ft_env_add_front(t_env **env, t_env *new) //env list functionality more to 
 		new->next = *env;
 	*env = new;
 }
+
 t_env	*ft_new_envtry(char *envp) // iknow its genius
 {
 	t_env	*new;
@@ -39,7 +40,7 @@ t_env	*ft_new_envtry(char *envp) // iknow its genius
 	return (new);
 }
 
-char	**ft_env_back_to_array(t_env *env) //puts t_env env back to array env pointer
+char	**ft_env_back_to_array(t_env *env) //puts t_env env back to envp ->pointer env array
 {
 	char	**arr;
 	t_env	*temp;
@@ -66,3 +67,23 @@ char	**ft_env_back_to_array(t_env *env) //puts t_env env back to array env point
 	}
 	return (arr);
 }
+
+// void	ft_add_envtry(t_env *env, char *key, char *val)
+// {
+// 	t_env	*new;
+
+// 	new = ft_find_env(key, val);
+// 	if (!new)
+// 		ft_error("envtry malloc error");
+// 	new->next = NULL;
+// 	new->str = NULL;
+// 	new->key = NULL;
+// 	new->val = NULL;
+// 	new->str = strdup(envp);
+// 	while (envp[i] && envp[i] != '=')
+// 		i++;
+// 	new->key = ft_substr(envp, 0, i);
+// 	if (envp[i])
+// 		new->val = ft_strdup(&envp[i + 1]);
+// 	return (new);
+// }

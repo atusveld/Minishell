@@ -10,14 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/exec.h"
+#include "../../Includes/alex.h"
 
-// void ft_cd()
-// {
-// 	return (0);
-// }
+int	ft_if_builtin(t_gen *gen)
+{
+	if (!ft_strncmp(gen->cmd_args[0], "echo", 5))
+		return (0);
+	return (1);
+}
+int	ft_echo(char **arr)
+{
+	bool nl;
 
-// void	ft_pwd()
-// {
-// 	return (0);
-// }
+	nl = true;
+	if (!ft_strncmp(arr[0], "-n", 3))
+	{
+		nl = false;
+		arr++;
+	}
+	while (*arr)
+	{
+		ft_putstr_fd(*arr, 1);
+		if (*(arr + 1) && **arr)
+			ft_putchar_fd(' ', 1);
+		arr++;
+	}
+	if (nl)
+		ft_putchar_fd('\n', 1);
+	return (1);
+}

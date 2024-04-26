@@ -20,7 +20,6 @@ int	main(int argv, char **argc, char **envp)
 	t_data	*input;
 	t_token	*token;
 	t_parse	*parsed;
-	t_gen	gen;
 
 	(void)argv;
 	(void)argc;
@@ -38,7 +37,7 @@ int	main(int argv, char **argc, char **envp)
 		if (lexer(token) == 1)
 			continue ;
 		parsed = parse(token);
-		new_process(parsed, &gen, envp);
+		ft_init(parsed, envp);
 	}
 	return (0);
 }

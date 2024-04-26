@@ -12,15 +12,11 @@
 
 #include "../../Includes/alex.h"
 
-int	new_process(t_parse *parsed, t_gen *gen, char **envp) //main process function needs to be cut up w/ init
+int	new_process(t_gen *gen, char **n_envp)
 {
-	char	**n_envp;
 	int		status;
 	pid_t	pid;
 
-	gen->env = ft_build_env(envp);
-	ft_init(gen, parsed);
-	n_envp = ft_env_back_to_array(gen->env);
 	pid = fork();
 	status = -1;
 	if (pid == 0)

@@ -36,6 +36,7 @@ SRC			=		main.c\
 					Src/Execution/exe.c\
 					Src/Execution/init.c\
 					Src/Execution/error.c\
+					Src/Execution/builtins.c\
 					Src/Environment/env.c\
 					Src/Environment/env_util.c\
 
@@ -47,7 +48,7 @@ DR_LIBFT	=		Libft/
 LIBFT		=		Libft/libft.a
 
 CFLAGS		=		-Wall -Wextra -Werror -g
-# CFLAGS		+=		-g -fsanitize=address
+CFLAGS		+=		-g -fsanitize=address
 
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)

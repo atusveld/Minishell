@@ -34,6 +34,7 @@ char	*ft_get_env(t_env *env, char *key) //get env value
 		return (NULL);
 	return (ret->val);
 }
+
 t_env	*ft_find_env(t_env *env, char *key) //find env value in env
 {
 	if (!env || !key)
