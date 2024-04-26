@@ -15,10 +15,14 @@
 int	ft_if_builtin(t_gen *gen)
 {
 	if (!ft_strncmp(gen->cmd_args[0], "echo", 5))
-		return (0);
+		return (ft_echo(gen->cmd_args + 1), 0);
+	if (!ft_strncmp(gen->cmd_args[0], "pwd", 4))
+		return (ft_pwd(), 0);
+	if (!ft_strncmp(gen->cmd_args[0], "env", 4))
+		return (ft_env(gen), 0);
 	return (1);
 }
-int	ft_echo(char **arr)
+void	ft_echo(char **arr)
 {
 	bool nl;
 
@@ -37,5 +41,16 @@ int	ft_echo(char **arr)
 	}
 	if (nl)
 		ft_putchar_fd('\n', 1);
-	return (1);
+}
+void	ft_pwd(void)
+{
+	char	*temp;
+
+	temp = getcwd(NULL, 0);
+	printf("%s\n", temp);
+	free (temp);
+}
+void	ft_env(t_gen *gen)
+{
+	printf("%s\n", gen->env->str);
 }

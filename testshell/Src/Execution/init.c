@@ -24,7 +24,7 @@ void	ft_init(t_parse *parsed, char **envp)
 	gen.cmd_path = get_cmd_path(&gen);
 	n_envp = ft_env_back_to_array(gen.env);
 	if (ft_if_builtin(&gen) == 0)
-		ft_echo(gen.cmd_args + 1);
+		return ;
 	else
 		new_process(&gen, n_envp);
 }
