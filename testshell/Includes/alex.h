@@ -53,7 +53,7 @@ void	ft_cd_update_env(t_gen *gen, char *old_p, char *new_p);
 void	ft_add_envtry(t_env *env, char *key, char *val);
 void	ft_env_add_front(t_env **env, t_env *new);
 void	ft_init(t_parse *parsed, char **envp);
-void	ft_cd(t_gen *gen, char *path);
+void	ft_cd(t_gen *gen);
 void	ft_error(char *str);
 void	ft_echo(char **arr);
 void	ft_pwd(void);

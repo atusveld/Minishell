@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-// cd, exit, export, unset
+// cd working, exit, export, unset
 
 int	ft_if_builtin(t_gen *gen)
 {
@@ -23,7 +23,7 @@ int	ft_if_builtin(t_gen *gen)
 	if (!ft_strncmp(gen->cmd_args[0], "env", 4))
 		return (ft_env(gen), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "cd", 3))
-		return (ft_cd(gen, gen->env->val), 0);
+		return (ft_cd(gen), 0);
 	return (1);
 }
 void	ft_echo(char **arr)
@@ -31,7 +31,9 @@ void	ft_echo(char **arr)
 	bool nl;
 
 	nl = true;
-	if (!ft_strncmp(arr[0], "-n", 3))
+	if (!*arr)
+		*arr = NULL;
+	else if (!ft_strncmp(arr[0], "-n", 3))
 	{
 		nl = false;
 		arr++;
@@ -59,11 +61,13 @@ void	ft_env(t_gen *gen)
 	printf("%s\n", gen->env->str);
 }
 
-void	ft_cd(t_gen *gen, char *path)
+void	ft_cd(t_gen *gen)
 {
 	char	*old_p;
 	char	*new_p;
-	
+	char	*path;
+
+	path = ft_strjoin_three(getcwd(NULL, 0), "/", gen->cmd_args[1]);
 	if (!path || !*path)
 		path = ft_get_env(gen->env, "HOME");
 	old_p = getcwd(NULL, 0);
