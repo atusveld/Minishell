@@ -47,3 +47,22 @@ t_env	*ft_find_env(t_env *env, char *key) //find key value in env
 	}
 	return (NULL);
 }
+
+void	ft_free_env_ele(t_env *env)
+{
+	free(env->str);
+	free(env->key);
+	free(env->val);
+	free(env);
+}
+void	ft_free_env(t_env **env)
+{
+	t_env	*tmp;
+
+	while (*env)
+	{
+		tmp = (*env)->next;
+		ft_free_env_ele(*env);
+		*env = tmp;
+	}
+}

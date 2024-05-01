@@ -20,6 +20,7 @@ int	main(int argv, char **argc, char **envp)
 	t_data	*input;
 	t_token	*token;
 	t_parse	*parsed;
+	t_gen	gen;
 
 	(void)argv;
 	(void)argc;
@@ -27,6 +28,7 @@ int	main(int argv, char **argc, char **envp)
 	input = malloc(sizeof(t_data));
 	token = ft_calloc(1, sizeof(t_token));
 	token->next = NULL;
+	gen.env = ft_build_env(envp);
 	while (1)
 	{
 		input->input = readline("Minishell: ");
@@ -37,7 +39,8 @@ int	main(int argv, char **argc, char **envp)
 		if (lexer(token) == 1)
 			continue ;
 		parsed = parse(token);
-		ft_init(parsed, envp);
+		ft_init(parsed, &gen);
 	}
+	ft_free_env(&gen.env);
 	return (0);
 }

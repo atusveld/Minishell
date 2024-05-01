@@ -12,19 +12,16 @@
 
 #include "../../Includes/alex.h"
 
-void	ft_init(t_parse *parsed, char **envp)
+void	ft_init(t_parse *parsed, t_gen *gen)
 {
 	char	**n_envp;
-	t_gen	gen;
 	
-
-	gen.env = ft_build_env(envp);
-	gen.cmd_args = parsed->argv;
-	gen.env_paths = get_paths(&gen);
-	gen.cmd_path = get_cmd_path(&gen);
-	n_envp = ft_env_back_to_array(gen.env);
-	if (ft_if_builtin(&gen) == 0)
+	gen->cmd_args = parsed->argv;
+	gen->env_paths = get_paths(gen);
+	gen->cmd_path = get_cmd_path(gen);
+	n_envp = ft_env_back_to_array(gen->env);
+	if (ft_if_builtin(gen) == 0)
 		return ;
 	else
-		new_process(&gen, n_envp);
+		new_process(gen, n_envp);
 }
