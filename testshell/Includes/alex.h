@@ -69,4 +69,5 @@ char	**get_paths(t_gen *gen);
 t_env	*ft_find_env(t_env *env, char *key);
 t_env	*ft_new_envtry(char *envp);
 t_env	*ft_build_env(char **envp);
+
 #endif
