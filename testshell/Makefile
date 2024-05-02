@@ -49,7 +49,7 @@ DR_LIBFT	=		Libft/
 LIBFT		=		Libft/libft.a
 
 CFLAGS		=		-Wall -Wextra -Werror -g
-# CFLAGS		+=		-g -fsanitize=address
+CFLAGS		+=		-g -fsanitize=address
 
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)

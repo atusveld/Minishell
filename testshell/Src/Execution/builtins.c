@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-//export and unset to come. they are not perfect yet (protection etc) lmk what u need
+//exit, export and unset to come. they are not perfect yet (protection etc) lmk what u need
 
 int	ft_if_builtin(t_gen *gen)
 {
