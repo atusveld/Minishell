@@ -44,7 +44,7 @@ char	**get_paths(t_gen *gen) //looks into own env for paths in order to execute
 {
 	char	*tmp;
 	char	**paths;
-
+	
 	gen->env->val = ft_get_env(gen->env, "PATH");
 	tmp = gen->env->val;
 	if (!tmp)

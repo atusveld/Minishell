@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-//exit, export, unset to come. they are not perfect yet (protection etc) lmk what u need
+//export and unset to come. they are not perfect yet (protection etc) lmk what u need
 
 int	ft_if_builtin(t_gen *gen)
 {
@@ -60,7 +60,15 @@ void	ft_pwd(void)
 }
 void	ft_env(t_gen *gen)
 {
-	printf("%s\n", gen->env->str);
+	t_env	*temp;
+
+	temp = gen->env;
+	while (temp)
+	{
+		if (temp->val && temp->key)
+			printf("%s\n", temp->str);
+		temp = temp->next;
+	}
 }
 
 void	ft_cd(t_gen *gen)
