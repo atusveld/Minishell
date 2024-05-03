@@ -66,3 +66,31 @@ void	ft_free_env(t_env **env)
 		*env = tmp;
 	}
 }
+
+void	ft_del_env(t_env **env, t_env *temp)
+{
+	t_env	*ele;
+
+	ele = *env;
+	if (temp == ele)
+	{
+		*env = temp->next;
+		ft_free_env(&temp);
+		return ;
+	}
+	while (ele->next != temp)
+		ele = ele->next;
+	ele->next = temp->next;
+	ft_free_env(&temp);
+}
+void	ft_unset_env(t_env **env, char *key)
+{
+	t_env	*keyval;
+
+	if (!key)
+		return ;
+	keyval = ft_find_env(*env, key);
+	if (!keyval)
+		return ;
+	ft_del_env(env, keyval);
+}

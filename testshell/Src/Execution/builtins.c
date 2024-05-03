@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-//exit, export and unset to come. they are not perfect yet (protection etc) lmk what u need
+//exit, export to come. they are not perfect yet (protection etc) lmk what u need
 
 int	ft_if_builtin(t_gen *gen)
 {
@@ -26,6 +26,8 @@ int	ft_if_builtin(t_gen *gen)
 		return (ft_cd(gen), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "exit", 5))
 		return (ft_exit(), 0);
+	if (!ft_strncmp(gen->cmd_args[0], "unset", 6))
+		return (ft_unset(gen->env, gen->cmd_args + 1), 0);
 	return (1);
 }
 void	ft_echo(char **arr)
@@ -104,3 +106,39 @@ void	ft_exit(void) // check if first and last cmd per prompt -> no forky etc
 	status = 0;
 	exit(status);
 }
+static int	ft_unset_error(char *arg, char *msg)
+{
+	ft_putstr_fd("minishell: unset: `", 2);
+	if (arg)
+		ft_putchar_fd(*arg, 2);
+	if (msg)
+		ft_putchar_fd(*msg, 2);
+	return (1);
+}
+static bool		ft_check_var(char *str)
+{
+	if (ft_isdigit(*str))
+		return (false);
+	while (*str && (*str == '_' || ft_isalnum(*str)))
+		str++;
+	if (!*str)
+		return (true);
+	return (false);
+}
+int	ft_unset(t_env *env, char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (&argv[i])
+	{
+		if (ft_check_var(argv[i]) == false)
+			ft_unset_error(argv[i], "': not a valid identifier\n");
+		else
+			ft_unset_env(&env, argv[i]);
+		i++;
+	}
+	return (1);
+}
+
+
