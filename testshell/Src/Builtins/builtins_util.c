@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-int	ft_if_builtin(t_gen *gen)
+int	ft_if_builtin(t_gen *gen, t_parse *parsed)
 {
 	if (!ft_strncmp(gen->cmd_args[0], "echo", 5))
 		return (ft_echo(gen->cmd_args + 1), 0);
@@ -23,11 +23,11 @@ int	ft_if_builtin(t_gen *gen)
 	if (!ft_strncmp(gen->cmd_args[0], "cd", 3))
 		return (ft_cd(gen), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "exit", 5))
-		return (ft_exit(), 0);
+		return (ft_exit(parsed), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "unset", 6))
 		return (ft_unset(gen->env, gen->cmd_args + 1), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "export", 7))
-		return (ft_export(gen->env, gen->cmd_args + 1), 0);
+		return (ft_export(&gen->env, gen->cmd_args + 1), 0);
 	return (1);
 }
 

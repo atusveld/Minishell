@@ -20,7 +20,7 @@ void	ft_init(t_parse *parsed, t_gen *gen)
 	gen->env_paths = get_paths(gen);
 	gen->cmd_path = get_cmd_path(gen);
 	n_envp = ft_env_back_to_array(gen->env);
-	if (ft_if_builtin(gen) == 0)
+	if (ft_if_builtin(gen, parsed) == 0)
 		return ;
 	else
 		new_process(gen, n_envp);

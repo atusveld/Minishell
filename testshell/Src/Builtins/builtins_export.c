@@ -12,6 +12,8 @@
 
 #include "../../Includes/alex.h"
 
+int	ft_export_print(char **env);
+
 static bool		ft_check_var(char *str)
 {
 	if (!*str || ft_isdigit(*str))

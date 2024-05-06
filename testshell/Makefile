@@ -41,6 +41,7 @@ SRC			=		main.c\
 					Src/Builtins/builtins_util.c\
 					Src/Builtins/builtins_unset.c\
 					Src/Builtins/builtins_export.c\
+					Src/Builtins/builtins_export_util.c\
 					Src/Environment/env.c\
 					Src/Environment/env_util.c\
 

@@ -74,10 +74,12 @@ void	ft_cd(t_gen *gen)
 	free (path);
 }
 
-void	ft_exit(void) // check if first and last cmd per prompt -> no forky etc
+void	ft_exit(t_parse *parsed) // check if first and last cmd per prompt -> no forky etc
 {
 	int	status;
 
 	status = 0;
+	if (parsed->next)
+		printf("exit\n");
 	exit(status);
 }

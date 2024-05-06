@@ -22,4 +22,20 @@
 	free (temp);
 	return (str);
  }
+
+void	*ft_free_arr(char **arr)
+ {
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return (NULL);
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	return (NULL);
+ }
  
