@@ -39,7 +39,7 @@ int	main(int argv, char **argc, char **envp)
 		if (lexer(token) == 1)
 			continue ;
 		parsed = parse(token);
-		ft_init(parsed, &gen);
+		ft_exe(parsed, &gen);
 	}
 	ft_free_env(&gen.env);
 	return (0);

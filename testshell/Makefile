@@ -35,8 +35,8 @@ SRC			=		main.c\
 					Src/Lexer/quotes_lexer.c\
 					Src/Execution/aux.c\
 					Src/Execution/exe.c\
-					Src/Execution/init.c\
 					Src/Execution/error.c\
+					Src/Execution/child.c\
 					Src/Builtins/builtins.c\
 					Src/Builtins/builtins_util.c\
 					Src/Builtins/builtins_unset.c\
@@ -44,6 +44,7 @@ SRC			=		main.c\
 					Src/Builtins/builtins_export_util.c\
 					Src/Environment/env.c\
 					Src/Environment/env_util.c\
+					Src/Environment/env_lst.c\
 
 DR_SRC		=		Src/
 DR_INC		=		Includes/

@@ -39,3 +39,24 @@ void	*ft_free_arr(char **arr)
 	return (NULL);
  }
  
+ //ft_exe_multi_legacy
+	// t_cpro	*cpro;
+	// int		fd;
+	// int		i;
+	// int		j;
+
+	// i = 0;
+	// j = ft_count_cmd(parsed);
+	// fd = ft_calloc(2, sizeof(int));
+	// pipe(fd);
+	// while (i < j)
+	// {
+	// 	cpro = ft_init_cpro();
+	// 	if (cpro->pid == -1)
+	// 		ft_error("child");
+	// 	else if (cpro->pid == 0)
+	// 	{
+			
+	// 	}
+	// }
+	// return (1);

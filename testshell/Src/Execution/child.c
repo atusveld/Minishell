@@ -10,19 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/exec.h"
+#include "../../Includes/alex.h"
 
-static t_pipe	*init_pipe(int size)
+t_cpro	*ft_init_cpro(void)
 {
-	t_pipe	*new_pipe;
+	t_cpro	*new_cpro;
 
-	new_pipe = (t_pipe *)malloc(1 * sizeof(t_pipe));
-	if (!new_pipe)
-		ft_error(pipe);
-	new_pipe->pid = (int *)malloc((size) * sizeof(int));
-	if (!new_pipe->pid)
-		ft_error(pipe);
-	new_pipe->in_fd = STDIN_FILENO;
-	new_pipe->i = -1;
-	return (new_pipe);
+	new_cpro = (t_cpro *)malloc(1 * sizeof(t_cpro));
+	if (!new_cpro)
+		ft_error("cpro");
+	new_cpro->pid = fork();
+	if (!new_cpro->pid)
+		ft_error("cpro pid");
+	new_cpro->in_fd = STDIN_FILENO;
+	new_cpro->i = -1;
+	return (new_cpro);
+}
+
+void	ft_free_cpro(t_cpro *cpro)
+{
+	free(cpro->pid);
+	free(cpro);
+}
+
+int	ft_count_cmd(t_parse *parsed)
+{
+	int	i;
+	t_parse	*tmp;
+
+	i = 0;
+	tmp = parsed;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	free(tmp);
+	return (i);
 }

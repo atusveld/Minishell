@@ -12,76 +12,57 @@
 
 #include "../../Includes/alex.h"
 
-int	new_process(t_gen *gen, char **n_envp)
+void	ft_exe(t_parse *parsed, t_gen *gen)
+{
+	char	**n_envp;
+	
+	gen->cmd_args = parsed->argv;
+	gen->env_paths = get_paths(gen);
+	gen->cmd_path = get_cmd_path(gen);
+	if (!parsed->next)
+		ft_exe_single(gen, gen->env);
+	else if (ft_if_builtin(gen, parsed) == 0)
+		return ;
+	else
+		ft_exe_multi(gen, parsed);
+}
+
+int	ft_exe_single(t_gen *gen, t_env *env)
 {
 	int		status;
-	pid_t	pid;
+	pid_t	f_id;
+	char	*path;
 
-	pid = fork();
+	f_id = fork();
 	status = -1;
-	if (pid == 0)
-	{
-		if ((execve(gen->cmd_path, gen->cmd_args, n_envp)) == -1)
-		{
-			perror ("child error");
-			exit (EXIT_FAILURE);
-		}
-	}
-	else if (pid < 0)
-	{
-		perror ("fork fail");
-		exit(1);
-	}
+	path = get_cmd_path(gen);
+	if (f_id < 0)
+		ft_error("fork");
+	if (f_id == 0)
+		if ((execve(path, gen->cmd_args, ft_env_to_array(env))) < 0)
+			ft_error("child");
 	else
 	{
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
-			waitpid(pid, &status, WUNTRACED);
+			waitpid(f_id, &status, WUNTRACED);
 	}
 	return (-1);
 }
 
-char	**get_paths(t_gen *gen) //looks into own env for paths in order to execute
+int	ft_exe_multi(t_gen *gen, t_parse *parsed)
 {
-	char	*tmp;
-	char	**paths;
-	
-	gen->env->val = ft_get_env(gen->env, "PATH");
-	tmp = gen->env->val;
-	if (!tmp)
-	{
-		if (access(gen->cmd_args[0], X_OK) == -1)
-			exit (127);
-		return (NULL);
-	}
-	paths = ft_split(tmp, ':');
-	if (!paths)
-		ft_error("split");
-	return (paths);
-}
+	int	fd[2];
 
-char	*get_cmd_path(t_gen *gen) //finds command path in env for execve
-{
-	char	*cmd_path;
-	char	*tmp_cmd;
-	int		i;
-	
-	i = 0;
-	tmp_cmd = ft_strjoin("/", gen->cmd_args[0]);
-	if (!tmp_cmd)
-		ft_error("strjoin");
-	while (gen->env_paths[i])
-	{
-		cmd_path = ft_strjoin(gen->env_paths[i], tmp_cmd);
-		if (!cmd_path)
-			ft_error("strjoin");
-		if (access(cmd_path, X_OK) == 0)
-		{
-			free (tmp_cmd);
-			return (cmd_path);
-		}
-		free (cmd_path);
-		i++;
-	}
-	free (tmp_cmd);
-	return (NULL);
+	fd[0] = 0;
+	fd[1] = 1;
+	execve(gen->cmd_path, gen->cmd_args, ft_env_to_array(gen->env));
+	dup2(fd[1], 1);
+	execve(gen->cmd_path, gen->cmd_args, ft_env_to_array(gen->env));
+	dup2(fd[0], 0);
+	close(fd[1]);
+	dup2(fd[1], 1);
+	execve(gen->cmd_path, gen->cmd_args, ft_env_to_array(gen->env));
+	close(fd[0]);
+	dup2(fd[0], 0);
+	return (-1);
 }

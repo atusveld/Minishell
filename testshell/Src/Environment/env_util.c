@@ -11,36 +11,7 @@
 /* ************************************************************************** */
  #include "../../Includes/alex.h"
 
-void	ft_env_add_front(t_env **env, t_env *new) //env list functionality more to come
-{
-	if (*env && new)
-		new->next = *env;
-	*env = new;
-}
-
-t_env	*ft_new_envtry(char *envp) // iknow its genius
-{
-	t_env	*new;
-	int		i;
-
-	i = 0;
-	new = (t_env *)malloc(sizeof(t_env));
-	if (!new)
-		ft_error("envtry malloc error");
-	new->next = NULL;
-	new->str = NULL;
-	new->key = NULL;
-	new->val = NULL;
-	new->str = strdup(envp);
-	while (envp[i] && envp[i] != '=')
-		i++;
-	new->key = ft_substr(envp, 0, i);
-	if (envp[i])
-		new->val = ft_strdup(&envp[i + 1]);
-	return (new);
-}
-
-char	**ft_env_back_to_array(t_env *env) //puts t_env env back to envp ->pointer env array
+char	**ft_env_back_to_array(t_env *env)
 {
 	char	**arr;
 	t_env	*temp;
@@ -68,16 +39,48 @@ char	**ft_env_back_to_array(t_env *env) //puts t_env env back to envp ->pointer 
 	return (arr);
 }
 
-void	ft_add_envtry(t_env *env, char *key, char *val)
+char	**get_paths(t_gen *gen)
 {
-	t_env	*new;
-
-	new = ft_find_env(env, key);
-	if (new && val)
+	char	*tmp;
+	char	**paths;
+	
+	gen->env->val = ft_get_env(gen->env, "PATH");
+	tmp = gen->env->val;
+	if (!tmp)
 	{
-		free (new->val);
-		free (new->str);
-		new->val = ft_strdup(val);
-		new->str = ft_strjoin_three(key, "=", val);
+		if (access(gen->cmd_args[0], X_OK) == -1)
+			exit (127);
+		return (NULL);
 	}
+	paths = ft_split(tmp, ':');
+	if (!paths)
+		ft_error("split");
+	return (paths);
+}
+
+char	*get_cmd_path(t_gen *gen)
+{
+	char	*cmd_path;
+	char	*tmp_cmd;
+	int		i;
+	
+	i = 0;
+	tmp_cmd = ft_strjoin("/", gen->cmd_args[0]);
+	if (!tmp_cmd)
+		ft_error("strjoin");
+	while (gen->env_paths[i])
+	{
+		cmd_path = ft_strjoin(gen->env_paths[i], tmp_cmd);
+		if (!cmd_path)
+			ft_error("strjoin");
+		if (access(cmd_path, X_OK) == 0)
+		{
+			free (tmp_cmd);
+			return (cmd_path);
+		}
+		free (cmd_path);
+		i++;
+	}
+	free (tmp_cmd);
+	return (NULL);
 }

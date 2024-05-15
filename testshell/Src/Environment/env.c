@@ -48,13 +48,6 @@ t_env	*ft_find_env(t_env *env, char *key) //find key value in env
 	return (NULL);
 }
 
-void	ft_free_env_ele(t_env *env)
-{
-	free(env->str);
-	free(env->key);
-	free(env->val);
-	free(env);
-}
 void	ft_free_env(t_env **env)
 {
 	t_env	*tmp;
@@ -67,30 +60,10 @@ void	ft_free_env(t_env **env)
 	}
 }
 
-void	ft_del_env(t_env **env, t_env *temp)
+void	ft_free_env_ele(t_env *env)
 {
-	t_env	*ele;
-
-	ele = *env;
-	if (temp == ele)
-	{
-		*env = temp->next;
-		ft_free_env(&temp);
-		return ;
-	}
-	while (ele->next != temp)
-		ele = ele->next;
-	ele->next = temp->next;
-	ft_free_env(&temp);
-}
-void	ft_unset_env(t_env **env, char *key)
-{
-	t_env	*keyval;
-
-	if (!key)
-		return ;
-	keyval = ft_find_env(*env, key);
-	if (!keyval)
-		return ;
-	ft_del_env(env, keyval);
+	free(env->str);
+	free(env->key);
+	free(env->val);
+	free(env);
 }
