@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/05/08 15:31:08 by jovieira      ########   odam.nl          #
+#    Updated: 2024/05/20 10:59:44 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,18 @@ SRC			=		main.c\
 					Src/Parse/parser.c\
 					Src/Lexer/quotes_lexer.c\
 					Src/Heredoc/heredoc.c\
+					Src/Execution/aux.c\
 					Src/Execution/exe.c\
-					Src/Execution/init.c\
 					Src/Execution/error.c\
+					Src/Execution/child.c\
+					Src/Builtins/builtins.c\
+					Src/Builtins/builtins_util.c\
+					Src/Builtins/builtins_unset.c\
+					Src/Builtins/builtins_export.c\
+					Src/Builtins/builtins_export_util.c\
 					Src/Environment/env.c\
+					Src/Environment/env_util.c\
+					Src/Environment/env_lst.c\
 
 DR_SRC		=		Src/
 DR_INC		=		Includes/

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.h                               		        :+:    :+:            */
+/*   pipe.c                	                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -10,32 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//==========[ ENV_H ]==========//
-#ifndef ENV_H
-#define ENV_H
-//==========[ LIBRARIES ]==========//
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include "token.h"
-#include "parse.h"
-#include "lexer.h"
-#include "exec.h"
-//==========[ STRUCTS ]==========//
-typedef	struct s_env
+#include "../../Includes/alex.h"
+
+t_cpro	*ft_init_cpro(void)
 {
-	struct s_env	*next;
-	char				*str;
-	char				*key;
-	char				*val;
-}	t_env;
+	t_cpro	*new_cpro;
 
-//==========[ PROTOTYPES ]==========//
-char	**get_paths(t_gen *gen);
-char	*get_cmd_path(t_gen *gen);
-// t_env	*ft_init_env(char **envp);
-// t_env	*ft_env_cpy(t_env *env);
+	new_cpro = (t_cpro *)malloc(1 * sizeof(t_cpro));
+	if (!new_cpro)
+		ft_error("cpro");
+	new_cpro->pid = fork();
+	if (!new_cpro->pid)
+		ft_error("cpro pid");
+	new_cpro->in_fd = STDIN_FILENO;
+	new_cpro->i = -1;
+	return (new_cpro);
+}
 
-#endif
+void	ft_free_cpro(t_cpro *cpro)
+{
+	free(cpro->pid);
+	free(cpro);
+}
+
+int	ft_count_cmd(t_parse *parsed)
+{
+	int	i;
+	t_parse	*tmp;
+
+	i = 0;
+	tmp = parsed;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	free(tmp);
+	return (i);
+}

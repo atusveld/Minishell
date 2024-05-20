@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipe.c                	                            :+:    :+:            */
+/*   builtins_unset.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -10,19 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/exec.h"
+#include "../../Includes/alex.h"
 
-static t_pipe	*init_pipe(int size)
+static int	ft_unset_error(char *arg, char *msg)
 {
-	t_pipe	*new_pipe;
+	ft_putstr_fd("minishell: unset: `", 2);
+	if (arg)
+		ft_putchar_fd(*arg, 2);
+	if (msg)
+		ft_putchar_fd(*msg, 2);
+	return (1);
+}
+static bool		ft_check_var(char *str)
+{
+	if (ft_isdigit(*str))
+		return (false);
+	while (*str && (*str == '_' || ft_isalnum(*str)))
+		str++;
+	if (!*str)
+		return (true);
+	return (false);
+}
 
-	new_pipe = (t_pipe *)malloc(1 * sizeof(t_pipe));
-	if (!new_pipe)
-		ft_error(pipe);
-	new_pipe->pid = (int *)malloc((size) * sizeof(int));
-	if (!new_pipe->pid)
-		ft_error(pipe);
-	new_pipe->in_fd = STDIN_FILENO;
-	new_pipe->i = -1;
-	return (new_pipe);
+int	ft_unset(t_env *env, char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (&argv[i])
+	{
+		if (ft_check_var(argv[i]) == false)
+			ft_unset_error(argv[i], "': not a valid identifier\n");
+		else
+			ft_unset_env(&env, argv[i]);
+		i++;
+	}
+	return (1);
 }

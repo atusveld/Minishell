@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/exec.h"
+#include "../../Includes/alex.h"
 
-void	ft_error(char *str)
+void	ft_error(char *str) // expand for exit codes
 {
 	perror(str);
 	exit (1);

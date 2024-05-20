@@ -13,7 +13,7 @@
 #include "Includes/token.h"
 #include "Includes/lexer.h"
 #include "Includes/parse.h"
-#include "Includes/exec.h"
+#include "Includes/alex.h"
 
 int	main(int argv, char **argc, char **envp)
 {
@@ -28,6 +28,7 @@ int	main(int argv, char **argc, char **envp)
 	input = malloc(sizeof(t_data));
 	token = ft_calloc(1, sizeof(t_token));
 	token->next = NULL;
+	gen.env = ft_build_env(envp);
 	while (1)
 	{
 		input->input = readline("Minishell: ");
@@ -38,7 +39,8 @@ int	main(int argv, char **argc, char **envp)
 		if (lexer(token) == 1)
 			continue ;
 		parsed = parse(token);
-		new_process(parsed, &gen, envp);
+		ft_exe(parsed, &gen);
 	}
+	ft_free_env(&gen.env);
 	return (0);
 }

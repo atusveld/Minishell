@@ -10,22 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/exec.h"
-#include "../../Includes/env.h"
+#include "../../Includes/alex.h"
 
-void	ft_init(t_gen *gen, t_parse *parsed)
-{
-	gen->cmd_args = parsed->argv;
-	gen->env_paths = get_paths(gen);
-	gen->cmd_path = get_cmd_path(gen);
-}
-// t_env	*ft_init_env(char **envp)
+// void	ft_exe(t_parse *parsed, t_gen *gen)
 // {
-// 	t_env	*new_env;
-// 	char	*tmp;
-
-// 	new_env = ft_env_cpy(envp);
-// 	tmp = getcwd(NULL, 0);
-// 	if (!tmp)
-// 		ft_error("env");
+// 	char	**n_envp;
+	
+// 	gen->cmd_args = parsed->argv;
+// 	gen->env_paths = get_paths(gen);
+// 	gen->cmd_path = get_cmd_path(gen);
+// 	if (!parsed->next)
+// 		ft_exe_single(gen, gen->env);
+// 	else if (ft_if_builtin(gen, parsed) == 0)
+// 		return ;
+// 	else
+// 		ft_exe_multi(gen, parsed);
 // }
