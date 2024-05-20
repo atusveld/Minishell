@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/04/09 11:47:02 by jovieira      ########   odam.nl          #
+#    Updated: 2024/05/08 15:31:08 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC			=		main.c\
 					Src/Lexer/lexer_err.c\
 					Src/Parse/parser.c\
 					Src/Lexer/quotes_lexer.c\
+					Src/Heredoc/heredoc.c\
 					Src/Execution/exe.c\
 					Src/Execution/init.c\
 					Src/Execution/error.c\
@@ -46,7 +47,7 @@ DR_LIBFT	=		Libft/
 LIBFT		=		Libft/libft.a
 
 CFLAGS		=		-Wall -Wextra -Werror -g
-CFLAGS		+=		-g -fsanitize=address
+# CFLAGS		+=		-g -fsanitize=address
 
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)

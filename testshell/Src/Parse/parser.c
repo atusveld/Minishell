@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/09 12:49:30 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/08 11:21:35 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ static void	prep_nod_array(t_token **temp, t_parse *parse)
 			*temp = (*temp)->next;
 			i++;
 		}
-		while (*temp && ((*temp)->type >= IN && (*temp)->type <= HEREDOC))
+		while (*temp && ((*temp)->type >= IN && (*temp)->type <= APPEND))
 		{
 			in_redir(temp, parse, redir_temp);
 			out_redir(temp, parse, redir_temp);
 		}
+		if ((*temp)->type == HEREDOC)
+			found_here(*temp);
 		if ((*temp))
 			(*temp) = (*temp)->next;
 	}
