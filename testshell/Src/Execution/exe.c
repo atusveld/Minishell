@@ -38,7 +38,7 @@ int	ft_exe_single(t_gen *gen, t_env *env)
 
 	f_id = fork();
 	status = -1;
-	path = get_cmd_path(gen);
+	path = get_cmd_path(gen, 0);
 	if (f_id < 0)
 		ft_error("fork");
 	else if (f_id == 0)
