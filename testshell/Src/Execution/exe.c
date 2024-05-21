@@ -14,14 +14,19 @@
 
 void	ft_exe(t_parse *parsed, t_gen *gen)
 {	
+	int	i;
+
+	i = 0;
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
-	gen->cmd_path = get_cmd_path(gen);
-	if (!parsed->next)
+	gen->cmd_path = get_cmd_path(gen, 0);
+	while (gen->cmd_args[i])
+		i++;
+	if (i == 1)
 		ft_exe_single(gen, gen->env);
 	else if (ft_if_builtin(gen, parsed) == 0)
 		return ;
-	else
+	if (i > 1)
 		ft_exe_multi(gen, parsed);
 }
 
@@ -51,12 +56,14 @@ int	ft_exe_single(t_gen *gen, t_env *env)
 
 int	ft_exe_multi(t_gen *gen, t_parse *parsed)
 {
+	int		i;
 	int		fd[2];
 	char	*path;
 	pid_t	pid;
 
+	i = 0;
 	pid = fork();
-	path = get_cmd_path(gen);
+	path = get_cmd_path(gen, 0);
 	if (pipe(fd) < 0)
 		ft_error("pipe fail");
 	if (pid < 0)
@@ -64,13 +71,12 @@ int	ft_exe_multi(t_gen *gen, t_parse *parsed)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		execve(path, gen->cmd_args, ft_env_to_arr(gen->env));
-		parsed = parsed->next;
+		execve(path, gen->cmd_args[0], ft_env_to_arr(gen->env));
 	}
 	else
 	{
-		path = get_cmd_path(gen);
-		execve(path, gen->cmd_args, ft_env_to_arr(gen->env));
+		path = get_cmd_path(gen, 1);
+		execve(path, gen->cmd_args[1], ft_env_to_arr(gen->env));
 	}
 	dup2(fd[1], 1);
 	return (-1);

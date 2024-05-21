@@ -74,7 +74,7 @@ void	ft_pwd(void);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
 char	**ft_env_to_arr(t_env *env);
 char	*ft_get_env(t_env *env, char *key);
-char	*get_cmd_path(t_gen *gen);
+char	*get_cmd_path(t_gen *gen, int cmd_i);
 char	**get_paths(t_gen *gen);
 t_env	*ft_find_env(t_env *env, char *key);
 t_env	*ft_new_envtry(char *envp);

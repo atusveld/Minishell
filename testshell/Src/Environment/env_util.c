@@ -58,14 +58,14 @@ char	**get_paths(t_gen *gen)
 	return (paths);
 }
 
-char	*get_cmd_path(t_gen *gen)
+char	*get_cmd_path(t_gen *gen, int cmd_i)
 {
 	char	*cmd_path;
 	char	*tmp_cmd;
 	int		i;
 	
 	i = 0;
-	tmp_cmd = ft_strjoin("/", gen->cmd_args[0]);
+	tmp_cmd = ft_strjoin("/", gen->cmd_args[cmd_i]);
 	if (!tmp_cmd)
 		ft_error("strjoin");
 	while (gen->env_paths[i])
