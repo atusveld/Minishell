@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipe.c                	                            :+:    :+:            */
+/*   child.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
+/*   Updated: 2024/05/20 11:09:48 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cpro	*ft_init_cpro(void)
 
 void	ft_free_cpro(t_cpro *cpro)
 {
-	free(cpro->pid);
+	// free(cpro->pid);
 	free(cpro);
 }
 

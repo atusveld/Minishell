@@ -6,13 +6,11 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
+/*   Updated: 2024/05/20 11:13:11 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/alex.h"
-
-int	ft_export_print(char **env);
 
 static bool		ft_check_var(char *str)
 {
@@ -58,7 +56,7 @@ int	ft_export(t_env **env, char **argv)
 	while (argv[i] && !*argv[i])
 		i++;
 	if (!argv[i])
-		return (ft_export_print(ft_env_back_to_array(*env)));
+		return (ft_export_print(ft_env_to_array(*env)));
 	while (argv[i])
 	{
 		if (*argv[i])

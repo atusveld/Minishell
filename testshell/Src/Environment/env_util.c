@@ -11,7 +11,7 @@
 /* ************************************************************************** */
  #include "../../Includes/alex.h"
 
-char	**ft_env_back_to_array(t_env *env)
+char	**ft_env_to_array(t_env *env)
 {
 	char	**arr;
 	t_env	*temp;

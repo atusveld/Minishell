@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/01/24 13:15:35 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/21 17:44:07 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@ int	main(int argv, char **argc, char **envp)
 	while (1)
 	{
 		input->input = readline("Minishell: ");
-		add_history(input->input);
+		if (!input->input)
+			return (1);
 		input->input = ft_strtrim(input->input, "\n\t\f\v ");
+		if (ft_strlen(input->input) == 0)
+			continue ;
+		add_history(input->input); // nao dar add a input vazio, falta fazer free
 		token = ft_token(input->input);
 		asign_token(token);
+		// expandable(token, gen.env);
+		
 		if (lexer(token) == 1)
 			continue ;
 		parsed = parse(token);

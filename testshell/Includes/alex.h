@@ -43,11 +43,12 @@ typedef struct s_cpro
 {
 	int	pipe[2];
 	int	in_fd;
-	int	*pid;
+	int	pid;
 	int	i;
 }	t_cpro;
 
 //==========[ PROTOTYPES ]==========//
+void	ft_exe(t_parse *parsed, t_gen *gen);
 int		ft_exe_single(t_gen *gen, t_env *env);
 int		ft_exe_multi(t_gen *gen, t_parse *parsed);
 int		ft_if_builtin(t_gen *gen, t_parse *parsed);
@@ -80,5 +81,8 @@ t_env	*ft_find_env(t_env *env, char *key);
 t_env	*ft_new_envtry(char *envp);
 t_env	*ft_build_env(char **envp);
 t_cpro	*ft_init_cpro(void);
+
+// -------------
+void	expandable(t_token *token, t_env *tmp_env);
 
 #endif
