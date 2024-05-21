@@ -13,9 +13,7 @@
 #include "../../Includes/alex.h"
 
 void	ft_exe(t_parse *parsed, t_gen *gen)
-{
-	char	**n_envp;
-	
+{	
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
 	gen->cmd_path = get_cmd_path(gen);
@@ -38,9 +36,11 @@ int	ft_exe_single(t_gen *gen, t_env *env)
 	path = get_cmd_path(gen);
 	if (f_id < 0)
 		ft_error("fork");
-	if (f_id == 0)
-		if ((execve(path, gen->cmd_args, ft_env_to_array(env))) < 0)
+	else if (f_id == 0)
+	{
+		if ((execve(path, gen->cmd_args, ft_env_to_arr(env))) < 0)
 			ft_error("child");
+	}
 	else
 	{
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
@@ -51,18 +51,27 @@ int	ft_exe_single(t_gen *gen, t_env *env)
 
 int	ft_exe_multi(t_gen *gen, t_parse *parsed)
 {
-	int	fd[2];
+	int		fd[2];
+	char	*path;
+	pid_t	pid;
 
-	fd[0] = 0;
-	fd[1] = 1;
-	execve(gen->cmd_path, gen->cmd_args, ft_env_to_array(gen->env));
+	pid = fork();
+	path = get_cmd_path(gen);
+	if (pipe(fd) < 0)
+		ft_error("pipe fail");
+	if (pid < 0)
+		ft_error("fork fail");
+	if (pid == 0)
+	{
+		close(fd[0]);
+		execve(path, gen->cmd_args, ft_env_to_arr(gen->env));
+		parsed = parsed->next;
+	}
+	else
+	{
+		path = get_cmd_path(gen);
+		execve(path, gen->cmd_args, ft_env_to_arr(gen->env));
+	}
 	dup2(fd[1], 1);
-	execve(gen->cmd_path, gen->cmd_args, ft_env_to_array(gen->env));
-	dup2(fd[0], 0);
-	close(fd[1]);
-	dup2(fd[1], 1);
-	execve(gen->cmd_path, gen->cmd_args, ft_env_to_array(gen->env));
-	close(fd[0]);
-	dup2(fd[0], 0);
 	return (-1);
 }

@@ -58,7 +58,7 @@ int	ft_export(t_env **env, char **argv)
 	while (argv[i] && !*argv[i])
 		i++;
 	if (!argv[i])
-		return (ft_export_print(ft_env_back_to_array(*env)));
+		return (ft_export_print(ft_env_to_arr(*env)));
 	while (argv[i])
 	{
 		if (*argv[i])
