@@ -18,10 +18,10 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
 	gen->cmd_path = get_cmd_path(gen);
-	if (!parsed->next)
-		ft_exe_single(gen, gen->env);
-	else if (ft_if_builtin(gen, parsed) == 0)// we're not going inside the buildt in funct yes we are
+	if (ft_if_builtin(gen, parsed) == 0)// we're not going inside the buildt in funct yes we are
 		return ;
+	else if (!parsed->next)
+		ft_exe_single(gen, gen->env);
 	else
 		ft_exe_multi(gen, parsed);
 }
