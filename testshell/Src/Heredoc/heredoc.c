@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/21 16:59:08 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/22 14:38:51 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/parse.h"
+#include "../Includes/main.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>
@@ -27,26 +27,41 @@ int	here_err(pid_t PID)
 	return (0);
 }
 
+size_t	skip_quotes(char *line, size_t i)
+{
+	char	c;
+
+	c = *(line + i);
+	i++;
+	while (*(line + i) != c && *(line + i) != '\0')
+		i++;
+	return (i);
+}
 
 char	*remove_quote(char *delimiter)
 {
 	int i;
+	int	j;
 
 	i = 0;
 	while (delimiter[i])
 	{
-		if ((delimiter[i] == '\'' || delimiter[i] == '"') && \
-			(delimiter[ft_strlen(delimiter) - 1] == '\'' || delimiter[ft_strlen(delimiter) - 1] == '"'))
+		if (delimiter[i] == '\'' || delimiter[i] == '"')
 		{
-			delimiter += 1;
-			delimiter[ft_strlen(delimiter) - 1] = '\0';
+			j = skip_quotes(delimiter, i);
+			if (delimiter[j] == '\0')
+				return (delimiter);
+			ft_memmove (delimiter + i, delimiter + i + 1, ft_strlen(delimiter + i));
+			ft_memmove(delimiter + j - 1, delimiter + j, ft_strlen(delimiter + j - 1));
+			i = j - 1;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (delimiter);
 }
 
-void	write_line(char *delimiter, int fd, bool quotes)
+void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 {
 	char *line;
 	char *temp;
@@ -57,14 +72,14 @@ void	write_line(char *delimiter, int fd, bool quotes)
 	{
 		if (!ft_strncmp(delimiter, line, ft_strlen(delimiter)))
 			break;
-		if (quotes == true)
+		if (quotes == false)
 		{
 			while (ft_strchr(line, '$'))
 			{
-				// temp = line;
-				printf("hello quote\n");
+				temp = line;
+				line = expandable(temp, env);// ainda por criar
+				printf("%s\n", line);
 				break ;
-				// line = expandable();// ainda por criar
 				// free(temp);
 			}
 		}
@@ -76,7 +91,7 @@ void	write_line(char *delimiter, int fd, bool quotes)
 }
 
 
-void	heredoc(char *delimiter, int fd)
+void	heredoc(char *delimiter, int fd, t_env *env)
 {
 	bool	quotes;
 
@@ -86,10 +101,10 @@ void	heredoc(char *delimiter, int fd)
 		delimiter = remove_quote(delimiter);
 		quotes = true;
 	}
-	write_line(delimiter, fd, quotes);
+	write_line(delimiter, fd, quotes, env);
 }
 
-void	init_doc(char *delimiter)
+static void	init_doc(char *delimiter, t_env *env)
 {
 	int	fd;
 
@@ -99,14 +114,14 @@ void	init_doc(char *delimiter)
 		// dar erro, escrever funct
 		return ;
 	}
-	heredoc(delimiter, fd);
+	heredoc(delimiter, fd, env);
 	// ft_add_redir(&data->redir_in, fd);
 	// unlink("tmp_here");
 	close(fd);
 	_exit(0);
 }
 
-void	found_here(t_parse *data, char *delimiter)
+void	found_here(t_parse *data, t_env *env, char *delimiter)
 {
 	int		status;
 	pid_t	pid;
@@ -121,7 +136,7 @@ void	found_here(t_parse *data, char *delimiter)
 	if (pid == 0)
 	{
 		unset_signals();
-		init_doc(delimiter);
+		init_doc(delimiter, env);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))

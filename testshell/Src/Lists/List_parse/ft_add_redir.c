@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstadd_back.c                                   :+:    :+:            */
+/*   ft_add_redir.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 21:34:46 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/08 14:14:04 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/22 12:02:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,20 @@ void	ft_add_redir(t_red **lst, t_red *new)
 		return ;
 	}
 	tail = ft_redir_last(*lst);
+	tail->next = new;
+}
+
+void	ft_add_parse(t_parse **lst, t_parse *new)
+{
+	t_parse	*tail;
+
+	if (!lst)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tail = ft_parse_last(*lst);
 	tail->next = new;
 }

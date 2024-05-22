@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:46 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/20 16:25:19 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/22 12:37:42 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ typedef struct s_token
 }	t_token;
 
 // Token creation Functions
-int		asign_token(t_token *token);
 t_token	*ft_token(char *s);
+int		asign_token(t_token *token);
 
 // List Functions
 int		ft_lstsize(t_token *lst);

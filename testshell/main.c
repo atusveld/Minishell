@@ -6,14 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/21 17:44:07 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/22 14:23:45 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Includes/token.h"
-#include "Includes/lexer.h"
-#include "Includes/parse.h"
-#include "Includes/alex.h"
+#include "Includes/main.h"
 
 int	main(int argv, char **argc, char **envp)
 {
@@ -40,11 +37,9 @@ int	main(int argv, char **argc, char **envp)
 		add_history(input->input); // nao dar add a input vazio, falta fazer free
 		token = ft_token(input->input);
 		asign_token(token);
-		// expandable(token, gen.env);
-		
 		if (lexer(token) == 1)
 			continue ;
-		parsed = parse(token);
+		parsed = parse(token, gen.env);
 		ft_exe(parsed, &gen);
 	}
 	ft_free_env(&gen.env);

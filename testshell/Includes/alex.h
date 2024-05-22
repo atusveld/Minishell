@@ -19,17 +19,15 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <stdbool.h>
-#include "token.h"
 #include "parse.h"
-#include "lexer.h"
 //==========[ STRUCTS ]==========//
-typedef	struct s_env
-{
-	struct s_env	*next;
-	char				*str;
-	char				*key;
-	char				*val;
-}	t_env;
+// typedef	struct s_env
+// {
+// 	struct s_env	*next;
+// 	char				*str;
+// 	char				*key;
+// 	char				*val;
+// }	t_env;
 
 typedef	struct s_gen
 {
@@ -83,6 +81,7 @@ t_env	*ft_build_env(char **envp);
 t_cpro	*ft_init_cpro(void);
 
 // -------------
-void	expandable(t_token *token, t_env *tmp_env);
+// char	*expandable(char *def, t_env *tmp_env);
+// void	found_here(t_parse *data, t_env *env, char *delimiter);
 
 #endif
