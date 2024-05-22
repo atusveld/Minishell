@@ -39,6 +39,18 @@ void	*ft_free_arr(char **arr)
 	return (NULL);
  }
  
+//  int	ft_count_cmd(t_gen *gen, t_parse *parsed)
+//  {
+// 	int	i;
+
+// 	i = 0;
+// 	if (!parsed->next)
+// 		return (-1);
+// 	while (parsed->next)
+// 		i++;
+// 	return (i);
+//  }
+
  //ft_exe_multi_legacy
 	// t_cpro	*cpro;
 	// int		fd;
