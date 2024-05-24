@@ -49,6 +49,9 @@ typedef struct s_cpro
 void	ft_exe(t_parse *parsed, t_gen *gen);
 int		ft_exe_single(t_gen *gen, t_env *env);
 int		ft_exe_multi(t_gen *gen, t_parse *parsed);
+t_cpro	*ft_exe_first(t_gen *gen);
+int		ft_exe_mid(t_gen *gen);
+int		ft_exe_last(t_gen *gen, t_cpro *cpro);
 int		ft_if_builtin(t_gen *gen, t_parse *parsed);
 int		ft_unset(t_env *env, char **argv);
 int		ft_export_print(char **env);

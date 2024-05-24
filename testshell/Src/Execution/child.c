@@ -20,7 +20,7 @@ t_cpro	*ft_init_cpro(void)
 	if (!new_cpro)
 		ft_error("cpro");
 	new_cpro->pid = fork();
-	if (!new_cpro->pid)
+	if (new_cpro->pid < 0)
 		ft_error("cpro pid");
 	new_cpro->in_fd = STDIN_FILENO;
 	new_cpro->i = -1;
