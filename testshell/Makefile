@@ -39,7 +39,6 @@ SRC			=		main.c\
 					Src/Execution/aux.c\
 					Src/Execution/exe.c\
 					Src/Execution/error.c\
-					Src/Execution/child.c\
 					Src/Builtins/builtins.c\
 					Src/Builtins/builtins_util.c\
 					Src/Builtins/builtins_unset.c\

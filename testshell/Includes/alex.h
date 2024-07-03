@@ -37,26 +37,25 @@ typedef	struct s_gen
 	t_env	*env;
 }	t_gen;
 
-typedef struct s_cpro
+typedef struct s_pipe
 {
-	int	pipe[2];
+	int	tube[2];
 	int	in_fd;
-	int	pid;
-	int	i;
-}	t_cpro;
+}	t_pipe;
 
 //==========[ PROTOTYPES ]==========//
 void	ft_exe(t_parse *parsed, t_gen *gen);
 int		ft_exe_single(t_gen *gen, t_env *env);
 int		ft_exe_multi(t_gen *gen, t_parse *parsed);
-t_cpro	*ft_exe_first(t_gen *gen);
-int		ft_exe_mid(t_gen *gen);
-int		ft_exe_last(t_gen *gen, t_cpro *cpro);
+int		ft_exe_first(t_gen *gen, t_pipe *pipe);
+int		ft_exe_mid(t_gen *gen, t_pipe *pipe);
+int		ft_exe_last(t_gen *gen, t_pipe *pipe);
 int		ft_if_builtin(t_gen *gen, t_parse *parsed);
 int		ft_unset(t_env *env, char **argv);
 int		ft_export_print(char **env);
 int		ft_export(t_env **env, char **argv);
 int		ft_count_cmd(t_parse *parsed);
+int		ft_wait(int cmd_c);
 void	ft_cd_update_env(t_gen *gen, char *old_p, char *new_p);
 void	ft_add_envtry(t_env *env, char *key, char *val);
 void	ft_env_add_front(t_env **env, t_env *new);
@@ -66,7 +65,6 @@ void	ft_del_env(t_env **env, t_env *temp);
 void	ft_unset_env(t_env **env, char *key);
 void	ft_init(t_parse *parsed, t_gen *gen);
 void	*ft_free_arr(char **arr);
-void	ft_free_cpro(t_cpro *cpro);
 void	ft_exit(t_parse *parsed);
 void	ft_error(char *str);
 void	ft_echo(char **arr);
@@ -78,10 +76,10 @@ char	**ft_env_to_array(t_env *env);
 char	*ft_get_env(t_env *env, char *key);
 char	*get_cmd_path(t_gen *gen);
 char	**get_paths(t_gen *gen);
+t_pipe	*ft_init_pipes();
 t_env	*ft_find_env(t_env *env, char *key);
 t_env	*ft_new_envtry(char *envp);
 t_env	*ft_build_env(char **envp);
-t_cpro	*ft_init_cpro(void);
 
 // -------------
 // char	*expandable(char *def, t_env *tmp_env);
