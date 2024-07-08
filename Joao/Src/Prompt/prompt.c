@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   prompt.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/10 16:42:04 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/10 16:42:22 by jovieira      ########   odam.nl         */
+/*   Created: 2024/01/24 14:13:50 by jovieira      #+#    #+#                 */
+/*   Updated: 2024/04/09 11:40:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Joao/Includes/token.h"
-#include "../Joao/Includes/lexer.h"
-#include "../Joao/Includes/parse.h"
+#include "token.h"
+#include "lexer.h"
+#include "parse.h"
 
 int	main(int argv, char **argc, char **envp)
 {
