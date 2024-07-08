@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
  
- #include "../../Includes/alex.h"
+#include "../../Includes/alex.h"
 
- char	*ft_strjoin_three(char *s1, char *s2, char *s3)
+char	*ft_strjoin_three(char *s1, char *s2, char *s3)
  {
 	char	*temp;
 	char	*str;
@@ -21,10 +21,10 @@
 	str = ft_strjoin(temp, s3);
 	free (temp);
 	return (str);
- }
+}
 
 void	*ft_free_arr(char **arr)
- {
+{
 	int	i;
 
 	i = 0;
@@ -33,30 +33,33 @@ void	*ft_free_arr(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
-		i++;
+			i++;
 	}
 	free(arr);
 	return (NULL);
- }
- 
- //ft_exe_multi_legacy
-	// t_cpro	*cpro;
-	// int		fd;
-	// int		i;
-	// int		j;
+}
+int	ft_count_cmd(t_parse *parsed)
+{
+	t_parse	*tmp;
+	int	i;
 
-	// i = 0;
-	// j = ft_count_cmd(parsed);
-	// fd = ft_calloc(2, sizeof(int));
-	// pipe(fd);
-	// while (i < j)
-	// {
-	// 	cpro = ft_init_cpro();
-	// 	if (cpro->pid == -1)
-	// 		ft_error("child");
-	// 	else if (cpro->pid == 0)
-	// 	{
-			
-	// 	}
-	// }
-	// return (1);
+	i = 0;
+	tmp = parsed;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	free(tmp);
+	return (i);
+}
+
+t_pipe	*ft_init_pipes()
+{
+	t_pipe	*new_pipe;
+
+	new_pipe = (t_pipe *)malloc(sizeof(t_pipe));
+	pipe(new_pipe->tube);
+	new_pipe->in_fd = STDIN_FILENO;
+	return (new_pipe);
+}
