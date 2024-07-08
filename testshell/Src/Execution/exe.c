@@ -17,7 +17,7 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
 	gen->cmd_path = get_cmd_path(gen);
-	if (ft_if_builtin(gen, parsed) == 0)
+	if (ft_if_builtin(gen, parsed) == 0) // !!!
 		return ;
 	if (!parsed->next)
 		ft_exe_single(gen, gen->env);
@@ -143,24 +143,3 @@ int	ft_exe_last(t_gen *gen, t_pipe *pipe)		// LAST COMMAND
 	free(env_arr);
 	return (-1);
 }
-
-// int	ft_wait(int cmd_c)
-// {
-// 	int	i;
-// 	int	status;
-
-// 	status = -1;
-// 	dprintf(2, "==[ENTER WAIT]==\n");
-// 	i = 0;
-// 	while (i < cmd_c - 1)
-// 	{
-// 		if (waitpid(pid[i], &status, WUNTRACED) == - 1)
-// 			ft_error("waitpid");
-// 		if (!WIFEXITED(status) && !WIFSIGNALED(status))
-// 			ft_error("waitrr");
-// 		i++;
-// 		dprintf(2, "==[WAITIN']==\n");
-// 	}
-// 	dprintf(2, "==[EXIT WAIT]==\n");
-// 	return (0);
-// }
