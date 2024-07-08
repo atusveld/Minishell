@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/22 14:38:51 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/23 15:46:24 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ char	*remove_quote(char *delimiter)
 void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 {
 	char *line;
-	char *temp;
 
-	temp = NULL;
 	line = readline("> ");
 	while (line)
 	{
@@ -75,13 +73,7 @@ void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 		if (quotes == false)
 		{
 			while (ft_strchr(line, '$'))
-			{
-				temp = line;
-				line = expandable(temp, env);// ainda por criar
-				printf("%s\n", line);
-				break ;
-				// free(temp);
-			}
+				line = expandable(line, env);
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -115,8 +107,6 @@ static void	init_doc(char *delimiter, t_env *env)
 		return ;
 	}
 	heredoc(delimiter, fd, env);
-	// ft_add_redir(&data->redir_in, fd);
-	// unlink("tmp_here");
 	close(fd);
 	_exit(0);
 }
@@ -141,9 +131,8 @@ void	found_here(t_parse *data, t_env *env, char *delimiter)
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
 	{
-		// clean if not
+		// clean after exec
 		return ;
 	}
 	set_signals();
-	// data = data->next;
 }

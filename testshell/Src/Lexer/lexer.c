@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/26 17:39:29 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/09 12:37:09 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/31 11:40:01 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/lexer.h"
+#include "main.h"
 
 static int	syntax_checker(t_token	*temp)
 {

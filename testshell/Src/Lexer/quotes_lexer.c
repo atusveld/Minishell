@@ -6,11 +6,12 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/22 11:47:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/09 12:46:02 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/08 13:43:14 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/lexer.h"
+#include "main.h"
+
 static size_t	quote_skip(char *token, size_t i)
 {
 	char	c;

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/22 14:27:08 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/05/27 17:05:55 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,6 @@ static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 	}
 }
 
-// static void	out_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
-// {
-// 	if ((*temp)->type == OUT || (*temp)->type == APPEND)
-// 	{
-// 		redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
-// 		ft_add_redir(&parse->redir_out, redir_temp);
-// 		(*temp) = (*temp)->next;
-// 	}
-// }
-
 static void	prep_nod_array(t_token **token, t_parse *parse, t_env *env)
 {
 	int		i;
@@ -50,6 +40,7 @@ static void	prep_nod_array(t_token **token, t_parse *parse, t_env *env)
 		while (*token && (*token)->type == DEFAULT)
 		{
 			parse->argv[i++] = ft_strdup((*token)->content);
+			// printf("%s\n", (*token)->content);
 			*token = (*token)->next;
 		}
 		if (*token && ((*token)->type >= IN && (*token)->type <= APPEND))
@@ -76,6 +67,7 @@ t_parse	*parse(t_token *token, t_env *env)
 	{
 		parse_temp = ft_calloc(1, sizeof(t_token));
 		parse_temp->argv = ft_calloc(ft_lstsize(token) + 1, sizeof(char **));
+		token_expand(token, env);
 		prep_nod_array(&token, parse_temp, env);
 		ft_add_parse(&parse, parse_temp);
 		if (token)
@@ -97,15 +89,15 @@ t_parse	*parse(t_token *token, t_env *env)
 // 	if (parse_temp->redir_in)
 // 	{
 // 		printf("arg '%s' type in '%i' file in '%s' \n", 
-//*parse_temp->argv, parse_temp->redir_in->type, 
-//parse_temp->redir_in->filename);
+// *parse_temp->argv, parse_temp->redir_in->type, 
+// parse_temp->redir_in->filename);
 // 		parse_temp->redir_in = parse_temp->redir_in->next;
 // 	}
 // 	else if (parse_temp->redir_out)
 // 	{
 // 		printf("arg '%s' type out '%i' file out '%s' \n", 
-//*parse_temp->argv, parse_temp->redir_out->type, 
-//parse_temp->redir_out->filename);
+// *parse_temp->argv, parse_temp->redir_out->type, 
+// parse_temp->redir_out->filename);
 // 		// printf("file out %s \n", parse_temp->redir_out->filename);
 // 		parse_temp->redir_out = parse_temp->redir_out->next;
 // 	}
