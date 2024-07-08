@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/05/21 16:12:20 by jovieira      ########   odam.nl          #
+#    Updated: 2024/07/08 15:11:17 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ SRC			=		main.c\
 					Src/Parse/parser.c\
 					Src/Lexer/quotes_lexer.c\
 					Src/Heredoc/heredoc.c\
+					Src/Heredoc/expansion.c\
+					Src/Heredoc/expansion_utils.c\
 					Src/Heredoc/heredoc_utils.c\
 					Src/Heredoc/signal_utils.c\
 					Src/Execution/aux.c\
