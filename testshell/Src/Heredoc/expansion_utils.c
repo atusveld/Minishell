@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/24 12:28:07 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/31 11:33:44 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/09 13:17:54 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,25 @@ void	token_expand(t_token *token, t_env *tmp_env)
 			token->next->operator = 1;
 		if (ft_strchr(token->content, '\''))
 		{
-			token->content = remove_quote(token->content);
-			// if ()
+			printf("here '\n");
+			token->content = remove_quote(token->content, '\'');
 			db_quotes = false;
 		}
-		if (ft_strchr(token->content, '"') && token->next->operator == 1)
-			token = token->next->next;
+		printf("token->content = %s\n", token->content);
+		if (ft_strchr(token->content, '"') /*&& token->next->operator == 1*/)
+		{
+			printf("here \"\n");
+			token->content = remove_quote(token->content, '"');
+			db_quotes = true;
+		}
 		if (ft_strchr(token->content, '$') && db_quotes == true)
 		{
+			printf("here $\n");
 			token->content = expandable(token->content, tmp_env);
 			continue;
 		}
-		if (db_quotes == false)
-			return ;
+		// if (db_quotes == false)
+		// 	return ;
 		token = token->next;
 	}
 	// return ()

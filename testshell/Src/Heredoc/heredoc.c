@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/23 15:46:24 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/09 13:21:56 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,30 @@ size_t	skip_quotes(char *line, size_t i)
 	return (i);
 }
 
-char	*remove_quote(char *delimiter)
+char	*remove_quote(char *delimiter, char quote)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	while (delimiter[i])
+	{
+		if (delimiter[i] == quote)
+		{
+			j = skip_quotes(delimiter, i);
+			if (delimiter[j] == '\0')
+				return (delimiter);
+			ft_memmove (delimiter + i, delimiter + i + 1, ft_strlen(delimiter + i));
+			ft_memmove(delimiter + j - 1, delimiter + j, ft_strlen(delimiter + j - 1));
+			i = j - 1;
+		}
+		else
+			i++;
+	}
+	return (delimiter);
+}
+
+char	*remove_quote_unexp(char *delimiter)
 {
 	int i;
 	int	j;
@@ -90,7 +113,8 @@ void	heredoc(char *delimiter, int fd, t_env *env)
 	quotes = false;
 	if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '"'))
 	{
-		delimiter = remove_quote(delimiter);
+		
+		delimiter = remove_quote_unexp(delimiter);
 		quotes = true;
 	}
 	write_line(delimiter, fd, quotes, env);

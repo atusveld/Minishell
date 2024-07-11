@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/22 14:27:08 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/09 11:35:42 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_parse	*parse(t_token *token, t_env *env)
 	{
 		parse_temp = ft_calloc(1, sizeof(t_token));
 		parse_temp->argv = ft_calloc(ft_lstsize(token) + 1, sizeof(char **));
+		token_expand(token, env);
 		prep_nod_array(&token, parse_temp, env);
 		ft_add_parse(&parse, parse_temp);
 		if (token)

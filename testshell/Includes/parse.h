@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:16:56 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/08 15:14:36 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/09 13:21:38 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	found_here(t_parse *data, t_env *env, char *delimiter);
 // Expantion
 char	*expandable(char *def, t_env *tmp_env);
 void	token_expand(t_token *token, t_env *tmp_env);
-char	*remove_quote(char *delimiter);
+char	*remove_quote(char *delimiter, char quote);
+char	*remove_quote_unexp(char *delimiter);
 
 // Signal handler
 
