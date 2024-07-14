@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/09 13:21:56 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/14 15:46:22 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	*remove_quote(char *delimiter, char quote)
 			if (delimiter[j] == '\0')
 				return (delimiter);
 			ft_memmove (delimiter + i, delimiter + i + 1, ft_strlen(delimiter + i));
-			ft_memmove(delimiter + j - 1, delimiter + j, ft_strlen(delimiter + j - 1));
+			ft_memmove (delimiter + j - 1, delimiter + j, ft_strlen(delimiter + j - 1));
+			printf(" inside mm%s\n", delimiter+j-1);
 			i = j - 1;
 		}
 		else

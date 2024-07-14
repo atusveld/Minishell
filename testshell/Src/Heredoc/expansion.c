@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/09 11:09:42 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/14 15:44:19 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*expandable(char *def, t_env *tmp_env)
 	int	i;
 
 	i = 1;
+	printf ("expand %s\n", def);
 	str = ft_strchr(def, '$');
 	while (str[i] != ' ' && str[i] != '$' && str[i] != '\0')
 		i++;
