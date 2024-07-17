@@ -53,7 +53,6 @@ char	*remove_quote(char *delimiter, char quote)
 				return (delimiter);
 			ft_memmove (delimiter + i, delimiter + i + 1, ft_strlen(delimiter + i));
 			ft_memmove (delimiter + j - 1, delimiter + j, ft_strlen(delimiter + j - 1));
-			printf(" inside mm%s\n", delimiter+j-1);
 			i = j - 1;
 		}
 		else
@@ -90,6 +89,8 @@ void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 	char *line;
 
 	line = readline("> ");
+	// remove_quote_unexp(line);
+	printf("%s\n", line);
 	while (line)
 	{
 		if (!ft_strncmp(delimiter, line, ft_strlen(delimiter)))
@@ -113,8 +114,7 @@ void	heredoc(char *delimiter, int fd, t_env *env)
 
 	quotes = false;
 	if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '"'))
-	{
-		
+	{	
 		delimiter = remove_quote_unexp(delimiter);
 		quotes = true;
 	}

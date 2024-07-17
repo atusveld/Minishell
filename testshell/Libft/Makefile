@@ -51,6 +51,7 @@ SRC= ft_atoi.c\
 	 ft_itoa.c\
 	 ft_strtrim.c\
 	 ft_split.c\
+	 ft_strlen_def.c\
 	 
 # BONUS_SRC=	ft_lstnew_bonus.c\
 # 			ft_lstadd_front_bonus.c\

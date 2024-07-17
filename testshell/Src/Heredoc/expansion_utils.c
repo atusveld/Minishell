@@ -13,89 +13,91 @@
 #include "main.h"
 
 
-static size_t	skip_quotes(char *line, size_t i)
+static size_t	skip_quotes(char *line)
 {
-	char	c;
-
-	c = *(line + i);
-	i++;
-	while (*(line + i) != c && *(line + i) != '\0')
-		i++;
-	return (i);
-}
-
-void	token_expand(t_token *token, t_env *tmp_env)
-{
-	int	i;
+	int i;
 
 	i = 0;
-	while (token)
-	{
-		if (token->content[i] == '\'')
-		{
-			// printf("%c\n", token->content[i]);
-			i = skip_quotes(token->content, i);
-			// i++;
-			// printf("%i\n", i);
-			
-		}
-		// printf("%c\n", token->content[i]);
-		if (token->content[i + 1] == '"')
-		{	
-			token->content  = remove_quote(token->content, '"');
-			i++;
-		}
-		// printf("%i, %c\n", i, token->content[i]);
-		if (token->content[i] == '$')
-		{
-			token->content = expandable(token->content, tmp_env);
-		}
-		token = token->next;
-	}
+	while (*(line + i) != '\'' && *(line + i) != '"' && *(line + i) != '\0')
+		i++;
+	printf("%c\n", line[i]);
+	return (i);
 }
 
 // void	token_expand(t_token *token, t_env *tmp_env)
 // {
-// 	int i;
-// 	bool	db_quotes;
-// 	// bool	here;
+// 	int	i;
 
-// 	// while (str[i]) {
-// 	// 	if ('\'') {
-// 	// 		i+++++++++ second;
-// 	// 	}
-// 	// 	if (str[i] == '$')
-// 	// 	{}
-// 	// 	i++;
-// 	// }
+// 	i = 0;
 // 	while (token)
 // 	{
-// 		db_quotes = true;
-// 		if (token->type == HEREDOC)
-// 			token->next->operator = 1;
-// 		if (ft_strchr(token->content, '\''))
+// 		if (token->content[i] == '\'')
 // 		{
-// 			// printf("here '\n");
-// 			token->content = remove_quote(token->content, '\'');
-// 			db_quotes = false;
+// 			// printf("%c\n", token->content[i]);
+// 			i = skip_quotes(token->content, i);
+// 			// i++;
+// 			// printf("%i\n", i);
+			
 // 		}
-// 		// printf("token->content = %s\n", token->content);
-// 		if (ft_strchr(token->content, '"') /*&& token->next->operator == 1*/)
+// 		// printf("%c\n", token->content[i]);
+// 		if (token->content[i + 1] == '"')
+// 		{	
+// 			token->content  = remove_quote(token->content, '"');
+// 			i++;
+// 		}
+// 		// printf("%i, %c\n", i, token->content[i]);
+// 		if (token->content[i] == '$')
 // 		{
-// 			// printf("here \"\n");
-// 			i = ft_strchr(token->content, '"') - token->content;
-// 			token->content = remove_quote(token->content, '"');
-// 			db_quotes = true;
+// 			token->content = expandable(token->content, tmp_env);
 // 		}
-// 		if (ft_strchr(token->content, '$') && db_quotes == true)
-// 		{
-// 			// printf("here $\n");
-// 			token->content = expandable(token->content + i, tmp_env);
-// 			continue;
-// 		}
-// 		// if (db_quotes == false)
-// 		// 	return ;
 // 		token = token->next;
 // 	}
-// 	// return ()
 // }
+
+void	token_expand(t_token *token, t_env *tmp_env)
+{
+	int i;
+	bool	db_quotes;
+	// bool	here;
+
+	// while (str[i]) {
+	// 	if ('\'') {
+	// 		i+++++++++ second;
+	// 	}
+	// 	if (str[i] == '$')
+	// 	{}
+	// 	i++;
+	// }
+
+	while (token)
+	{
+		db_quotes = true;
+		if (token->type == HEREDOC)
+			token->next->operator = 1;
+		i = skip_quotes(token->content);
+		if (token->content[i] == '\'')
+		{
+			// printf("here '\n");
+			token->content = remove_quote(token->content, '\'');
+			db_quotes = false;
+		}
+		else if (token->content[i] == '"')
+		{
+			// printf("here \"\n");
+			// i = ft_strchr(token->content, '"') - token->content;
+			token->content = remove_quote(token->content, '"');
+			db_quotes = true;
+		}
+		printf("%i\n", db_quotes);
+		if (db_quotes == true)
+		{
+			// printf("here $\n");
+			token->content = expandable(token->content, tmp_env);
+			continue;
+		}
+		// if (db_quotes == false)
+		// 	return ;
+		token = token->next;
+	}
+	// return ()
+}

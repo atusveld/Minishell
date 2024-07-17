@@ -63,7 +63,9 @@ CFLAGS		+=		-g -fsanitize=address
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)
 
-CC			=		cc
+# CC			=		cc
+CC			=		clang
+
 
 all:
 	@$(MAKE) $(NAME) -j4 --no-print-directory

@@ -14,9 +14,9 @@
 
 int	asign_token(t_token *token)
 {
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	while (token)
 	{
 		if (token->content[0] == '|' && token->content[1] == '|')

@@ -14,15 +14,18 @@
 
 static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 {
+	char *filename;
+
+	filename = ft_strdup((*temp)->next->content);
 	if ((*temp)->type == IN)
 	{
-		redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
+		redir_temp = ft_redir_new(filename, (*temp)->type);
 		ft_add_redir(&parse->redir_in, redir_temp);
 		(*temp) = (*temp)->next;
 	}
 	else if ((*temp)->type == OUT || (*temp)->type == APPEND)
 	{
-		redir_temp = ft_redir_new((*temp)->next->content, (*temp)->type);
+		redir_temp = ft_redir_new(filename, (*temp)->type);
 		ft_add_redir(&parse->redir_out, redir_temp);
 		(*temp) = (*temp)->next;
 	}
@@ -76,7 +79,7 @@ t_parse	*parse(t_token *token, t_env *env)
 	{
 		parse_temp = ft_calloc(1, sizeof(t_token));
 		parse_temp->argv = ft_calloc(ft_lstsize(token) + 1, sizeof(char **));
-		token_expand(token, env);
+		// token_expand(token, env);
 		prep_nod_array(&token, parse_temp, env);
 		ft_add_parse(&parse, parse_temp);
 		if (token)
