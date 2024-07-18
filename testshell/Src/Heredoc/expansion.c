@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/14 15:44:19 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/18 12:28:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ char	*expandable(char *def, t_env *tmp_env)
 
 	i = 1;
 	str = ft_strchr(def, '$');
-	// dar error se for null
-	while (str[i] != '\0' && ft_isalnum(str[i]))
+	while (str[i] != '\0' && str[i] != ' ' && ft_isalnum(str[i]))
 		i++;
 	val = find_env_val(tmp_env, str, i);
 	j = ft_strlen(def) + ft_strlen(val) - i;
 	str = expand_str(def, val, i, j);
-	// free(def);
 	return(str);
 }

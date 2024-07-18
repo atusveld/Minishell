@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/14 15:46:22 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/18 13:22:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 	char *line;
 
 	line = readline("> ");
-	// remove_quote_unexp(line);
-	printf("%s\n", line);
 	while (line)
 	{
 		if (!ft_strncmp(delimiter, line, ft_strlen(delimiter)))
