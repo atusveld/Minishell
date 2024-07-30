@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/18 12:28:37 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/30 15:20:47 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*find_env_val(t_env *tmp_env, char *str, int i)
 {
 	while (tmp_env)
 	{
-		if (!ft_strncmp(str + 1, tmp_env->key, i - 2))
+		if (!ft_strncmp(str + 1, tmp_env->key, i))
 			return (tmp_env->val);
 		tmp_env = tmp_env->next;
 	}
