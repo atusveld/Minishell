@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-static bool		ft_check_var(char *str)
+static bool	ft_check_var(char *str)
 {
 	if (!*str || ft_isdigit(*str))
 		return (false);

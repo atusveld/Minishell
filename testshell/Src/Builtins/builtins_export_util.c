@@ -46,8 +46,8 @@ static void	ft_export_sort(char **env)
 		j = 0;
 		while (env[j] && env[j + 1])
 		{
-			if (ft_strncmp(env[j], env[j + 1], 
-								ft_max_strlen(env[j], env[j + 1]) + 1) > 0)
+			if (ft_strncmp(env[j], env[j + 1],
+					ft_max_strlen(env[j], env[j + 1]) + 1) > 0)
 				ft_arr_swap(&env[j], &env[j + 1]);
 			j++;
 		}

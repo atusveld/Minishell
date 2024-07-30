@@ -12,11 +12,16 @@
 
 #include "../../Includes/alex.h"
 
-void	ft_echo(char **arr)
+void	ft_echo(char **arr, t_parse *parsed)
 {
-	bool nl;
+	bool	nl;
 
 	nl = true;
+	if (parsed->redir_out->type)
+	{
+		ft_red_out(parsed);
+		return ;
+	}
 	if (!*arr)
 		*arr = NULL;
 	else if (!ft_strncmp(arr[0], "-n", 3))
@@ -34,14 +39,18 @@ void	ft_echo(char **arr)
 	if (nl)
 		ft_putchar_fd('\n', 1);
 }
+
 void	ft_pwd(void)
 {
 	char	*temp;
 
 	temp = getcwd(NULL, 0);
+	if (!temp)
+		ft_error("pwd");
 	printf("%s\n", temp);
 	free (temp);
 }
+
 void	ft_env(t_gen *gen)
 {
 	t_env	*temp;
@@ -60,21 +69,25 @@ void	ft_cd(t_gen *gen)
 	char	*old_p;
 	char	*new_p;
 	char	*path;
-	
+
 	old_p = getcwd(NULL, 0);
+	if (!old_p)
+		ft_error("no old pwd");
 	path = ft_strjoin_three(old_p, "/", gen->cmd_args[1]);
 	if (!path || !*path)
-		path = ft_get_env(gen->env, "HOME"); // might want to set home to home of minishell project instead of home  of user
+		path = ft_get_env(gen->env, "HOME");
 	if (chdir(path) == -1)
 		perror("cd");
 	new_p = getcwd(NULL, 0);
+	if (!new_p)
+		ft_error("cd");
 	ft_cd_update_env(gen, old_p, new_p);
 	free (old_p);
 	free (new_p);
 	free (path);
 }
 
-void	ft_exit(t_parse *parsed) // check if first and last cmd per prompt -> no forky etc
+void	ft_exit(t_parse *parsed)
 {
 	int	status;
 
