@@ -38,7 +38,9 @@ SRC			=		main.c\
 					Src/Heredoc/signal_utils.c\
 					Src/Execution/aux.c\
 					Src/Execution/exe.c\
+					Src/Execution/utils.c\
 					Src/Execution/error.c\
+					Src/Execution/redirect.c\
 					Src/Builtins/builtins.c\
 					Src/Builtins/builtins_util.c\
 					Src/Builtins/builtins_unset.c\
@@ -56,7 +58,7 @@ DR_LIBFT	=		Libft/
 LIBFT		=		Libft/libft.a
 
 CFLAGS		=		-Wall -Wextra -Werror -g
-# CFLAGS		+=		-g -fsanitize=address
+CFLAGS		+=		-g -fsanitize=address
 
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)

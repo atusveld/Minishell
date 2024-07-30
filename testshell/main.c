@@ -34,7 +34,7 @@ int	main(int argv, char **argc, char **envp)
 		input->input = ft_strtrim(input->input, "\n\t\f\v ");
 		if (ft_strlen(input->input) == 0)
 			continue ;
-		add_history(input->input); // nao dar add a input vazio, falta fazer free
+		add_history(input->input);
 		token = ft_token(input->input);
 		asign_token(token);
 		if (lexer(token) == 1)
@@ -42,6 +42,6 @@ int	main(int argv, char **argc, char **envp)
 		parsed = parse(token, gen.env);
 		ft_exe(parsed, &gen);
 	}
-	ft_free_env(&gen.env);
+	// ft_free_gen(&gen);
 	return (0);
 }

@@ -17,7 +17,7 @@ t_env	*ft_build_env(char **envp) //setup new t_env out of main envp
 	t_env	*new;
 
 	new = NULL;
-	while(*envp)
+	while (*envp)
 	{
 		ft_env_add_front(&new, ft_new_envtry(*envp));
 		envp++;

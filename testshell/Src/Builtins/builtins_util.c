@@ -15,7 +15,12 @@
 int	ft_if_builtin(t_gen *gen, t_parse *parsed)
 {
 	if (!ft_strncmp(gen->cmd_args[0], "echo", 5))
-		return (ft_echo(gen->cmd_args + 1), 0);
+	{
+		if (!ft_strncmp(parsed->argv[1], "$?", 5))
+			return (-1);
+		else
+			return (ft_echo((gen->cmd_args + 1), parsed), 0);
+	}
 	if (!ft_strncmp(gen->cmd_args[0], "pwd", 4))
 		return (ft_pwd(), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "env", 4))
