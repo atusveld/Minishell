@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/30 15:20:47 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/30 16:38:50 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*find_env_val(t_env *tmp_env, char *str, int i)
 {
 	while (tmp_env)
 	{
+		// printf("str + 1 = %s, i = %i\n", str + 1, i);
 		if (!ft_strncmp(str + 1, tmp_env->key, i))
 			return (tmp_env->val);
 		tmp_env = tmp_env->next;
@@ -45,14 +46,24 @@ char	*expandable(char *def, t_env *tmp_env)
 {
 	char *str;
 	char *val;
+	char tmp;
 	int	j;
 	int	i;
 
-	i = 1;
+	// printf("def = %s\n", def);
 	str = ft_strchr(def, '$');
-	while (str[i] != '\0' && str[i] != ' ' && ft_isalnum(str[i]))
+	if (!str)
+		return (def);
+	i = 1;
+	while (str[i] != '\0' && ft_isalnum(str[i]))
+	{
+		// printf("str[i] = %c\n", str[i]);
 		i++;
+	}
+	tmp = str[i];
+	str[i] = '\0';
 	val = find_env_val(tmp_env, str, i);
+	str[i] = tmp;
 	j = ft_strlen(def) + ft_strlen(val) - i;
 	str = expand_str(def, val, i, j);
 	return(str);

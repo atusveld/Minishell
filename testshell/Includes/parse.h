@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:16:56 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/25 12:13:00 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/31 18:39:49 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef	struct s_env
 	char				*key;
 	char				*val;
 }	t_env;
+
+typedef struct s_exp
+{
+	int		i;
+	bool	in_quotes;
+	char	*tmp_str;
+	char	*tmp_exp;
+}	t_exp;
 
 // Main Parse Function
 t_parse	*parse(t_token *token, t_env *env);

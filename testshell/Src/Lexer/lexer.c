@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/26 17:39:29 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/09 12:37:09 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/31 12:53:32 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static int	syntax_checker(t_token	*temp)
 
 int	lexer(t_token	*token)
 {
-	if (syntax_checker(token) == 1)
-		return (1);
+	while (token)
+	{
+		if (syntax_checker(token) == 1)
+			return (1);
+		token = token->next;
+	}
 	return (0);
 }
