@@ -16,15 +16,12 @@ int	ft_if_builtin(t_gen *gen, t_parse *parsed)
 {
 	if ((ft_strncmp(gen->cmd_args[0], "echo", 5)) == 0)
 	{
+		// if (ft_strncmp(gen->cmd_args[1], "$?", 3) == 0)
+		// 		return (ft_e_code(gen), 0);
 		if (parsed->redir_in)
 			return (ft_red_in(parsed, gen), 0);
 		if (parsed->redir_out)
 			return (ft_red_out(parsed, gen), 0);
-		if (parsed->argv[1])
-		{
-			if (ft_strncmp(parsed->argv[1], "$?", 5) == 0)
-				return (ft_e_code(gen), 0);
-		}
 		else
 			return (ft_echo(gen), 0);
 	}

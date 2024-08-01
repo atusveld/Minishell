@@ -27,14 +27,6 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 		gen->e_code = ft_exe_single(gen, gen->env);
 	else
 		gen->e_code = ft_exe_multi(gen, parsed, -1, 0);
-	// if (parsed->argv[1])
-	// {
-	// 	if (ft_strncmp(parsed->argv[1], "$?", 5) == 0)
-	// 	{
-	// 		ft_e_code(gen);
-	// 		return ;
-	// 	}
-	// }
 }
 
 int	ft_exe_single(t_gen *gen, t_env *env)
@@ -99,6 +91,8 @@ int	ft_exe_multi(t_gen *gen, t_parse *parsed, int status, int i)
 }
 void	ft_e_code(t_gen *gen)
 {
+	if (ft_isdigit(gen->e_code) != 1)
+		ft_error("e_code not numba", gen);
 	ft_putnbr_fd(gen->e_code, 1);
 	write(1, "\n", 1);
 	return ;
