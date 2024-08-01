@@ -12,19 +12,14 @@
 
 #include "../../Includes/alex.h"
 
-void	ft_echo(char **arr, t_parse *parsed)
+void	ft_echo(t_gen *gen)
 {
+	char	**arr;
 	bool	nl;
 
 	nl = true;
-	if (parsed->redir_out->type)
-	{
-		ft_red_out(parsed);
-		return ;
-	}
-	if (!*arr)
-		*arr = NULL;
-	else if (!ft_strncmp(arr[0], "-n", 3))
+	arr = (gen->cmd_args + 1);
+	if (!ft_strncmp(arr[0], "-n", 3))
 	{
 		nl = false;
 		arr++;
@@ -40,13 +35,13 @@ void	ft_echo(char **arr, t_parse *parsed)
 		ft_putchar_fd('\n', 1);
 }
 
-void	ft_pwd(void)
+void	ft_pwd(t_gen *gen)
 {
 	char	*temp;
 
 	temp = getcwd(NULL, 0);
 	if (!temp)
-		ft_error("pwd");
+		ft_error("pwd", gen);
 	printf("%s\n", temp);
 	free (temp);
 }
@@ -56,6 +51,8 @@ void	ft_env(t_gen *gen)
 	t_env	*temp;
 
 	temp = gen->env;
+	if (!temp)
+		ft_error("ft_env", gen);
 	while (temp)
 	{
 		if (temp->val && temp->key)
@@ -72,7 +69,7 @@ void	ft_cd(t_gen *gen)
 
 	old_p = getcwd(NULL, 0);
 	if (!old_p)
-		ft_error("no old pwd");
+		ft_error("no old pwd", gen);
 	path = ft_strjoin_three(old_p, "/", gen->cmd_args[1]);
 	if (!path || !*path)
 		path = ft_get_env(gen->env, "HOME");
@@ -80,7 +77,7 @@ void	ft_cd(t_gen *gen)
 		perror("cd");
 	new_p = getcwd(NULL, 0);
 	if (!new_p)
-		ft_error("cd");
+		ft_error("cd", gen);
 	ft_cd_update_env(gen, old_p, new_p);
 	free (old_p);
 	free (new_p);

@@ -12,8 +12,8 @@
 
 #include "../../Includes/alex.h"
 
-void	ft_error(char *str) // expand for exit codes
+void	ft_error(char *str, t_gen *gen) // expand for exit codes
 {
 	perror(str);
-	exit (1);
+	exit (gen->e_code);
 }

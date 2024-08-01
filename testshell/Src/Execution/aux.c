@@ -19,10 +19,10 @@ char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 
 	temp = ft_strjoin(s1, s2);
 	if (!temp)
-		ft_error("strj3");
+		return (NULL);
 	str = ft_strjoin(temp, s3);
 	if (!str)
-		ft_error("strj3");
+		return (NULL);
 	free (temp);
 	return (str);
 }
@@ -65,7 +65,7 @@ t_pipe	*ft_init_pipes(void)
 
 	new_pipe = (t_pipe *)malloc(sizeof(t_pipe));
 	if (!new_pipe)
-		ft_error("init pipes");
+		return (NULL);
 	pipe(new_pipe->tube);
 	new_pipe->in_fd = STDIN_FILENO;
 	return (new_pipe);

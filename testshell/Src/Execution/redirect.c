@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-void	ft_red_out(t_parse *parsed)
+void	ft_red_out(t_parse *parsed, t_gen *gen)
 {
 	int	fd;
 	
@@ -24,7 +24,7 @@ void	ft_red_out(t_parse *parsed)
 		{
 			fd = ft_create_file(parsed);
 			if (fd == -1)
-				ft_error("fd, append file");
+				ft_error("fd, append file", gen);
 			parsed->redir_out = parsed->redir_out->next;
 		}
 		ft_write_to_file(fd, parsed);
@@ -33,17 +33,19 @@ void	ft_red_out(t_parse *parsed)
 	{
 		fd = ft_create_file(parsed);
 		if (fd == -1)
-			ft_error("fd, append file");
+			ft_error("fd, append file", gen);
 		ft_write_to_file(fd, parsed);
 	}
 }
-void	ft_red_in(t_parse *parsed)
+void	ft_red_in(t_parse *parsed, t_gen *gen)
 {
 	char	*filename;
 	int		fd;
 
 	filename = parsed->redir_in->filename;
 	fd = open(filename, O_RDONLY);
+	if (!fd)
+		ft_error("red_in, fd", gen);
 	if (dup2(fd, STDIN_FILENO) < 0)
 		return ;
 	if (close(fd))
@@ -57,8 +59,8 @@ int	ft_create_file(t_parse *parsed)
 
 	filename = parsed->redir_out->filename;
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	if (fd == -1)
-		ft_error("fd, create file");
+	// if (fd == -1)
+	// 	ft_error("fd, create file", gen);
 	return (fd);
 }
 
@@ -69,8 +71,8 @@ void	ft_write_to_file(int fd, t_parse *parsed)
 
 	i = 0;
 	text = parsed->argv[1];
-	if (fd == -1)
-		ft_error("fd, write to file");
+	// if (fd == -1)
+	// 	ft_error("fd, write to file", gen);
 	while (text[i])
 	{
 		write(fd, &text[i], 1);

@@ -16,53 +16,53 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 {
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
+	gen->e_code = 0;
 	if (parsed->redir_in)
-		ft_red_in(parsed);
+		ft_red_in(parsed, gen);
+	if (parsed->redir_out)
+		ft_red_out(parsed, gen);
 	if (ft_if_builtin(gen, parsed) == 0)
 		return ;
 	if (!parsed->next)
 		gen->e_code = ft_exe_single(gen, gen->env);
 	else
 		gen->e_code = ft_exe_multi(gen, parsed, -1, 0);
-	if (parsed->argv[1])
-	{
-		if (ft_strncmp(parsed->argv[1], "$?", 5) == 0)
-		{
-			ft_e_code(gen);
-			return ;
-		}
-	}
+	// if (parsed->argv[1])
+	// {
+	// 	if (ft_strncmp(parsed->argv[1], "$?", 5) == 0)
+	// 	{
+	// 		ft_e_code(gen);
+	// 		return ;
+	// 	}
+	// }
 }
 
 int	ft_exe_single(t_gen *gen, t_env *env)
 {
-	pid_t	f_id;
+	pid_t	pid;
 	char 	**arr;
 	char	*path;
 	int		status;
 
-	f_id = fork();
 	status = -1;
 	path = get_cmd_path(gen);
 	arr = ft_env_to_array(env);
-	if (f_id < 0)
-		// ft_error("fork");
-		exit (gen->e_code);
-	if (f_id == 0)
+	pid = fork();
+	if (pid < 0)
+		ft_error("fork single", gen);
+	if (pid == 0)
 	{
-		execve(path, gen->cmd_args, arr);
-		exit (gen->e_code);
-		// ft_error("single cmd");
+		if ((execve(path, gen->cmd_args, arr)) < 0)
+			ft_error("single cmd", gen);
 	}
 	else
 	{
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 		{
+			waitpid(pid, &status, WUNTRACED);
 			gen->e_code = ((status >> 8) & 0xFF);
-			waitpid(f_id, &status, WUNTRACED);
 		}
 	}
-	ft_free_arr(arr);
 	return (gen->e_code);
 }
 
@@ -83,8 +83,10 @@ int	ft_exe_multi(t_gen *gen, t_parse *parsed, int status, int i)
 		{
 			close(pipe->tube[1]);
 			if (waitpid(pid, &status, WUNTRACED) == -1)
-				ft_error("waitpid multi");
-			gen->e_code = ((status >> 8) & 0xFF);
+			{
+				gen->e_code = ((status >> 8) & 0xFF);
+				ft_error("wait multi", gen);
+			}
 		}
 		if (parsed->next)
 		{
@@ -99,5 +101,6 @@ void	ft_e_code(t_gen *gen)
 {
 	ft_putnbr_fd(gen->e_code, 1);
 	write(1, "\n", 1);
+	return ;
 }
 //-> ((status >> 8) 7 0xFF) return value calc <-

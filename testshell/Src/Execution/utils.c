@@ -18,7 +18,7 @@ int	ft_fork(void)
 
 	pid = fork();
 	if (pid < 0)
-		ft_error("pid");
+		return (-1);
 	return (pid);
 }
 void	ft_fml(t_gen *gen, t_pipe *pipe, int i, int cmd_c)
@@ -40,7 +40,7 @@ void	ft_exe_first(t_gen *gen, t_pipe *pipe)
 	close(pipe->tube[0]);
 	dup2(pipe->tube[1], STDOUT_FILENO);
 	if ((execve(path, gen->cmd_args, env_arr)) < 0)
-		ft_error("multi cmd1");
+		ft_error("multi cmd1", gen);
 	ft_free_arr(env_arr);
 }
 
@@ -55,7 +55,7 @@ void	ft_exe_mid(t_gen *gen, t_pipe *pipe)
 	dup2(pipe->tube[1], STDOUT_FILENO);
 	dup2(pipe->in_fd, STDIN_FILENO);
 	if ((execve(path, gen->cmd_args, env_arr)) < 0)
-		ft_error("multi cmd2");
+		ft_error("multi cmd2", gen);
 	ft_free_arr(env_arr);
 }
 
@@ -70,6 +70,6 @@ void	ft_exe_last(t_gen *gen, t_pipe *pipe)
 	dup2(pipe->tube[0], STDIN_FILENO);
 	dup2(pipe->in_fd, STDIN_FILENO);
 	if ((execve(path, gen->cmd_args, env_arr)) < 0)
-		ft_error("multi cmd3");
+		ft_error("multi cmd3", gen);
 	ft_free_arr(env_arr);
 }

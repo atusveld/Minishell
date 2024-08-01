@@ -65,18 +65,18 @@ void	ft_del_env(t_env **env, t_env *temp);
 char	*get_cmd_path(t_gen *gen);
 //==========[ BUILTINS ]==========//
 int		ft_if_builtin(t_gen *gen, t_parse *parsed);
-void	ft_echo(char **arr, t_parse *parsed);
-void	ft_pwd(void);
+void	ft_echo(t_gen *gen);
+void	ft_pwd(t_gen *gen);
 void	ft_cd(t_gen *gen);
 void	ft_cd_update_env(t_gen *gen, char *old_p, char *new_p);
 void	ft_env(t_gen *gen);
 int		ft_unset(t_env *env, char **argv);
 void	ft_unset_env(t_env **env, char *key);
 int		ft_export_print(char **env);
-int		ft_export(t_env **env, char **argv);
+int		ft_export(t_gen *gen);
 //==========[ REDIRECT ]==========//
-void	ft_red_out(t_parse *parsed);
-void	ft_red_in(t_parse *parsed);
+void	ft_red_out(t_parse *parsed, t_gen *gen);
+void	ft_red_in(t_parse *parsed, t_gen *gen);
 int		ft_create_file(t_parse *parsed);
 void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
@@ -84,7 +84,7 @@ void	ft_append(t_parse *parsed);
 void	ft_init(t_parse *parsed, t_gen *gen);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
-void	ft_error(char *str);
+void	ft_error(char *str, t_gen *gen);
 char	**get_paths(t_gen *gen);
 void	ft_free_gen(t_gen *gen);
 //==========[  ]==========//
