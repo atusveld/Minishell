@@ -28,6 +28,7 @@ typedef struct s_gen
 	char	**env_paths;
 	char	**cmd_args;
 	char	*cmd_path;
+	// char	*pwd;
 	int		e_code;
 	t_env	*env;
 }	t_gen;

@@ -17,6 +17,7 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
 	gen->e_code = 0;
+	// gen->pwd = getcwd(NULL, 0);
 	if (parsed->redir_in)
 		ft_red_in(parsed, gen);
 	if (parsed->redir_out)
@@ -92,7 +93,7 @@ int	ft_exe_multi(t_gen *gen, t_parse *parsed, int status, int i)
 void	ft_e_code(t_gen *gen)
 {
 	if (ft_isdigit(gen->e_code) != 1)
-		ft_error("e_code not numba", gen);
+		ft_error("e_code not digit", gen);
 	ft_putnbr_fd(gen->e_code, 1);
 	write(1, "\n", 1);
 	return ;

@@ -78,7 +78,7 @@ void	ft_write_to_file(int fd, t_parse *parsed)
 		write(fd, &text[i], 1);
 		i++;
 	}
-	write(fd, "\0", 1);
+	write(fd, "\0", 1);	//<-?
 	write(fd, "\n", 1);
 	close(fd);
 }

@@ -73,8 +73,7 @@ t_pipe	*ft_init_pipes(void)
 
 void	ft_free_gen(t_gen *gen)
 {
-	if (&gen->env)
-		ft_free_env(&gen->env);
+	ft_free_env(&gen->env);
 	if (gen->cmd_args)
 		ft_free_arr(gen->cmd_args);
 	if (gen->env_paths)
