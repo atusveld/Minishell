@@ -17,7 +17,7 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 	gen->cmd_args = parsed->argv;
 	gen->env_paths = get_paths(gen);
 	gen->e_code = 0;
-	// gen->pwd = getcwd(NULL, 0);
+	gen->owd = getcwd(NULL, 0);
 	if (parsed->redir_in)
 		ft_red_in(parsed, gen);
 	if (parsed->redir_out)
@@ -28,6 +28,7 @@ void	ft_exe(t_parse *parsed, t_gen *gen)
 		gen->e_code = ft_exe_single(gen, gen->env);
 	else
 		gen->e_code = ft_exe_multi(gen, parsed, -1, 0);
+	// return ;
 }
 
 int	ft_exe_single(t_gen *gen, t_env *env)

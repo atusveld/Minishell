@@ -46,6 +46,8 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 		new->val = ft_strdup(val);
 		new->str = ft_strjoin_three(key, "=", val);
 	}
+	// ft_free_env(new);
+	// return ;
 }
 
 void	ft_env_add_front(t_env **env, t_env *new)
@@ -53,6 +55,7 @@ void	ft_env_add_front(t_env **env, t_env *new)
 	if (*env && new)
 		new->next = *env;
 	*env = new;
+	return ;
 }
 
 void	ft_del_env(t_env **env, t_env *temp)
@@ -70,4 +73,5 @@ void	ft_del_env(t_env **env, t_env *temp)
 		ele = ele->next;
 	ele->next = temp->next;
 	ft_free_env(&temp);
+	return ;
 }

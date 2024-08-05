@@ -67,7 +67,7 @@ void	ft_cd(t_gen *gen)
 	char	*new_p;
 	char	*path;
 
-	old_p = getcwd(NULL, 0);
+	old_p = gen->owd;
 	if (!old_p)
 		ft_error("no old pwd", gen);
 	path = ft_strjoin_three(old_p, "/", gen->cmd_args[1]);

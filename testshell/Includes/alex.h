@@ -28,7 +28,7 @@ typedef struct s_gen
 	char	**env_paths;
 	char	**cmd_args;
 	char	*cmd_path;
-	// char	*pwd;
+	char	*owd;
 	int		e_code;
 	t_env	*env;
 }	t_gen;
@@ -38,8 +38,47 @@ typedef struct s_pipe
 	int	tube[2];
 	int	in_fd;
 }	t_pipe;
-
-//==========[ EXECUTION ]==========//
+//==========[ PARSING ]==========//
+// t_parse	*parse(t_token *token, t_env *env);
+// void	ft_add_redir(t_red **lst, t_red *new);
+// void	ft_add_parse(t_parse **lst, t_parse *new);
+// void	ft_redir_clean(t_red **lst);
+// void	ft_redir_del(t_red *lst);
+// t_red	*ft_redir_last(t_red *lst);
+// t_parse	*ft_parse_last(t_parse *lst);
+// t_red	*ft_redir_new(char *filename, t_type type);
+//==========[ LEXING ]==========//
+// int		lexer(t_token	*token);
+// void	lexer_error(int error, char *word);
+// void	valid_operator(t_token *temp);
+// void	redirect_check(t_token *temp);
+// bool	check_double(t_token *temp);
+// bool	exit_cond_valid(t_token *temp);
+// bool	single_char_check(t_token *temp);
+//==========[ TOKENIZE ]==========//
+// t_token	*ft_token(char *s);
+// int		asign_token(t_token *token);
+// int		ft_lstsize(t_token *lst);
+// void	ft_lstprint(t_token *token);
+// void	ft_lstclear_mod(t_token **lst);
+// void	ft_lstdelone_mod(t_token *lst);
+// void	ft_lstadd_back(t_token **lst, t_token *new);
+// void	ft_lstadd_front(t_token **lst, t_token *new);
+// t_token	*ft_lstlast(t_token *lst);
+// t_token	*ft_lstnew(void *content);
+//==========[ HEREDOC ]==========//
+// void	found_here(t_parse *data, t_env *env, char *delimiter);
+//==========[ EXPANSIONS ]==========//
+// char	*expandable(char *def, t_env *tmp_env);
+// void	token_expand(t_token *token, t_env *tmp_env);
+// char	*remove_quote(char *delimiter, char quote);
+// char	*remove_quote_unexp(char *delimiter);
+//==========[ SIGNALS ]==========//
+// void	set_signals(void);
+// void	unset_signals(void);
+// void	ignore_signal(void);
+// void	signal_ctrl_c(int sig);
+// ==========[ EXECUTION ]==========//
 t_pipe	*ft_init_pipes(void);
 void	ft_exe(t_parse *parsed, t_gen *gen);
 int		ft_fork(void);
@@ -75,14 +114,14 @@ int		ft_unset(t_env *env, char **argv);
 void	ft_unset_env(t_env **env, char *key);
 int		ft_export_print(char **env);
 int		ft_export(t_gen *gen);
-//==========[ REDIRECT ]==========//
+//==========[ REDIRECTION ]==========//
 void	ft_red_out(t_parse *parsed, t_gen *gen);
 void	ft_red_in(t_parse *parsed, t_gen *gen);
 int		ft_create_file(t_parse *parsed);
 void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
 //==========[ AUX ]==========//
-void	ft_init(t_parse *parsed, t_gen *gen);
+// void	ft_init(t_parse *parsed, t_gen *gen);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
 void	ft_error(char *str, t_gen *gen);
