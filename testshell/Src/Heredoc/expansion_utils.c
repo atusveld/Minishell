@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/06 11:01:05 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 11:29:53 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 17:21:46 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*end_expand(char *token, t_exp *exp_data)
 	if (ft_strlen(token) == '\0')
 	{
 		token = ft_strdup(exp_data->tmp_str);
+		printf("em end exp token: %s\n", token);
 		free (exp_data->tmp_str);
 		if (exp_data->tmp_exp)
 			free (exp_data->tmp_exp);
@@ -32,16 +33,20 @@ t_exp	*exp_init(t_exp *exp_data)
 	exp_data->tmp_exp = ft_strdup("");
 	return (exp_data);
 }
+
 void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env, int action)
 {
 	if (action == 1)
 	{
 		exp_data->tmp_exp = ft_substr(token->cont, 0, exp_data->i);
+		printf("tmp_exp: %s\n", exp_data->tmp_exp);
 		ft_memmove (token->cont, token->cont + exp_data->i, \
 		ft_strlen(token->cont));
 		exp_data->tmp_exp = expandable(exp_data->tmp_exp, tmp_env);
+		printf("tmp_exp: %s\n", exp_data->tmp_exp);
 		exp_data->tmp_str = ft_strjoin(exp_data->tmp_str, \
 		exp_data->tmp_exp);
+		printf("tmp_str: %s\n", exp_data->tmp_str);
 	}
 	else
 	{
