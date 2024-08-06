@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/26 17:40:51 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/01 16:26:18 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 11:13:24 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	single_char_check(t_token *temp)
 	{
 		if (!temp->next && (temp->type >= PIPEPIPE && temp->type <= HEREDOC))
 		{
-			lexer_error(2, temp->content);
+			lexer_error(2, temp->cont);
 			return (false);
 		}
 		temp = temp->next;
@@ -56,10 +56,10 @@ bool	check_double(t_token *temp)
 {
 	while (temp)
 	{
-		if ((temp->content[0] == '&' && temp->content[1] == '&') || \
-		(temp->content[0] == '$' && temp->content[1] == '$'))
+		if ((temp->cont[0] == '&' && temp->cont[1] == '&') || \
+		(temp->cont[0] == '$' && temp->cont[1] == '$'))
 		{
-			lexer_error(2, temp->content);
+			lexer_error(2, temp->cont);
 			return (false);
 		}
 		temp = temp->next;
@@ -71,9 +71,9 @@ bool	check_double(t_token *temp)
 // {
 // 	while (temp)
 // 	{
-// 		if (ft_strchr(temp->content, '('))
+// 		if (ft_strchr(head->cont, '('))
 // 		{
-// 			if (!ft_strchr(temp->content, ')') && temp->next)
+// 			if (!ft_strchr(head->cont, ')') && temp->next)
 // 				temp = temp->next;
 // 			else
 // 			{

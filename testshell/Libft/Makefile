@@ -6,7 +6,7 @@
 #    By: jovieira <jovieira@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/17 12:29:25 by jovieira      #+#    #+#                  #
-#    Updated: 2024/02/22 15:13:29 by jovieira      ########   odam.nl          #
+#    Updated: 2024/07/31 19:06:05 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRC= ft_atoi.c\
 	 ft_strtrim.c\
 	 ft_split.c\
 	 ft_strlen_def.c\
+	 ft_skip_func.c\
 	 
 # BONUS_SRC=	ft_lstnew_bonus.c\
 # 			ft_lstadd_front_bonus.c\

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 19:30:10 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/02/07 15:24:09 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 11:09:47 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*ft_lstnew(void *content)
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-	head->content = content;
+	head->cont = content;
 	head->next = NULL;
 	return (head);
 }

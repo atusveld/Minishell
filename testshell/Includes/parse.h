@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:16:56 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/25 12:13:00 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 11:30:00 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ typedef	struct s_env
 	char				*val;
 }	t_env;
 
+typedef struct s_exp
+{
+	int		i;
+	bool	in_quotes;
+	char	*tmp_str;
+	char	*tmp_exp;
+}	t_exp;
+
 // Main Parse Function
 t_parse	*parse(t_token *token, t_env *env);
 
@@ -52,6 +60,9 @@ char	*expandable(char *def, t_env *tmp_env);
 void	token_expand(t_token *token, t_env *tmp_env);
 char	*remove_quote(char *delimiter, char quote);
 char	*remove_quote_unexp(char *delimiter);
+char	*end_expand(char *token, t_exp *exp_data);
+t_exp	*exp_init(t_exp *exp_data);
+void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env, int action);
 
 // Signal handler
 

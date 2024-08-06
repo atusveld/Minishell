@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jovieira <jovieira@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 19:30:10 by jovieira          #+#    #+#             */
-/*   Updated: 2022/10/31 22:32:48 by jovieira         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_lstnew_bonus.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jovieira <jovieira@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/10/27 19:30:10 by jovieira      #+#    #+#                 */
+/*   Updated: 2024/08/06 11:09:47 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstnew(void *content)
 	head = malloc(sizeof(t_list));
 	if (head == NULL)
 		return (NULL);
-	head->content = content;
+	head->cont = content;
 	head->next = NULL;
 	return (head);
 }

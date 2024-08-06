@@ -6,21 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/22 11:47:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/09 12:46:02 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 11:12:49 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/lexer.h"
-static size_t	quote_skip(char *token, size_t i)
-{
-	char	c;
-
-	c = *(token + i);
-	i++;
-	while (*(token + i) != c && *(token + i) != '\0')
-		i++;
-	return (i);
-}
 
 static bool	check_closed_quotes(char *token)
 {
@@ -33,7 +23,7 @@ static bool	check_closed_quotes(char *token)
 		if (*(token + i) == '\'' || *(token + i) == '"')
 		{
 			c = ft_substr(token, i, 1);
-			i = quote_skip(token, i);
+			i = skip_quotes(token, i);
 		}
 		if (*(token + i) == '\0')
 		{
@@ -49,6 +39,6 @@ static bool	check_closed_quotes(char *token)
 bool	exit_cond_valid(t_token *temp)
 {
 	if (temp && temp->type == DEFAULT)
-		return (check_closed_quotes(temp->content));
+		return (check_closed_quotes(temp->cont));
 	return (true);
 }
