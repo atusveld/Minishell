@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/18 13:20:22 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 11:12:20 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 {
 	char *filename;
 
-	filename = ft_strdup((*temp)->next->content);
+	filename = ft_strdup((*temp)->next->cont);
 	if ((*temp)->type == IN)
 	{
 		redir_temp = ft_redir_new(filename, (*temp)->type);
@@ -42,14 +42,14 @@ static void	prep_nod_array(t_token **token, t_parse *parse, t_env *env)
 	{
 		while (*token && (*token)->type == DEFAULT)
 		{
-			parse->argv[i++] = ft_strdup((*token)->content);
+			parse->argv[i++] = ft_strdup((*token)->cont);
 			*token = (*token)->next;
 		}
 		if (*token && ((*token)->type >= IN && (*token)->type <= APPEND))
 			add_redir(token, parse, redir_temp);
-		if (*token && (*token)->type == HEREDOC && (*token)->next->content)
+		if (*token && (*token)->type == HEREDOC && (*token)->next->cont)
 		{
-			found_here(parse, env, (*token)->next->content);
+			found_here(parse, env, (*token)->next->cont);
 			(*token) = (*token)->next->next;
 		}
 		if ((*token) && (*token)->type != PIPE)
@@ -79,7 +79,7 @@ t_parse	*parse(t_token *token, t_env *env)
 	while (token)
 	{
 		token_pos = token->next;
-		free(token->content);
+		free(token->cont);
 		free(token);
 		token = token_pos;
 	}

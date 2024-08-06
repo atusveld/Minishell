@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/18 13:22:37 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/31 19:15:30 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,6 @@ int	here_err(pid_t PID)
 		return (1);
 	}
 	return (0);
-}
-
-size_t	skip_quotes(char *line, size_t i)
-{
-	char	c;
-
-	c = *(line + i);
-	i++;
-	while (*(line + i) != c && *(line + i) != '\0')
-		i++;
-	return (i);
 }
 
 char	*remove_quote(char *delimiter, char quote)

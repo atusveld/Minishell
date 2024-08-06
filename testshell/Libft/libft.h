@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:04:25 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/03/26 12:16:27 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/07/31 19:11:48 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
+size_t	skip_char(char *line, char c);
+size_t	skip_quotes(char *line, size_t i);
 
 // typedef struct s_list
 // {
