@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstclear.c                                      :+:    :+:            */
+/*   ft_redir_clear.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/30 15:30:48 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/08 13:13:56 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 14:22:23 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/parse.h"
+#include "main.h"
 
 void	ft_redir_clean(t_red **lst)
 {

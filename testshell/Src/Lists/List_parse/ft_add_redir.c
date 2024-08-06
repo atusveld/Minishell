@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 21:34:46 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/22 12:02:37 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 14:21:59 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/parse.h"
+#include "main.h"
 
 void	ft_add_redir(t_red **lst, t_red *new)
 {

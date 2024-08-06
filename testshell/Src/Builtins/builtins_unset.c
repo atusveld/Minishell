@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_unset.c                                    :+:    :+:           */
+/*   builtins_unset.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
+/*   Updated: 2024/08/06 16:34:48 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "main.h"
 
 static int	ft_unset_error(char *arg, char *msg)
 {
@@ -33,6 +33,18 @@ static bool	ft_check_var(char *str)
 	return (false);
 }
 
+void	ft_unset_env(t_env **env, char *key)
+{
+	t_env	*keyval;
+
+	if (!key)
+		return ;
+	keyval = ft_find_env(*env, key);
+	if (!keyval)
+		return ;
+	ft_del_env(env, keyval);
+}
+
 int	ft_unset(t_env *env, char **argv)
 {
 	int	i;
@@ -47,15 +59,4 @@ int	ft_unset(t_env *env, char **argv)
 		i++;
 	}
 	return (1);
-}
-void	ft_unset_env(t_env **env, char *key)
-{
-	t_env	*keyval;
-
-	if (!key)
-		return ;
-	keyval = ft_find_env(*env, key);
-	if (!keyval)
-		return ;
-	ft_del_env(env, keyval);
 }

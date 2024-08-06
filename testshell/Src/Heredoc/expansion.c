@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/24 12:28:07 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 11:36:30 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 17:06:52 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,15 @@ void	token_expand(t_token *token, t_env *tmp_env)
 	while (token)
 	{
 		exp_data->in_quotes = false;
+		printf("em expand token->cont: %s\n", token->cont);
 		if (single_quote(token, exp_data))
 			continue ;
 		if (double_quote(token, exp_data, tmp_env))
 			continue ;
 		if (dollar_expand(token, exp_data, tmp_env))
 			continue ;
-		token->cont = end_expand(token->cont, exp_data);
+		token->cont = end_expand(token, exp_data);
+		token->cont = remove_quote_unexp(token->cont);
 		token = token->next;
 	}
 }

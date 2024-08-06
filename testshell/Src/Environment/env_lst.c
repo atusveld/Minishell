@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "../../Includes/alex.h"
+ #include "../../Includes/main.h"
 
  t_env	*ft_new_envtry(char *envp)
 {

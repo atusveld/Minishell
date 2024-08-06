@@ -6,11 +6,11 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/05/21 14:10:51 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 16:29:50 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
 void	ft_echo(t_gen *gen)
 {
@@ -19,6 +19,11 @@ void	ft_echo(t_gen *gen)
 
 	nl = true;
 	arr = (gen->cmd_args + 1);
+	if (!*arr)
+	{
+		ft_putchar_fd('\n', 1);
+		return ;
+	}
 	if (!ft_strncmp(arr[0], "-n", 3))
 	{
 		nl = false;

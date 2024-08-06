@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:22 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/05/20 17:15:18 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 14:23:29 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/parse.h"
+#include "main.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>

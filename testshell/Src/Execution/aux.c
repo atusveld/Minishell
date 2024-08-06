@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
 char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 {

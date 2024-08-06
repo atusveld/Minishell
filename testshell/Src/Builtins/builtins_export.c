@@ -6,11 +6,11 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/05/20 11:13:11 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 16:35:03 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "main.h"
 
 static bool	ft_check_var(char *str)
 {

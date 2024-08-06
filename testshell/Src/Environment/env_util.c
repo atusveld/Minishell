@@ -9,7 +9,7 @@
 /*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
 char	**ft_env_to_array(t_env *env)
 {
