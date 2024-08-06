@@ -39,10 +39,11 @@ void	ft_pwd(t_gen *gen)
 {
 	char	*temp;
 
-	temp = getcwd(NULL, 0);
+	temp = gen->owd;
 	if (!temp)
 		ft_error("pwd", gen);
-	printf("%s\n", temp);
+	else
+		printf("%s\n", temp);
 	free (temp);
 }
 
