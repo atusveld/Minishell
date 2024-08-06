@@ -16,8 +16,6 @@ int	ft_if_builtin(t_gen *gen, t_parse *parsed)
 {
 	if ((ft_strncmp(gen->cmd_args[0], "echo", 5)) == 0)
 	{
-		// if (ft_strncmp(gen->cmd_args[1], "$?", 3) == 0)
-		// 		return (ft_e_code(gen), 0);
 		if (parsed->redir_in)
 			return (ft_red_in(parsed, gen), 0);
 		if (parsed->redir_out)
@@ -34,9 +32,9 @@ int	ft_if_builtin(t_gen *gen, t_parse *parsed)
 	if (!ft_strncmp(gen->cmd_args[0], "exit", 5))
 		return (ft_exit(parsed), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "unset", 6))
-		return (ft_unset(gen->env, gen->cmd_args + 1), 0);
+		return (ft_unset(gen, gen->cmd_args + 1), 0);
 	if (!ft_strncmp(gen->cmd_args[0], "export", 7))
-		return (ft_export(gen), 0);
+		return (ft_export(gen, gen->cmd_args + 1), 0);
 	return (1);
 }
 

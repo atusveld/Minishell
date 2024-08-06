@@ -58,20 +58,20 @@ void	ft_env_add_front(t_env **env, t_env *new)
 	return ;
 }
 
-void	ft_del_env(t_env **env, t_env *temp)
+void	ft_del_env(t_env **env, t_env *val)
 {
-	t_env	*ele;
+	t_env	*temp;
 
-	ele = *env;
-	if (temp == ele)
+	temp = *env;
+	if (val == temp)
 	{
-		*env = temp->next;
-		ft_free_env(&temp);
+		*env = val->next;
+		ft_free_env(&val);
 		return ;
 	}
-	while (ele->next != temp)
-		ele = ele->next;
-	ele->next = temp->next;
-	ft_free_env(&temp);
+	while (temp->next != val)
+		temp = temp->next;
+	temp->next = val->next;
+	ft_free_env(&val);
 	return ;
 }
