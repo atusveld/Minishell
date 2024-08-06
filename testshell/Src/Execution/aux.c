@@ -9,16 +9,20 @@
 /*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
- 
+
 #include "../../Includes/alex.h"
 
 char	*ft_strjoin_three(char *s1, char *s2, char *s3)
- {
+{
 	char	*temp;
 	char	*str;
 
 	temp = ft_strjoin(s1, s2);
+	if (!temp)
+		return (NULL);
 	str = ft_strjoin(temp, s3);
+	if (!str)
+		return (NULL);
 	free (temp);
 	return (str);
 }
@@ -33,15 +37,16 @@ void	*ft_free_arr(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
-			i++;
+		i++;
 	}
 	free(arr);
 	return (NULL);
 }
+
 int	ft_count_cmd(t_parse *parsed)
 {
 	t_parse	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	tmp = parsed;
@@ -54,12 +59,25 @@ int	ft_count_cmd(t_parse *parsed)
 	return (i);
 }
 
-t_pipe	*ft_init_pipes()
+t_pipe	*ft_init_pipes(void)
 {
 	t_pipe	*new_pipe;
 
 	new_pipe = (t_pipe *)malloc(sizeof(t_pipe));
+	if (!new_pipe)
+		return (NULL);
 	pipe(new_pipe->tube);
 	new_pipe->in_fd = STDIN_FILENO;
 	return (new_pipe);
+}
+
+void	ft_free_gen(t_gen *gen)
+{
+	ft_free_env(&gen->env);
+	if (gen->cmd_args)
+		ft_free_arr(gen->cmd_args);
+	if (gen->env_paths)
+		ft_free_arr(gen->env_paths);
+	if (gen->cmd_path)
+		free(gen->cmd_path);
 }

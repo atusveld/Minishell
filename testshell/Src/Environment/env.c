@@ -17,7 +17,7 @@ t_env	*ft_build_env(char **envp) //setup new t_env out of main envp
 	t_env	*new;
 
 	new = NULL;
-	while(*envp)
+	while (*envp)
 	{
 		ft_env_add_front(&new, ft_new_envtry(*envp));
 		envp++;
@@ -58,12 +58,17 @@ void	ft_free_env(t_env **env)
 		ft_free_env_ele(*env);
 		*env = tmp;
 	}
+	return ;
 }
 
 void	ft_free_env_ele(t_env *env)
 {
-	free(env->str);
-	free(env->key);
-	free(env->val);
+	if (env->str)
+		free(env->str);
+	if (env->key)
+		free(env->key);
+	if (env->val)
+		free(env->val);
 	free(env);
+	return ;
 }

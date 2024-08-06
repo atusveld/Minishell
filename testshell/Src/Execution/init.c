@@ -12,17 +12,11 @@
 
 #include "../../Includes/alex.h"
 
-// void	ft_exe(t_parse *parsed, t_gen *gen)
-// {
-// 	char	**n_envp;
-	
+// void	ft_init(t_parse *parsed, t_gen *gen)
+// {	
 // 	gen->cmd_args = parsed->argv;
 // 	gen->env_paths = get_paths(gen);
 // 	gen->cmd_path = get_cmd_path(gen);
-// 	if (!parsed->next)
-// 		ft_exe_single(gen, gen->env);
-// 	else if (ft_if_builtin(gen, parsed) == 0)
-// 		return ;
-// 	else
-// 		ft_exe_multi(gen, parsed);
+// 	gen->e_code = 0;
+// 	gen->owd = getcwd(NULL, 0);
 // }

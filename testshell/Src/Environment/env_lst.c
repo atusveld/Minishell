@@ -12,15 +12,13 @@
 
  #include "../../Includes/alex.h"
 
- t_env	*ft_new_envtry(char *envp) // iknow its genius
+ t_env	*ft_new_envtry(char *envp)
 {
 	t_env	*new;
 	int		i;
 
 	i = 0;
 	new = (t_env *)malloc(sizeof(t_env));
-	if (!new)
-		ft_error("envtry malloc error");
 	new->next = NULL;
 	new->str = NULL;
 	new->key = NULL;
@@ -34,6 +32,8 @@
 	return (new);
 }
 
+
+
 void	ft_add_envtry(t_env *env, char *key, char *val)
 {
 	t_env	*new;
@@ -46,6 +46,8 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 		new->val = ft_strdup(val);
 		new->str = ft_strjoin_three(key, "=", val);
 	}
+	// ft_free_env(new);
+	// return ;
 }
 
 void	ft_env_add_front(t_env **env, t_env *new)
@@ -53,6 +55,7 @@ void	ft_env_add_front(t_env **env, t_env *new)
 	if (*env && new)
 		new->next = *env;
 	*env = new;
+	return ;
 }
 
 void	ft_del_env(t_env **env, t_env *temp)
@@ -70,16 +73,5 @@ void	ft_del_env(t_env **env, t_env *temp)
 		ele = ele->next;
 	ele->next = temp->next;
 	ft_free_env(&temp);
-}
-
-void	ft_unset_env(t_env **env, char *key)
-{
-	t_env	*keyval;
-
-	if (!key)
-		return ;
-	keyval = ft_find_env(*env, key);
-	if (!keyval)
-		return ;
-	ft_del_env(env, keyval);
+	return ;
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_unset.c                                    :+:    :+:            */
+/*   builtins_unset.c                                    :+:    :+:           */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -21,7 +21,8 @@ static int	ft_unset_error(char *arg, char *msg)
 		ft_putchar_fd(*msg, 2);
 	return (1);
 }
-static bool		ft_check_var(char *str)
+
+static bool	ft_check_var(char *str)
 {
 	if (ft_isdigit(*str))
 		return (false);
@@ -46,4 +47,15 @@ int	ft_unset(t_env *env, char **argv)
 		i++;
 	}
 	return (1);
+}
+void	ft_unset_env(t_env **env, char *key)
+{
+	t_env	*keyval;
+
+	if (!key)
+		return ;
+	keyval = ft_find_env(*env, key);
+	if (!keyval)
+		return ;
+	ft_del_env(env, keyval);
 }

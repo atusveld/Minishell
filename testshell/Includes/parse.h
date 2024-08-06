@@ -39,6 +39,7 @@ typedef	struct s_env
 	char				*str;
 	char				*key;
 	char				*val;
+	// int					e_code;
 }	t_env;
 
 typedef struct s_exp

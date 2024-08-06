@@ -12,7 +12,7 @@
 
 #include "../../Includes/alex.h"
 
-static bool		ft_check_var(char *str)
+static bool	ft_check_var(char *str)
 {
 	if (!*str || ft_isdigit(*str))
 		return (false);
@@ -43,24 +43,26 @@ static void	ft_export_add_env(t_env **env, char *str)
 		ft_add_envtry(*env, key, val);
 		free(val);
 	}
-	else
-		ft_error("export, no valid identifier");
+	// else
+	// 	ft_error("export, no valid identifier");
 	free(key);
 }
 
-int	ft_export(t_env **env, char **argv)
+int	ft_export(t_gen *gen)
 {
-	int	i;
+	char	**argv;
+	int		i;
 
 	i = 1;
+	argv = (gen->cmd_args + 1);
 	while (argv[i] && !*argv[i])
 		i++;
 	if (!argv[i])
-		return (ft_export_print(ft_env_to_array(*env)));
+		return (ft_export_print(ft_env_to_array(gen->env)));
 	while (argv[i])
 	{
 		if (*argv[i])
-			ft_export_add_env(env, argv[i]);
+			ft_export_add_env(&gen->env, argv[i]);
 		i++;
 	}
 	return (1);
