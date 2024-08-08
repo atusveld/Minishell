@@ -41,6 +41,7 @@ SRC			=		main.c\
 					Src/Heredoc/signal_utils.c\
 					Src/Execution/aux.c\
 					Src/Execution/exe.c\
+					Src/Execution/init.c\
 					Src/Execution/utils.c\
 					Src/Execution/error.c\
 					Src/Execution/redirect.c\

@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "Includes/main.h"
+#include "Includes/alex.h"
 
 int	main(int argv, char **argc, char **envp)
 {
 	t_data	*input;
 	t_token	*token;
 	t_parse	*parsed;
-	t_gen	gen;
+	t_gen	*gen;
 
 	(void)argv;
 	(void)argc;
@@ -25,7 +26,8 @@ int	main(int argv, char **argc, char **envp)
 	input = malloc(sizeof(t_data));
 	token = ft_calloc(1, sizeof(t_token));
 	token->next = NULL;
-	gen.env = ft_build_env(envp);
+	gen = NULL;
+	gen->env = ft_build_env(envp);
 	while (1)
 	{
 		input->input = readline("Minishell: ");
@@ -39,8 +41,10 @@ int	main(int argv, char **argc, char **envp)
 		asign_token(token);
 		if (lexer(token) == 1)
 			continue ;
-		parsed = parse(token, gen.env);
-		ft_exe(parsed, &gen);
+		parsed = parse(token, gen->env);
+		if (gen == NULL)
+			gen = ft_init(parsed, gen);
+		ft_exe(parsed, gen);
 	}
 	// ft_free_gen(&gen);
 	return (0);

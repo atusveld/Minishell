@@ -122,7 +122,7 @@ int		ft_create_file(t_parse *parsed);
 void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
 //==========[ AUX ]==========//
-// void	ft_init(t_parse *parsed, t_gen *gen);
+t_gen	*ft_init(t_parse *parsed, t_gen *gen);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
 void	ft_error(char *str, t_gen *gen);

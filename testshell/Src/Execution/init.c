@@ -12,11 +12,14 @@
 
 #include "../../Includes/alex.h"
 
-// void	ft_init(t_parse *parsed, t_gen *gen)
-// {	
-// 	gen->cmd_args = parsed->argv;
-// 	gen->env_paths = get_paths(gen);
-// 	gen->cmd_path = get_cmd_path(gen);
-// 	gen->e_code = 0;
-// 	gen->owd = getcwd(NULL, 0);
-// }
+t_gen	*ft_init(t_parse *parsed, t_gen *gen)
+{
+	printf("=[INITTED]=");
+
+	gen->env_paths = get_paths(gen);
+	gen->cmd_args = parsed->argv;
+	gen->cmd_path = get_cmd_path(gen);
+	gen->owd = getcwd(NULL, 0);
+	gen->e_code = 0;
+	return (gen);
+}
