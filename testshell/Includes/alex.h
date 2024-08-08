@@ -38,6 +38,7 @@ typedef struct s_pipe
 	int	tube[2];
 	int	in_fd;
 }	t_pipe;
+
 //==========[ PARSING ]==========//
 // t_parse	*parse(t_token *token, t_env *env);
 // void	ft_add_redir(t_red **lst, t_red *new);
@@ -110,10 +111,10 @@ void	ft_pwd(t_gen *gen);
 void	ft_cd(t_gen *gen);
 void	ft_cd_update_env(t_gen *gen, char *old_p, char *new_p);
 void	ft_env(t_gen *gen);
-int		ft_unset(t_env *env, char **argv);
-void	ft_unset_env(t_env **env, char *key);
+int		ft_unset(t_gen *gen, char **argv);
+void	ft_unset_env(t_gen *gen, char *key);
 int		ft_export_print(char **env);
-int		ft_export(t_gen *gen);
+int		ft_export(t_gen *gen, char **argv);
 //==========[ REDIRECTION ]==========//
 void	ft_red_out(t_parse *parsed, t_gen *gen);
 void	ft_red_in(t_parse *parsed, t_gen *gen);
@@ -121,7 +122,7 @@ int		ft_create_file(t_parse *parsed);
 void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
 //==========[ AUX ]==========//
-// void	ft_init(t_parse *parsed, t_gen *gen);
+t_gen	*ft_init(t_parse *parsed, t_gen *gen);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
 void	ft_error(char *str, t_gen *gen);

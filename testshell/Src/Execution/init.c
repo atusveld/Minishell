@@ -12,6 +12,7 @@
 
 #include "../../Includes/main.h"
 
+<<<<<<< HEAD
 t_main	*init_main(char **envp, t_main *main)
 {
 	main = malloc(sizeof(t_main));
@@ -24,4 +25,16 @@ t_main	*init_main(char **envp, t_main *main)
 	main->gen->env_paths = get_paths(main);
 	main->gen->e_code = 0;
 	return (main);
+=======
+t_gen	*ft_init(t_parse *parsed, t_gen *gen)
+{
+	printf("=[INITTED]=");
+
+	gen->env_paths = get_paths(gen);
+	gen->cmd_args = parsed->argv;
+	gen->cmd_path = get_cmd_path(gen);
+	gen->owd = getcwd(NULL, 0);
+	gen->e_code = 0;
+	return (gen);
+>>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 }

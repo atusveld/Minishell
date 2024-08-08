@@ -48,13 +48,22 @@ static void	ft_export_add_env(t_env **env, char *str)
 	free(key);
 }
 
+<<<<<<< HEAD
 int	ft_export(t_main *main)
+=======
+int	ft_export(t_gen *gen, char **argv)
+>>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 {
-	char	**argv;
-	int		i;
+	int	i;
 
+<<<<<<< HEAD
 	i = 1;
 	argv = (main->gen->cmd_args + 1);
+=======
+	i = 0;
+	if (!argv[i])
+		ft_error("export arg invalid", gen);
+>>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 	while (argv[i] && !*argv[i])
 		i++;
 	if (!argv[i])

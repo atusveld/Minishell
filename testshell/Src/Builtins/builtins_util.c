@@ -16,8 +16,6 @@ int	ft_if_builtin(t_main *main, t_parse *parsed)
 {
 	if ((ft_strncmp(main->gen->cmd_args[0], "echo", 5)) == 0)
 	{
-		// if (ft_strncmp(gen->cmd_args[1], "$?", 3) == 0)
-		// 		return (ft_e_code(gen), 0);
 		if (parsed->redir_in)
 			return (ft_red_in(parsed, main), 0);
 		if (parsed->redir_out)
@@ -33,10 +31,17 @@ int	ft_if_builtin(t_main *main, t_parse *parsed)
 		return (ft_cd(main), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "exit", 5))
 		return (ft_exit(parsed), 0);
+<<<<<<< HEAD
 	if (!ft_strncmp(main->gen->cmd_args[0], "unset", 6))
 		return (ft_unset(main->env, main->gen->cmd_args + 1), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "export", 7))
 		return (ft_export(main), 0);
+=======
+	if (!ft_strncmp(gen->cmd_args[0], "unset", 6))
+		return (ft_unset(gen, gen->cmd_args + 1), 0);
+	if (!ft_strncmp(gen->cmd_args[0], "export", 7))
+		return (ft_export(gen, gen->cmd_args + 1), 0);
+>>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 	return (1);
 }
 

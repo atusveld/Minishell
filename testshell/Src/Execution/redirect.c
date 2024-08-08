@@ -16,8 +16,8 @@ void	ft_red_out(t_parse *parsed, t_main *main)
 {
 	int	fd;
 	
-	// if (ft_strncmp(parsed->redir_out->type, ">>", 2) == 0)
-	// 	ft_append(parsed);
+	if (parsed->redir_out->type == APPEND)
+		ft_append(parsed);
 	if (parsed->redir_out->next)
 	{
 		while (parsed->redir_out)

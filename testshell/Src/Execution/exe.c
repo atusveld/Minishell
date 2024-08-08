@@ -14,9 +14,12 @@
 
 void	ft_exe(t_parse *parsed, t_main *main)
 {
+<<<<<<< HEAD
 	main->gen->cmd_args = parsed->argv;
 	// if (parsed->argv)
 		// gen->cmd_args = parsed->argv;
+=======
+>>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 	if (parsed->redir_in)
 		ft_red_in(parsed, main);
 	if (parsed->redir_out)
@@ -90,7 +93,12 @@ int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
 	}
 	return (main->gen->e_code);
 }
+<<<<<<< HEAD
 void	ft_e_code(t_main *main)
+=======
+
+void	ft_e_code(t_gen *gen)
+>>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 {
 	if (ft_isdigit(main->gen->e_code) != 1)
 		ft_error("e_code not digit", main);
