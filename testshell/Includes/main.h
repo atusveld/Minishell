@@ -6,16 +6,16 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 17:11:40 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/08 17:35:32 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
-// # include "token.h"
-// # include "lexer.h"
-// # include "parse.h"
+// # include "main.h"
+// # include "main.h"
+// # include "main.h"
 // # include "main.h"
 
 # include <readline/readline.h>
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <fcntl.h>
-// # include "parse.h"
+// # include "main.h"
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
 # define ECHOCTL 1000
@@ -111,7 +111,7 @@ typedef struct s_gen
 	char	*cmd_path;
 	char	*owd;
 	int		e_code;
-	t_env	*env;
+	// t_env	*env;
 }	t_gen;
 
 typedef struct s_pipe
@@ -120,7 +120,14 @@ typedef struct s_pipe
 	int	in_fd;
 }	t_pipe;
 
-
+typedef struct s_main
+{
+	t_data	*input;
+	t_token	*token;
+	t_parse	*parsed;
+	t_env	*env;
+	t_gen	*gen;
+}	t_main;
 
 //==========[ PARSING ]==========//
 void	ft_add_redir(t_red **lst, t_red *new);
@@ -159,9 +166,9 @@ void	found_here(t_parse *data, t_env *env, char *delimiter);
 //==========[ EXPANSIONS ]==========//
 char	*expandable(char *def, t_env *tmp_env);
 char	*remove_quote(char *delimiter, char quote);
-char	*remove_quote_unexp(char *delimiter);
+char	*remove_quote_unsp(char *delimiter);
 char	*end_expand(t_token *token, t_exp *exp_data);
-void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env, int action);
+void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env);
 void	token_expand(t_token *token, t_env *tmp_env);
 t_exp	*exp_init(t_exp *exp_data);
 
@@ -173,17 +180,17 @@ void	signal_ctrl_c(int sig);
 
 // ==========[ EXECUTION ]==========//
 t_pipe	*ft_init_pipes(void);
-void	ft_exe(t_parse *parsed, t_gen *gen);
+void	ft_exe(t_parse *parsed, t_main *main);
 int		ft_fork(void);
-int		ft_exe_single(t_gen *gen, t_env *env);
-int		ft_exe_multi(t_gen *gen, t_parse *parsed, int status, int cmd_c);
-void	ft_exe_first(t_gen *gen, t_pipe *pipe);
-void	ft_exe_mid(t_gen *gen, t_pipe *pipe);
-void	ft_exe_last(t_gen *gen, t_pipe *pipe);
+int		ft_exe_single(t_main *main, t_env *env);
+int		ft_exe_multi(t_main *main, t_parse *parsed, int status, int cmd_c);
+void	ft_exe_first(t_main *main, t_pipe *pipe);
+void	ft_exe_mid(t_main *main, t_pipe *pipe);
+void	ft_exe_last(t_main *main, t_pipe *pipe);
 int		ft_count_cmd(t_parse *parsed);
-void	ft_fml(t_gen *gen, t_pipe *pipe, int i, int cmd_c);
+void	ft_fml(t_main *main, t_pipe *pipe, int i, int cmd_c);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
-void	ft_e_code(t_gen *gen);
+void	ft_e_code(t_main *main);
 
 //==========[ ENVIRONMENT ]==========//
 t_env	*ft_find_env(t_env *env, char *key);
@@ -196,22 +203,22 @@ void	ft_env_add_front(t_env **env, t_env *new);
 void	ft_free_env_ele(t_env *env);
 void	ft_free_env(t_env **env);
 void	ft_del_env(t_env **env, t_env *temp);
-char	*get_cmd_path(t_gen *gen);
+char	*get_cmd_path(t_main *main);
 
 //==========[ BUILTINS ]==========//
-int		ft_if_builtin(t_gen *gen, t_parse *parsed);
+int		ft_if_builtin(t_main *main, t_parse *parsed);
 int		ft_export_print(char **env);
-int		ft_export(t_gen *gen);
+int		ft_export(t_main *main);
 int		ft_unset(t_env *env, char **argv);
-void	ft_echo(t_gen *gen);
-void	ft_pwd(t_gen *gen);
-void	ft_cd(t_gen *gen);
-void	ft_cd_update_env(t_gen *gen, char *old_p, char *new_p);
-void	ft_env(t_gen *gen);
+void	ft_echo(t_main *main);
+void	ft_pwd(t_main *main);
+void	ft_cd(t_main *main);
+void	ft_cd_update_env(t_main *main, char *old_p, char *new_p);
+void	ft_env(t_main *main);
 
 //==========[ REDIRECTION ]==========//
-void	ft_red_out(t_parse *parsed, t_gen *gen);
-void	ft_red_in(t_parse *parsed, t_gen *gen);
+void	ft_red_out(t_parse *parsed, t_main *main);
+void	ft_red_in(t_parse *parsed, t_main *main);
 int		ft_create_file(t_parse *parsed);
 void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
@@ -220,9 +227,9 @@ void	ft_append(t_parse *parsed);
 // void	ft_init(t_parse *parsed, t_gen *gen);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
-void	ft_error(char *str, t_gen *gen);
-char	**get_paths(t_gen *gen);
-void	ft_free_gen(t_gen *gen);
+void	ft_error(char *str, t_main *main);
+char	**get_paths(t_main *main);
+void	ft_free_gen(t_main *main);
 
 //==========[  ]==========//
 // char	*expandable(char *def, t_env *tmp_env);

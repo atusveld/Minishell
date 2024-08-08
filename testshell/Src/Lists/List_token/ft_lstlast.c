@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 21:15:22 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/02/07 14:00:07 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 17:36:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/token.h"
+#include "../../../Includes/main.h"
 
 t_token	*ft_lstlast(t_token *lst)
 {

@@ -12,7 +12,7 @@
 
 #include "../../Includes/main.h"
 
-void	ft_red_out(t_parse *parsed, t_gen *gen)
+void	ft_red_out(t_parse *parsed, t_main *main)
 {
 	int	fd;
 	
@@ -24,7 +24,7 @@ void	ft_red_out(t_parse *parsed, t_gen *gen)
 		{
 			fd = ft_create_file(parsed);
 			if (fd == -1)
-				ft_error("fd, append file", gen);
+				ft_error("fd, append file", main);
 			parsed->redir_out = parsed->redir_out->next;
 		}
 		ft_write_to_file(fd, parsed);
@@ -33,11 +33,11 @@ void	ft_red_out(t_parse *parsed, t_gen *gen)
 	{
 		fd = ft_create_file(parsed);
 		if (fd == -1)
-			ft_error("fd, append file", gen);
+			ft_error("fd, append file", main);
 		ft_write_to_file(fd, parsed);
 	}
 }
-void	ft_red_in(t_parse *parsed, t_gen *gen)
+void	ft_red_in(t_parse *parsed, t_main *main)
 {
 	char	*filename;
 	int		fd;
@@ -45,7 +45,7 @@ void	ft_red_in(t_parse *parsed, t_gen *gen)
 	filename = parsed->redir_in->filename;
 	fd = open(filename, O_RDONLY);
 	if (!fd)
-		ft_error("red_in, fd", gen);
+		ft_error("red_in, fd", main);
 	if (dup2(fd, STDIN_FILENO) < 0)
 		return ;
 	if (close(fd))

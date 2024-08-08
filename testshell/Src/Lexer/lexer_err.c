@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/13 13:00:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/03/25 14:50:13 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 17:36:44 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/lexer.h"
+#include "../../Includes/main.h"
 
 void	lexer_error(int error, char *word)
 {

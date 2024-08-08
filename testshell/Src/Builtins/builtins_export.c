@@ -6,7 +6,7 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/06 16:35:03 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/08 17:31:07 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ static void	ft_export_add_env(t_env **env, char *str)
 	free(key);
 }
 
-int	ft_export(t_gen *gen)
+int	ft_export(t_main *main)
 {
 	char	**argv;
 	int		i;
 
 	i = 1;
-	argv = (gen->cmd_args + 1);
+	argv = (main->gen->cmd_args + 1);
 	while (argv[i] && !*argv[i])
 		i++;
 	if (!argv[i])
-		return (ft_export_print(ft_env_to_array(gen->env)));
+		return (ft_export_print(ft_env_to_array(main->env)));
 	while (argv[i])
 	{
 		if (*argv[i])
-			ft_export_add_env(&gen->env, argv[i]);
+			ft_export_add_env(&main->env, argv[i]);
 		i++;
 	}
 	return (1);

@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:32:37 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 11:08:39 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 17:36:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/token.h"
+#include "../../../Includes/main.h"
 
 void	ft_lstprint(t_token *token)
 {

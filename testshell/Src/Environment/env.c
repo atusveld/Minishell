@@ -41,6 +41,7 @@ t_env	*ft_find_env(t_env *env, char *key) //find key value in env
 		return (NULL);
 	while (env)
 	{
+		
 		if (env->key && !ft_strncmp(env->key, key, ft_strlen(key) + 1))
 			return (env);
 		env = env->next;

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/24 12:28:07 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 17:06:52 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/08 17:42:22 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static bool	double_quote(t_token *token, t_exp	*exp_data, t_env *tmp_env)
 			}
 			else
 				exp_data->i += skip_char(token->cont + exp_data->i, '$');
-			tmp_join(exp_data, token, tmp_env, 1);
+			tmp_join(exp_data, token, tmp_env);
 		}
 		return (true);
 	}
@@ -84,7 +84,7 @@ static bool	dollar_expand(t_token *token, t_exp *exp_data, t_env *tmp_env)
 				else
 					exp_data->i += skip_char(token->cont + exp_data->i, '$');
 			}
-			tmp_join(exp_data, token, tmp_env, 0);
+			tmp_join(exp_data, token, tmp_env);
 		}
 		return (true);
 	}
@@ -99,16 +99,18 @@ void	token_expand(t_token *token, t_env *tmp_env)
 	exp_data = exp_init(exp_data);
 	while (token)
 	{
+	
+
 		exp_data->in_quotes = false;
-		printf("em expand token->cont: %s\n", token->cont);
 		if (single_quote(token, exp_data))
 			continue ;
 		if (double_quote(token, exp_data, tmp_env))
 			continue ;
 		if (dollar_expand(token, exp_data, tmp_env))
 			continue ;
+		exp_data->tmp_exp = ft_strjoin(exp_data->tmp_str, token->cont);
 		token->cont = end_expand(token, exp_data);
-		token->cont = remove_quote_unexp(token->cont);
+		token->cont = remove_quote_unsp(token->cont);
 		token = token->next;
 	}
 }

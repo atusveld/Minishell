@@ -71,13 +71,13 @@ t_pipe	*ft_init_pipes(void)
 	return (new_pipe);
 }
 
-void	ft_free_gen(t_gen *gen)
+void	ft_free_gen(t_main *main)
 {
-	ft_free_env(&gen->env);
-	if (gen->cmd_args)
-		ft_free_arr(gen->cmd_args);
-	if (gen->env_paths)
-		ft_free_arr(gen->env_paths);
-	if (gen->cmd_path)
-		free(gen->cmd_path);
+	ft_free_env(&main->env);
+	if (main->gen->cmd_args)
+		ft_free_arr(main->gen->cmd_args);
+	if (main->gen->env_paths)
+		ft_free_arr(main->gen->env_paths);
+	if (main->gen->cmd_path)
+		free(main->gen->cmd_path);
 }

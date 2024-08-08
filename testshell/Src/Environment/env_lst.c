@@ -18,17 +18,19 @@
 	int		i;
 
 	i = 0;
-	new = (t_env *)malloc(sizeof(t_env));
-	new->next = NULL;
-	new->str = NULL;
-	new->key = NULL;
-	new->val = NULL;
+	new = (t_env *)ft_calloc(1, sizeof(t_env));
+	// new->next = NULL;
+	// new->str = NULL;
+	// new->key = NULL;
+	// new->val = NULL;
 	new->str = strdup(envp);
 	while (envp[i] && envp[i] != '=')
 		i++;
 	new->key = ft_substr(envp, 0, i);
 	if (envp[i])
 		new->val = ft_strdup(&envp[i + 1]);
+	if (!new->str || !new->key || !new->val)
+		ft_error("malloc", NULL);
 	return (new);
 }
 
@@ -39,6 +41,11 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 	t_env	*new;
 
 	new = ft_find_env(env, key);
+	if (!new)
+	{
+		ft_error("env not found", NULL);
+		return ;
+	}
 	if (new && val)
 	{
 		free (new->val);
