@@ -12,25 +12,6 @@
 
 #include "Includes/main.h"
 
-t_main	*par_init(char **envp, t_main *main)
-{
-	main = malloc(sizeof(t_main));
-	main->parsed = NULL;
-	// main->gen = malloc(sizeof(t_gen));
-	main->input = malloc(sizeof(t_data));
-	main->token = ft_calloc(1, sizeof(t_token));
-	main->token->next = NULL;
-	main->gen = malloc(sizeof(t_gen));
-	// main->gen->cmd_args = NULL;
-	// main->env = NULL;
-	// main->env->next = NULL;
-	main->env = ft_build_env(envp);
-	main->gen->env_paths = get_paths(main);
-	main->gen->e_code = 0;
-	// main->gen->cmd_path = get_cmd_path(main);
-	return (main);
-}
-
 int	main(int argv, char **argc, char **envp)
 {
 	t_main	*main;
@@ -39,7 +20,7 @@ int	main(int argv, char **argc, char **envp)
 	(void)argv;
 	(void)argc;
 	// (void)envp;
-	main = par_init(envp, main);
+	main = init_main(envp, main);
 	while (1)
 	{
 		main->input->input = readline("Minishell: ");

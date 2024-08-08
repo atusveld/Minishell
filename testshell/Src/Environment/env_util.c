@@ -42,7 +42,6 @@ char	**get_paths(t_main *main)
 	char	*temp;
 	char	**paths;
 
-	printf("get_paths %p\n", main->env);
 	main->env->val = ft_get_env(main->env, "PATH");
 	if(!main->env->val)
 	{

@@ -224,7 +224,7 @@ void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
 
 //==========[ AUX ]==========//
-// void	ft_init(t_parse *parsed, t_gen *gen);
+t_main	*init_main(char **envp, t_main *main);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
 void	ft_error(char *str, t_main *main);
