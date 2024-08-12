@@ -48,7 +48,10 @@ void	ft_dup_exe(t_main *main, t_pipe *pipes, int i, int cmd_c)
     if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
     {
         ft_free_arr(env_arr);
-        exit(errno == EACCES ? 126 : 127);
+		if (errno == EACCES)
+			exit(126);
+		else
+			exit(127);
     }
     ft_free_arr(env_arr);
 }
