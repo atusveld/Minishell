@@ -22,7 +22,11 @@ char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 		return (NULL);
 	str = ft_strjoin(temp, s3);
 	if (!str)
+	{
+		free (temp);
+		temp = NULL;
 		return (NULL);
+	}
 	free (temp);
 	return (str);
 }
@@ -37,9 +41,11 @@ void	*ft_free_arr(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
 	free(arr);
+	arr = NULL;
 	return (NULL);
 }
 

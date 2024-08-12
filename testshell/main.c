@@ -19,7 +19,6 @@ int	main(int argv, char **argc, char **envp)
 	main = NULL;
 	(void)argv;
 	(void)argc;
-	// (void)envp;
 	main = init_main(envp, main);
 	while (1)
 	{

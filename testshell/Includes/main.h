@@ -207,23 +207,23 @@ int		ft_export_print(char **env);
 int		ft_export(t_main *main);
 int		ft_unset(t_main *main, char **argv);
 void	ft_echo(t_main *main);
-void	ft_pwd(t_main *main);
+void	ft_pwd(void);
 void	ft_cd(t_main *main);
 void	ft_cd_update_env(t_main *main, char *old_p, char *new_p);
 void	ft_env(t_main *main);
 
 //==========[ REDIRECTION ]==========//
-void	ft_red_out(t_parse *parsed, t_main *main);
-void	ft_red_in(t_parse *parsed, t_main *main);
+void	ft_red_out(t_parse *parsed);
+void	ft_red_in(t_parse *parsed);
 int		ft_create_file(t_parse *parsed);
-void	ft_write_to_file(int fd, t_parse *parsed, t_main *main);
-void	ft_append(t_parse *parsed, t_main *main);
+void	ft_write_to_file(int fd, t_parse *parsed);
+void	ft_append(t_parse *parsed);
 
 //==========[ AUX ]==========//
 t_main	*init_main(char **envp, t_main *main);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
-void	ft_error(char *str, t_main *main);
+void	ft_error(char *str, int e_code);
 char	**get_paths(t_main *main);
 void	ft_free_gen(t_main *main);
 

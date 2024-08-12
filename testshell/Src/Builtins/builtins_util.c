@@ -17,9 +17,9 @@ int	ft_if_builtin(t_main *main, t_parse *parsed)
 	if ((ft_strncmp(main->gen->cmd_args[0], "echo", 5)) == 0)
 	{
 		if (parsed->redir_in)
-			return (ft_red_in(parsed, main), 0);
+			return (ft_red_in(parsed), 0);
 		if (parsed->redir_out)
-			return (ft_red_out(parsed, main), 0);
+			return (ft_red_out(parsed), 0);
 		else
 			return (ft_echo(main), 0);
 	}

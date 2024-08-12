@@ -25,8 +25,6 @@ void	ft_exe(t_parse *parsed, t_main *main)
 		main->gen->e_code = ft_exe_single(main, main->env);
 	else
 		main->gen->e_code = ft_exe_multi(main, parsed, -1, 0);
-	printf("-=[%d]=-\n", main->gen->e_code);
-	// return ;
 }
 
 int	ft_exe_single(t_main *main, t_env *env)
@@ -41,15 +39,15 @@ int	ft_exe_single(t_main *main, t_env *env)
 	arr = ft_env_to_array(env);
 	pid = fork();
 	if (pid < 0)
-		ft_error("fork single", main);
+		ft_error("Fork failed", 1);
 	if (pid == 0)
     {
         if ((execve(path, main->gen->cmd_args, arr)) < 0)
         {
             if (errno == EACCES)
-                exit(126);
+                ft_error("Permission denied", 126);
             else
-                exit(127);
+                ft_error("Command not found", 127);
         }
     }
 	else
@@ -84,7 +82,7 @@ int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
             if (waitpid(pid, &status, WUNTRACED) == -1)
             {
                 main->gen->e_code = ((status >> 8) & 0xFF);
-                ft_error("wait multi", main);
+				return (main->gen->e_code);
             }
             else
                 main->gen->e_code = WEXITSTATUS(status);
@@ -99,12 +97,3 @@ int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
     return (main->gen->e_code);
 }
 
-void	ft_e_code(t_main *main)
-{
-	if (ft_isdigit(main->gen->e_code) != 1)
-		ft_error("e_code not digit", main);
-	ft_putnbr_fd(main->gen->e_code, 1);
-	write(1, "\n", 1);
-	return ;
-}
-//-> ((status >> 8) 7 0xFF) return value calc <-

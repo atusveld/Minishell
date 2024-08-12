@@ -12,14 +12,14 @@
 
 #include "../../Includes/main.h"
 
-void	ft_red_out(t_parse *parsed, t_main *main)
+void	ft_red_out(t_parse *parsed)
 {
 	int	fd;
 	
 	if (!parsed || !parsed->redir_out)
         return;
 	if (parsed->redir_out->type == APPEND)
-		ft_append(parsed, main);
+		ft_append(parsed);
 	if (parsed->redir_out->next)
 	{
 		while (parsed->redir_out)
@@ -27,25 +27,25 @@ void	ft_red_out(t_parse *parsed, t_main *main)
 			fd = ft_create_file(parsed);
 			if (fd == -1)
 			{
-				ft_error("fd, append file", main);
+				ft_error("fd, create file", 1);
 				return ;
 			}
 			parsed->redir_out = parsed->redir_out->next;
 		}
-		ft_write_to_file(fd, parsed, main);
+		ft_write_to_file(fd, parsed);
 	}
 	else
 	{
 		fd = ft_create_file(parsed);
 		if (fd == -1)
 		{
-			ft_error("fd, append file", main);
+			ft_error("fd, append file", 1);
 			return ;
 		}
-		ft_write_to_file(fd, parsed, main);
+		ft_write_to_file(fd, parsed);
 	}
 }
-void	ft_red_in(t_parse *parsed, t_main *main)
+void	ft_red_in(t_parse *parsed)
 {
 	char	*filename;
 	int		fd;
@@ -56,7 +56,7 @@ void	ft_red_in(t_parse *parsed, t_main *main)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_error("red_in, fd", main);
+		ft_error("red_in, fd", 1);
 		return ;
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
@@ -80,7 +80,7 @@ int	ft_create_file(t_parse *parsed)
 	return (fd);
 }
 
-void	ft_write_to_file(int fd, t_parse *parsed, t_main *main)
+void	ft_write_to_file(int fd, t_parse *parsed)
 {
 	char	*text;
 	int		i;
@@ -88,7 +88,7 @@ void	ft_write_to_file(int fd, t_parse *parsed, t_main *main)
 	i = 0;
 	text = parsed->argv[1];
 	if (fd == -1)
-		ft_error("fd, write to file", main);
+		ft_error("fd, write to file", 1);
 	while (text[i])
 	{
 		write(fd, &text[i], 1);
@@ -98,12 +98,12 @@ void	ft_write_to_file(int fd, t_parse *parsed, t_main *main)
 	close(fd);
 }
 
-void	ft_append(t_parse *parsed, t_main *main)
+void	ft_append(t_parse *parsed)
 {
 	char	*filename;
 	int 	fd;
 	
 	filename = parsed->redir_out->filename;
 	fd = open(filename, O_CREAT | O_RDWR | O_APPEND, 0666);
-	ft_write_to_file(fd, parsed, main);
+	ft_write_to_file(fd, parsed);
 }

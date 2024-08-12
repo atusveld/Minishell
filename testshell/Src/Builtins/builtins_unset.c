@@ -24,7 +24,7 @@ static int	ft_unset_error(char *arg, char *msg)
 
 static bool	ft_check_var(char *str)
 {
-	if (ft_isdigit(*str) == 1)
+	if (!str || ft_isdigit(*str) == 1)
 		return (false);
 	while (*str && (*str == '_' || ft_isalnum(*str)))
 		str++;
@@ -37,7 +37,7 @@ void	ft_unset_env(t_main *main, char *key)
 {
 	t_env	*val;
 
-	if (!key)
+	if (!main || !key)
 		return ;
 	val = ft_find_env(main->env, key);
 	if (!val)
@@ -49,9 +49,11 @@ int	ft_unset(t_main *main, char **argv)
 {
 	int	i;
 
+	if (!main || !argv)
+        return (1);
 	i = 1;
 	if (!argv[i])
-		ft_error("unset, invalid arg", main);
+		ft_error("unset", 1);
 	while (argv[i])
 	{
 		if (ft_check_var(argv[i]) == false)
