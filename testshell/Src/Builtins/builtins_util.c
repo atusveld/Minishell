@@ -24,7 +24,7 @@ int	ft_if_builtin(t_main *main, t_parse *parsed)
 			return (ft_echo(main), 0);
 	}
 	if (!ft_strncmp(main->gen->cmd_args[0], "pwd", 4))
-		return (ft_pwd(main), 0);
+		return (ft_pwd(), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "env", 4))
 		return (ft_env(main), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "cd", 3))

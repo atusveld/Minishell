@@ -16,9 +16,9 @@ void	ft_exe(t_parse *parsed, t_main *main)
 {
 	main->gen->cmd_args = parsed->argv;
 	if (parsed->redir_in)
-		ft_red_in(parsed, main);
+		ft_red_in(parsed);
 	if (parsed->redir_out)
-		ft_red_out(parsed, main);
+		ft_red_out(parsed);
 	if (ft_if_builtin(main, parsed) == 0)
 		return ;
 	if (!parsed->next)
