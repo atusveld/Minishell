@@ -33,16 +33,16 @@ static bool	ft_check_var(char *str)
 	return (false);
 }
 
-void	ft_unset_env(t_env **env, char *key)
+void	ft_unset_env(t_main *main, char *key)
 {
 	t_env	*val;
 
 	if (!key)
 		return ;
-	val = ft_find_env(gen->env, key);
+	val = ft_find_env(main->env, key);
 	if (!val)
 		return ;
-	ft_del_env(&gen->env, val);
+	ft_del_env(&main->env, val);
 }
 
 int	ft_unset(t_main *main, char **argv)
@@ -57,7 +57,7 @@ int	ft_unset(t_main *main, char **argv)
 		if (ft_check_var(argv[i]) == false)
 			ft_unset_error(argv[i], "': not a valid identifier\n");
 		else
-			ft_unset_env(&main->env, argv[i]);
+			ft_unset_env(main, argv[i]);
 		i++;
 	}
 	return (1);
