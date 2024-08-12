@@ -72,6 +72,11 @@ void	ft_cd(t_main *main)
 	char	*new_p;
 	char	*path;
 
+ 	 if (access(".", F_OK) == -1)
+    {
+        ft_error("Current directory does not exist", main);
+        return;
+    }
 	old_p = getcwd(NULL, 0);
 	if (!old_p)
 		ft_error("no old pwd", main);
