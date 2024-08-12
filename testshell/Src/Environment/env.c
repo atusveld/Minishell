@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
 t_env	*ft_build_env(char **envp)
 {
@@ -41,6 +41,7 @@ t_env	*ft_find_env(t_env *env, char *key)
 		return (NULL);
 	while (env)
 	{
+		
 		if (env->key && !ft_strncmp(env->key, key, ft_strlen(key) + 1))
 			return (env);
 		env = env->next;

@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/22 11:47:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 11:12:49 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 17:36:44 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/lexer.h"
+#include "../../Includes/main.h"
 
 static bool	check_closed_quotes(char *token)
 {

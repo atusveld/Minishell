@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_unset.c                                    :+:    :+:           */
+/*   builtins_unset.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
+/*   Updated: 2024/08/06 16:34:48 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "main.h"
 
 static int	ft_unset_error(char *arg, char *msg)
 {
@@ -33,24 +33,7 @@ static bool	ft_check_var(char *str)
 	return (false);
 }
 
-int	ft_unset(t_gen *gen, char **argv)
-{
-	int	i;
-
-	i = 0;
-	if (!argv[i])
-		ft_error("unset, invalid arg", gen);
-	while (argv[i])
-	{
-		if (ft_check_var(argv[i]) == false)
-			ft_unset_error(argv[i], "': not a valid identifier\n");
-		else
-			ft_unset_env(gen, argv[i]);
-		i++;
-	}
-	return (1);
-}
-void	ft_unset_env(t_gen *gen, char *key)
+void	ft_unset_env(t_env **env, char *key)
 {
 	t_env	*val;
 
@@ -60,4 +43,22 @@ void	ft_unset_env(t_gen *gen, char *key)
 	if (!val)
 		return ;
 	ft_del_env(&gen->env, val);
+}
+
+int	ft_unset(t_main *main, char **argv)
+{
+	int	i;
+
+	i = 1;
+	if (!argv[i])
+		ft_error("unset, invalid arg", main);
+	while (argv[i])
+	{
+		if (ft_check_var(argv[i]) == false)
+			ft_unset_error(argv[i], "': not a valid identifier\n");
+		else
+			ft_unset_env(&main->env, argv[i]);
+		i++;
+	}
+	return (1);
 }

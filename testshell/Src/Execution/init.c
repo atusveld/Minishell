@@ -10,16 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
-t_gen	*ft_init(t_parse *parsed, t_gen *gen)
+t_main	*init_main(char **envp, t_main *main)
 {
-	printf("=[INITTED]=");
-
-	gen->env_paths = get_paths(gen);
-	gen->cmd_args = parsed->argv;
-	gen->cmd_path = get_cmd_path(gen);
-	gen->owd = getcwd(NULL, 0);
-	gen->e_code = 0;
-	return (gen);
+	main = malloc(sizeof(t_main));
+	main->parsed = NULL;
+	main->input = malloc(sizeof(t_data));
+	main->token = ft_calloc(1, sizeof(t_token));
+	main->token->next = NULL;
+	main->gen = malloc(sizeof(t_gen));
+	main->env = ft_build_env(envp);
+	main->gen->env_paths = get_paths(main);
+	main->gen->e_code = 0;
+	return (main);
 }

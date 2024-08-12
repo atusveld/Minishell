@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 11:51:06 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/08 10:48:41 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static char	*find_env_val(t_env *tmp_env, char *str, int i)
 	return("");
 }
 
-static char *find_exit_code(char *str, int i)
-{
-	if (!ft_strncmp(str, "?", i))
-		return (str);
-	return ("");
-}
+// static char *find_exit_code(char *str, int i)
+// {
+// 	if (!ft_strncmp(str, "?", i))
+// 		return (str);
+// 	return (str);
+// }
 
 // def = stands for default
 char	*expandable(char *def, t_env *tmp_env)
@@ -65,7 +65,7 @@ char	*expandable(char *def, t_env *tmp_env)
 	tmp = str[i];
 	str[i] = '\0';
 	val = find_env_val(tmp_env, str, i);
-	str = find_exit_code(str, i);
+	// str = find_exit_code(str, i);
 	str[i] = tmp;
 	j = ft_strlen(def) + ft_strlen(val) - i;
 	str = expand_str(def, val, i, j);

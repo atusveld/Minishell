@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/07/31 19:15:30 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/07 12:36:34 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*remove_quote(char *delimiter, char quote)
 	return (delimiter);
 }
 
-char	*remove_quote_unexp(char *delimiter)
+char	*remove_quote_unsp(char *delimiter)
 {
 	int i;
 	int	j;
@@ -102,7 +102,7 @@ void	heredoc(char *delimiter, int fd, t_env *env)
 	quotes = false;
 	if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '"'))
 	{	
-		delimiter = remove_quote_unexp(delimiter);
+		delimiter = remove_quote_unsp(delimiter);
 		quotes = true;
 	}
 	write_line(delimiter, fd, quotes, env);

@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
-void	ft_error(char *str, t_gen *gen) // expand for exit codes
+void	ft_error(char *str, t_main *main) // expand for exit codes
 {
 	perror(str);
-	exit (gen->e_code);
+	exit (main->gen->e_code);
 }

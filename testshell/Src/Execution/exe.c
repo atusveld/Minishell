@@ -10,24 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/alex.h"
+#include "../../Includes/main.h"
 
-void	ft_exe(t_parse *parsed, t_gen *gen)
+void	ft_exe(t_parse *parsed, t_main *main)
 {
+	main->gen->cmd_args = parsed->argv;
 	if (parsed->redir_in)
-		ft_red_in(parsed, gen);
+		ft_red_in(parsed, main);
 	if (parsed->redir_out)
-		ft_red_out(parsed, gen);
-	if (ft_if_builtin(gen, parsed) == 0)
+		ft_red_out(parsed, main);
+	if (ft_if_builtin(main, parsed) == 0)
 		return ;
 	if (!parsed->next)
-		gen->e_code = ft_exe_single(gen, gen->env);
+		main->gen->e_code = ft_exe_single(main, main->env);
 	else
-		gen->e_code = ft_exe_multi(gen, parsed, -1, 0);
+		main->gen->e_code = ft_exe_multi(main, parsed, -1, 0);
+	printf("-=[%d]=-\n", main->gen->e_code);
 	// return ;
 }
 
-int	ft_exe_single(t_gen *gen, t_env *env)
+int	ft_exe_single(t_main *main, t_env *env)
 {
 	pid_t	pid;
 	char 	**arr;
@@ -35,64 +37,73 @@ int	ft_exe_single(t_gen *gen, t_env *env)
 	int		status;
 
 	status = -1;
-	path = get_cmd_path(gen);
+	path = get_cmd_path(main);
 	arr = ft_env_to_array(env);
 	pid = fork();
 	if (pid < 0)
-		ft_error("fork single", gen);
+		ft_error("fork single", main);
 	if (pid == 0)
-	{
-		if ((execve(path, gen->cmd_args, arr)) < 0)
-			ft_error("single cmd", gen);
-	}
+    {
+        if ((execve(path, main->gen->cmd_args, arr)) < 0)
+        {
+            if (errno == EACCES)
+                exit(126);
+            else
+                exit(127);
+        }
+    }
 	else
 	{
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 		{
 			waitpid(pid, &status, WUNTRACED);
-			gen->e_code = ((status >> 8) & 0xFF);
+			main->gen->e_code = ((status >> 8) & 0xFF);
 		}
 	}
-	return (gen->e_code);
+	return (main->gen->e_code);
 }
 
-int	ft_exe_multi(t_gen *gen, t_parse *parsed, int status, int i)
+int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
 {
-	t_pipe	*pipe;
-	int		pid;
-	int		cmd_c;
+    t_pipe	*pipes;
+    int		pid;
+    int		cmd_c;
 
-	cmd_c = ft_count_cmd(parsed);
-	pipe = ft_init_pipes();
-	while (cmd_c > i++)
-	{
-		pid = ft_fork();
-		if (pid == 0)
-			ft_fml(gen, pipe, i, cmd_c);
-		else
-		{
-			close(pipe->tube[1]);
-			if (waitpid(pid, &status, WUNTRACED) == -1)
-			{
-				gen->e_code = ((status >> 8) & 0xFF);
-				ft_error("wait multi", gen);
-			}
-		}
-		if (parsed->next)
-		{
-			pipe->in_fd = pipe->tube[0];
-			parsed = parsed->next;
-		}
-		gen->cmd_args = parsed->argv;
-	}
-	return (gen->e_code);
+    cmd_c = ft_count_cmd(parsed);
+    pipes = ft_init_pipes(cmd_c);
+    while (cmd_c > i++)
+    {
+        pid = ft_fork();
+        if (pid == 0)
+            ft_dup_exe(main, pipes, i, cmd_c);
+        else
+        {
+            if (i > 1)
+                close(pipes[i - 2].tube[0]);
+            close(pipes[i - 1].tube[1]);
+            if (waitpid(pid, &status, WUNTRACED) == -1)
+            {
+                main->gen->e_code = ((status >> 8) & 0xFF);
+                ft_error("wait multi", main);
+            }
+            else
+                main->gen->e_code = WEXITSTATUS(status);
+        }
+        if (parsed->next)
+        {
+            pipes[i - 1].in_fd = pipes[i - 1].tube[0];
+            parsed = parsed->next;
+        }
+        main->gen->cmd_args = parsed->argv;
+    }
+    return (main->gen->e_code);
 }
 
-void	ft_e_code(t_gen *gen)
+void	ft_e_code(t_main *main)
 {
-	if (ft_isdigit(gen->e_code) != 1)
-		ft_error("e_code not digit", gen);
-	ft_putnbr_fd(gen->e_code, 1);
+	if (ft_isdigit(main->gen->e_code) != 1)
+		ft_error("e_code not digit", main);
+	ft_putnbr_fd(main->gen->e_code, 1);
 	write(1, "\n", 1);
 	return ;
 }

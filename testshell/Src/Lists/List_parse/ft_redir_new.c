@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstnew.c                                        :+:    :+:            */
+/*   ft_redir_new.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 19:30:10 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/04/08 13:13:31 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/06 14:21:43 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/parse.h"
+#include "main.h"
 
 t_red	*ft_redir_new(char *filename, t_type type)
 {
