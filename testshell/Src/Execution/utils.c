@@ -21,55 +21,35 @@ int	ft_fork(void)
 		return (-1);
 	return (pid);
 }
-void	ft_fml(t_main *main, t_pipe *pipe, int i, int cmd_c)
+void	ft_dup_exe(t_main *main, t_pipe *pipes, int i, int cmd_c)
 {
-	if (i == 1)
-		ft_exe_first(main, pipe);
-	else if (i != 1 && i != cmd_c)
-		ft_exe_mid(main, pipe);
-	else if (cmd_c == i)
-		ft_exe_last(main, pipe);
-}
-void	ft_exe_first(t_main *main, t_pipe *pipe)
-{
-	char	*path;
-	char	**env_arr;
+    char	*path;
+    char	**env_arr;
 
-	env_arr = ft_env_to_array(main->env);
-	path = get_cmd_path(main);
-	close(pipe->tube[0]);
-	dup2(pipe->tube[1], STDOUT_FILENO);
-	if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
-		ft_error("multi cmd1", main);
-	ft_free_arr(env_arr);
-}
-
-void	ft_exe_mid(t_main *main, t_pipe *pipe)
-{
-	char	*path;
-	char	**env_arr;
-
-	env_arr = ft_env_to_array(main->env);
-	path = get_cmd_path(main);
-	close(pipe->tube[0]);
-	dup2(pipe->tube[1], STDOUT_FILENO);
-	dup2(pipe->in_fd, STDIN_FILENO);
-	if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
-		ft_error("multi cmd2", main);
-	ft_free_arr(env_arr);
+    env_arr = ft_env_to_array(main->env);
+    path = get_cmd_path(main);
+    if (i == 1)
+    {
+        close(pipes[i - 1].tube[0]);
+        dup2(pipes[i - 1].tube[1], STDOUT_FILENO);
+    }
+    else if (i == cmd_c)
+    {
+        close(pipes[i - 2].tube[1]);
+        dup2(pipes[i - 2].tube[0], STDIN_FILENO);
+    }
+    else
+    {
+        close(pipes[i - 2].tube[1]);
+        dup2(pipes[i - 2].tube[0], STDIN_FILENO);
+        close(pipes[i - 1].tube[0]);
+        dup2(pipes[i - 1].tube[1], STDOUT_FILENO);
+    }
+    if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
+    {
+        ft_free_arr(env_arr);
+        exit(errno == EACCES ? 126 : 127);
+    }
+    ft_free_arr(env_arr);
 }
 
-void	ft_exe_last(t_main *main, t_pipe *pipe)
-{
-	char	*path;
-	char	**env_arr;
-
-	env_arr = ft_env_to_array(main->env);
-	path = get_cmd_path(main);
-	close(pipe->tube[1]);
-	dup2(pipe->tube[0], STDIN_FILENO);
-	dup2(pipe->in_fd, STDIN_FILENO);
-	if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
-		ft_error("multi cmd3", main);
-	ft_free_arr(env_arr);
-}

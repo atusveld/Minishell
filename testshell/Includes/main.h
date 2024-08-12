@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <errno.h>
 // # include "main.h"
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
@@ -179,7 +180,7 @@ void	ignore_signal(void);
 void	signal_ctrl_c(int sig);
 
 // ==========[ EXECUTION ]==========//
-t_pipe	*ft_init_pipes(void);
+t_pipe	*ft_init_pipes(int cmd_count);
 void	ft_exe(t_parse *parsed, t_main *main);
 int		ft_fork(void);
 int		ft_exe_single(t_main *main, t_env *env);
@@ -188,7 +189,7 @@ void	ft_exe_first(t_main *main, t_pipe *pipe);
 void	ft_exe_mid(t_main *main, t_pipe *pipe);
 void	ft_exe_last(t_main *main, t_pipe *pipe);
 int		ft_count_cmd(t_parse *parsed);
-void	ft_fml(t_main *main, t_pipe *pipe, int i, int cmd_c);
+void	ft_dup_exe(t_main *main, t_pipe *pipe, int i, int cmd_c);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
 void	ft_e_code(t_main *main);
 
@@ -209,7 +210,7 @@ char	*get_cmd_path(t_main *main);
 int		ft_if_builtin(t_main *main, t_parse *parsed);
 int		ft_export_print(char **env);
 int		ft_export(t_main *main);
-int		ft_unset(t_env *env, char **argv);
+int		ft_unset(t_main *main, char **argv);
 void	ft_echo(t_main *main);
 void	ft_pwd(t_main *main);
 void	ft_cd(t_main *main);
@@ -220,8 +221,8 @@ void	ft_env(t_main *main);
 void	ft_red_out(t_parse *parsed, t_main *main);
 void	ft_red_in(t_parse *parsed, t_main *main);
 int		ft_create_file(t_parse *parsed);
-void	ft_write_to_file(int fd, t_parse *parsed);
-void	ft_append(t_parse *parsed);
+void	ft_write_to_file(int fd, t_parse *parsed, t_main *main);
+void	ft_append(t_parse *parsed, t_main *main);
 
 //==========[ AUX ]==========//
 t_main	*init_main(char **envp, t_main *main);

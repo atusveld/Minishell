@@ -44,16 +44,10 @@ void	ft_pwd(t_main *main)
 {
 	char	*temp;
 
-	temp = gen->owd;
+	temp = main->gen->owd;
 	if (!temp)
-<<<<<<< HEAD
 		ft_error("pwd", main);
 	printf("%s\n", temp);
-=======
-		ft_error("pwd", gen);
-	else
-		printf("%s\n", temp);
->>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 	free (temp);
 }
 

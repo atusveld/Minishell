@@ -14,12 +14,9 @@
 
 void	ft_exe(t_parse *parsed, t_main *main)
 {
-<<<<<<< HEAD
 	main->gen->cmd_args = parsed->argv;
 	// if (parsed->argv)
 		// gen->cmd_args = parsed->argv;
-=======
->>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
 	if (parsed->redir_in)
 		ft_red_in(parsed, main);
 	if (parsed->redir_out)
@@ -30,6 +27,7 @@ void	ft_exe(t_parse *parsed, t_main *main)
 		main->gen->e_code = ft_exe_single(main, main->env);
 	else
 		main->gen->e_code = ft_exe_multi(main, parsed, -1, 0);
+	printf("-=[%d]=-\n", main->gen->e_code);
 	// return ;
 }
 
@@ -47,10 +45,15 @@ int	ft_exe_single(t_main *main, t_env *env)
 	if (pid < 0)
 		ft_error("fork single", main);
 	if (pid == 0)
-	{
-		if ((execve(path, main->gen->cmd_args, arr)) < 0)
-			ft_error("single cmd", main);
-	}
+    {
+        if ((execve(path, main->gen->cmd_args, arr)) < 0)
+        {
+            if (errno == EACCES)
+                exit(126);
+            else
+                exit(127);
+        }
+    }
 	else
 	{
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
@@ -64,41 +67,41 @@ int	ft_exe_single(t_main *main, t_env *env)
 
 int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
 {
-	t_pipe	*pipe;
-	int		pid;
-	int		cmd_c;
+    t_pipe	*pipes;
+    int		pid;
+    int		cmd_c;
 
-	cmd_c = ft_count_cmd(parsed);
-	pipe = ft_init_pipes();
-	while (cmd_c > i++)
-	{
-		pid = ft_fork();
-		if (pid == 0)
-			ft_fml(main, pipe, i, cmd_c);
-		else
-		{
-			close(pipe->tube[1]);
-			if (waitpid(pid, &status, WUNTRACED) == -1)
-			{
-				main->gen->e_code = ((status >> 8) & 0xFF);
-				ft_error("wait multi", main);
-			}
-		}
-		if (parsed->next)
-		{
-			pipe->in_fd = pipe->tube[0];
-			parsed = parsed->next;
-		}
-		main->gen->cmd_args = parsed->argv;
-	}
-	return (main->gen->e_code);
+    cmd_c = ft_count_cmd(parsed);
+    pipes = ft_init_pipes(cmd_c);
+    while (cmd_c > i++)
+    {
+        pid = ft_fork();
+        if (pid == 0)
+            ft_dup_exe(main, pipes, i, cmd_c);
+        else
+        {
+            if (i > 1)
+                close(pipes[i - 2].tube[0]);
+            close(pipes[i - 1].tube[1]);
+            if (waitpid(pid, &status, WUNTRACED) == -1)
+            {
+                main->gen->e_code = ((status >> 8) & 0xFF);
+                ft_error("wait multi", main);
+            }
+            else
+                main->gen->e_code = WEXITSTATUS(status);
+        }
+        if (parsed->next)
+        {
+            pipes[i - 1].in_fd = pipes[i - 1].tube[0];
+            parsed = parsed->next;
+        }
+        main->gen->cmd_args = parsed->argv;
+    }
+    return (main->gen->e_code);
 }
-<<<<<<< HEAD
-void	ft_e_code(t_main *main)
-=======
 
-void	ft_e_code(t_gen *gen)
->>>>>>> c3aecb263a7c5383cfc3f28adc8d242fac8f04ab
+void	ft_e_code(t_main *main)
 {
 	if (ft_isdigit(main->gen->e_code) != 1)
 		ft_error("e_code not digit", main);
