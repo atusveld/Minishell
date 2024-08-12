@@ -73,8 +73,8 @@ typedef struct s_token
 
 typedef	struct s_red
 {
-	int				fd; // return from function open, after close file
-	char			*filename; // </>/<< + arg // <<???
+	int				fd;
+	char			*filename;
 	t_type			type;
 	struct s_red	*next;
 }			t_red;
@@ -110,9 +110,7 @@ typedef struct s_gen
 	char	**env_paths;
 	char	**cmd_args;
 	char	*cmd_path;
-	char	*owd;
 	int		e_code;
-	// t_env	*env;
 }	t_gen;
 
 typedef struct s_pipe

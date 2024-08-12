@@ -44,7 +44,7 @@ void	ft_pwd(t_main *main)
 {
 	char	*temp;
 
-	temp = main->gen->owd;
+	temp = getcwd(NULL, 0);
 	if (!temp)
 		ft_error("pwd", main);
 	printf("%s\n", temp);
@@ -72,7 +72,7 @@ void	ft_cd(t_main *main)
 	char	*new_p;
 	char	*path;
 
-	old_p = main->gen->owd;
+	old_p = getcwd(NULL, 0);
 	if (!old_p)
 		ft_error("no old pwd", main);
 	path = ft_strjoin_three(old_p, "/", main->gen->cmd_args[1]);
