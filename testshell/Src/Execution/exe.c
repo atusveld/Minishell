@@ -114,6 +114,11 @@ void	ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cm
 	while (cmd_c > i++)
 	{
 		pid = ft_fork();
+		if (pid < 0)
+		{
+			ft_error("Fork failed", 1);
+			return ;
+		}
 		if (pid == 0)
 		{
 			close_pipes(pipes, cmd_c, i);
