@@ -12,7 +12,7 @@
 
 #include "../../Includes/main.h"
 
-t_env	*ft_build_env(char **envp) //setup new t_env out of main envp
+t_env	*ft_build_env(char **envp)
 {
 	t_env	*new;
 
@@ -25,7 +25,7 @@ t_env	*ft_build_env(char **envp) //setup new t_env out of main envp
 	return (new);
 }
 
-char	*ft_get_env(t_env *env, char *key) //get env values
+char	*ft_get_env(t_env *env, char *key) 
 {
 	t_env	*ret;
 
@@ -35,7 +35,7 @@ char	*ft_get_env(t_env *env, char *key) //get env values
 	return (ret->val);
 }
 
-t_env	*ft_find_env(t_env *env, char *key) //find key value in env
+t_env	*ft_find_env(t_env *env, char *key) 
 {
 	if (!env || !key)
 		return (NULL);

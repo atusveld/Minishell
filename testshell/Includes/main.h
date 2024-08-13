@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <errno.h>
 // # include "main.h"
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
@@ -72,8 +73,8 @@ typedef struct s_token
 
 typedef	struct s_red
 {
-	int				fd; // return from function open, after close file
-	char			*filename; // </>/<< + arg // <<???
+	int				fd;
+	char			*filename;
 	t_type			type;
 	struct s_red	*next;
 }			t_red;
@@ -109,9 +110,7 @@ typedef struct s_gen
 	char	**env_paths;
 	char	**cmd_args;
 	char	*cmd_path;
-	char	*owd;
 	int		e_code;
-	// t_env	*env;
 }	t_gen;
 
 typedef struct s_pipe
@@ -181,16 +180,17 @@ void	ignore_signal(void);
 void	signal_ctrl_c(int sig);
 
 // ==========[ EXECUTION ]==========//
-t_pipe	*ft_init_pipes(void);
+t_pipe	*ft_init_pipes(int cmd_count);
+int 	ft_init_pipes_pids(t_parse *parsed, t_pipe **pipes, int **pids);
+void	ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c);
 void	ft_exe(t_parse *parsed, t_main *main);
 int		ft_fork(void);
 int		ft_exe_single(t_main *main, t_env *env);
-int		ft_exe_multi(t_main *main, t_parse *parsed, int status, int cmd_c);
-void	ft_exe_first(t_main *main, t_pipe *pipe);
-void	ft_exe_mid(t_main *main, t_pipe *pipe);
-void	ft_exe_last(t_main *main, t_pipe *pipe);
+int 	ft_exe_multi(t_main *main, t_parse *parsed, int status);
 int		ft_count_cmd(t_parse *parsed);
-void	ft_fml(t_main *main, t_pipe *pipe, int i, int cmd_c);
+void 	ft_dup_exe(t_main *main, t_pipe *pipes, int i, int cmd_c);
+void 	ft_dup_pipes(t_pipe *pipes, int i, int cmd_c);
+void 	ft_exec_cmd(t_main *main, char *path, char **env_arr);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
 void	ft_e_code(t_main *main);
 
@@ -211,25 +211,25 @@ char	*get_cmd_path(t_main *main);
 int		ft_if_builtin(t_main *main, t_parse *parsed);
 int		ft_export_print(char **env);
 int		ft_export(t_main *main);
-int		ft_unset(t_env *env, char **argv);
+int		ft_unset(t_main *main, char **argv);
 void	ft_echo(t_main *main);
-void	ft_pwd(t_main *main);
+void	ft_pwd(void);
 void	ft_cd(t_main *main);
 void	ft_cd_update_env(t_main *main, char *old_p, char *new_p);
 void	ft_env(t_main *main);
 
 //==========[ REDIRECTION ]==========//
-void	ft_red_out(t_parse *parsed, t_main *main);
-void	ft_red_in(t_parse *parsed, t_main *main);
+void	ft_red_out(t_parse *parsed);
+void	ft_red_in(t_parse *parsed);
 int		ft_create_file(t_parse *parsed);
 void	ft_write_to_file(int fd, t_parse *parsed);
 void	ft_append(t_parse *parsed);
 
 //==========[ AUX ]==========//
-// void	ft_init(t_parse *parsed, t_gen *gen);
+t_main	*init_main(char **envp, t_main *main);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
-void	ft_error(char *str, t_main *main);
+void	ft_error(char *str, int e_code);
 char	**get_paths(t_main *main);
 void	ft_free_gen(t_main *main);
 

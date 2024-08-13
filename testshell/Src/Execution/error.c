@@ -12,8 +12,8 @@
 
 #include "../../Includes/main.h"
 
-void	ft_error(char *str, t_main *main) // expand for exit codes
+void	ft_error(char *str, int e_code)
 {
 	perror(str);
-	exit (main->gen->e_code);
+	exit (e_code);
 }

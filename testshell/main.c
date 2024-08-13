@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:02:26 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 17:10:35 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ int	main(int argv, char **argc, char **envp)
 		free(main->parsed);
 		main->parsed = NULL;
 	}
-	// ft_free_gen(&gen);
 	return (0);
 }

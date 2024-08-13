@@ -45,14 +45,14 @@ char	**get_paths(t_main *main)
 	main->env->val = ft_get_env(main->env, "PATH");
 	if(!main->env->val)
 	{
-		ft_error("PATH not found", main);
+		ft_error("PATH not found", 1);
 		return (NULL);
 	}
 	temp = main->env->val;
 	if (!temp)
 	{
 		if (access(main->gen->cmd_args[0], X_OK) == -1)
-			exit (127);
+			ft_error("Command not found", 127);
 		return (NULL);
 	}
 	paths = ft_split(temp, ':');

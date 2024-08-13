@@ -7,10 +7,19 @@
 		{
 			"type": "lldb",
 			"request": "launch",
+<<<<<<< HEAD
 			"name": "Debug",
+=======
+			"name": "Launch",
+>>>>>>> main
 			"program": "${workspaceFolder}/testshell/minishell",
 			"args": [],
 			"cwd": "${workspaceFolder}"
 		}
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
 	]
 }

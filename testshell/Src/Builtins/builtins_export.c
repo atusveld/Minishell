@@ -43,15 +43,20 @@ static void	ft_export_add_env(t_env **env, char *str)
 		ft_add_envtry(*env, key, val);
 		free(val);
 	}
-	// else
-	// 	ft_error("export, no valid identifier");
+	else
+	{
+		free(key);
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+	}
 	free(key);
 }
 
 int	ft_export(t_main *main)
 {
-	char	**argv;
-	int		i;
+	char **argv;
+	int	i;
 
 	i = 1;
 	argv = (main->gen->cmd_args + 1);

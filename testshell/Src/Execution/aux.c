@@ -22,7 +22,11 @@ char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 		return (NULL);
 	str = ft_strjoin(temp, s3);
 	if (!str)
+	{
+		free (temp);
+		temp = NULL;
 		return (NULL);
+	}
 	free (temp);
 	return (str);
 }
@@ -37,9 +41,11 @@ void	*ft_free_arr(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
 	free(arr);
+	arr = NULL;
 	return (NULL);
 }
 
@@ -59,16 +65,25 @@ int	ft_count_cmd(t_parse *parsed)
 	return (i);
 }
 
-t_pipe	*ft_init_pipes(void)
+t_pipe	*ft_init_pipes(int cmd_count)
 {
-	t_pipe	*new_pipe;
+    t_pipe	*pipes;
+    int		i;
 
-	new_pipe = (t_pipe *)malloc(sizeof(t_pipe));
-	if (!new_pipe)
-		return (NULL);
-	pipe(new_pipe->tube);
-	new_pipe->in_fd = STDIN_FILENO;
-	return (new_pipe);
+    pipes = malloc(sizeof(t_pipe) * (cmd_count - 1));
+    if (!pipes)
+        return (NULL);
+    i = 0;
+    while (i < cmd_count - 1)
+    {
+        if (pipe(pipes[i].tube) == -1)
+        {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+        i++;
+    }
+    return (pipes);
 }
 
 void	ft_free_gen(t_main *main)

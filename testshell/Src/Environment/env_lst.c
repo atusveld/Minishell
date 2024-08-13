@@ -30,7 +30,7 @@
 	if (envp[i])
 		new->val = ft_strdup(&envp[i + 1]);
 	if (!new->str || !new->key || !new->val)
-		ft_error("malloc", NULL);
+		ft_error("malloc failed", 1);
 	return (new);
 }
 
@@ -43,7 +43,7 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 	new = ft_find_env(env, key);
 	if (!new)
 	{
-		ft_error("env not found", NULL);
+		ft_error("env key not found", 1);
 		return ;
 	}
 	if (new && val)
@@ -65,20 +65,20 @@ void	ft_env_add_front(t_env **env, t_env *new)
 	return ;
 }
 
-void	ft_del_env(t_env **env, t_env *temp)
+void	ft_del_env(t_env **env, t_env *val)
 {
-	t_env	*ele;
+	t_env	*temp;
 
-	ele = *env;
-	if (temp == ele)
+	temp = *env;
+	if (val == temp)
 	{
-		*env = temp->next;
-		ft_free_env(&temp);
+		*env = val->next;
+		ft_free_env(&val);
 		return ;
 	}
-	while (ele->next != temp)
-		ele = ele->next;
-	ele->next = temp->next;
-	ft_free_env(&temp);
+	while (temp->next != val)
+		temp = temp->next;
+	temp->next = val->next;
+	ft_free_env(&val);
 	return ;
 }
