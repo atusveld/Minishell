@@ -105,7 +105,8 @@ void ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cm
         {
             pids[i - 1] = pid;
             if (i > 1) close(pipes[i - 2].tube[0]);
-            close(pipes[i - 1].tube[1]);
+			if (i < cmd_c)
+           		close(pipes[i - 1].tube[1]);
         }
         if (parsed->next) 
 			parsed = parsed->next;
