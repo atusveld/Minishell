@@ -74,41 +74,53 @@ int ft_init_pipes_pids(t_parse *parsed, t_pipe **pipes, int **pids)
     }
     return (cmd_c);
 }
+void close_pipes(t_pipe *pipes, int cmd_c, int i)
+{
+    int j = 0;
+    while (j < cmd_c - 1)
+    {
+        if (j != i - 1) close(pipes[j].tube[1]);
+        if (j != i - 2) close(pipes[j].tube[0]);
+        j++;
+    }
+}
+
 void ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c)
 {
-    int pid;
-    int i = 0;
-
+    int pid; 
+	int	i;
+	
+	pid = 0;
+	i = 0;
     while (cmd_c > i++)
     {
         pid = ft_fork();
         if (pid == 0)
         {
+            close_pipes(pipes, cmd_c, i);
             ft_dup_exe(main, pipes, i, cmd_c);
             exit(main->gen->e_code);
         }
         else
         {
             pids[i - 1] = pid;
-            if (i > 1)
-                close(pipes[i - 2].tube[0]);
+            if (i > 1) close(pipes[i - 2].tube[0]);
             close(pipes[i - 1].tube[1]);
         }
-        if (parsed->next)
-        {
-            pipes[i - 1].in_fd = pipes[i - 1].tube[0];
-            parsed = parsed->next;
-        }
+        if (parsed->next) 
+			parsed = parsed->next;
         main->gen->cmd_args = parsed->argv;
     }
 }
+
 int ft_exe_multi(t_main *main, t_parse *parsed, int status)
 {
     t_pipe *pipes;
     int *pids;
     int cmd_c;
-    int j = 0;
+    int j;
 
+	j = 0;
     cmd_c = ft_init_pipes_pids(parsed, &pipes, &pids);
     if (cmd_c == -1)
         return (-1);
@@ -122,15 +134,10 @@ int ft_exe_multi(t_main *main, t_parse *parsed, int status)
             free(pipes);
             return (main->gen->e_code);
         }
-        else
-            main->gen->e_code = WEXITSTATUS(status);
+        main->gen->e_code = WEXITSTATUS(status);
         j++;
     }
     free(pids);
     free(pipes);
     return (main->gen->e_code);
 }
-
-
-
-

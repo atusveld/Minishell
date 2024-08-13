@@ -177,6 +177,7 @@ int 	ft_init_pipes_pids(t_parse *parsed, t_pipe **pipes, int **pids);
 void	ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c);
 void	ft_exe(t_parse *parsed, t_main *main);
 int		ft_fork(void);
+void 	close_pipes(t_pipe *pipes, int cmd_c, int i);
 int		ft_exe_single(t_main *main, t_env *env);
 int 	ft_exe_multi(t_main *main, t_parse *parsed, int status);
 int		ft_count_cmd(t_parse *parsed);
