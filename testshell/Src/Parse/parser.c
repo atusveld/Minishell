@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/08 14:02:20 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 17:00:10 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 	}
 }
 
-static void	prep_nod_array(t_token **token, t_parse *parse, t_env *env)
+static void	prep_nod_array(t_token **token, t_main *main, t_parse *parse_temp)
 {
 	int		i;
 	t_red	*redir_temp;
@@ -42,14 +42,14 @@ static void	prep_nod_array(t_token **token, t_parse *parse, t_env *env)
 	{
 		while (*token && (*token)->type == DEFAULT)
 		{
-			parse->argv[i++] = ft_strdup((*token)->cont);
+			parse_temp->argv[i++] = ft_strdup((*token)->cont);
 			*token = (*token)->next;
 		}
 		if (*token && ((*token)->type >= IN && (*token)->type <= APPEND))
-			add_redir(token, parse, redir_temp);
+			add_redir(token, parse_temp, redir_temp);
 		if (*token && (*token)->type == HEREDOC && (*token)->next->cont)
 		{
-			found_here(parse, env, (*token)->next->cont);
+			found_here(main, (*token)->next->cont);
 			(*token) = (*token)->next->next;
 		}
 		if ((*token) && (*token)->type != PIPE)
@@ -57,33 +57,33 @@ static void	prep_nod_array(t_token **token, t_parse *parse, t_env *env)
 	}
 }
 
-t_parse	*parse(t_token *token, t_env *env)
+void	parse(t_main *main)
 {
 	t_parse	*parse;
 	t_parse	*parse_temp;
 	t_token	*token_pos;
 
-	token_pos = token;
+	token_pos = main->token;
 	parse = NULL;
-	while (token)
+	while (main->token)
 	{
-		parse_temp = ft_calloc(1, sizeof(t_token));
-		parse_temp->argv = ft_calloc(ft_lstsize(token) + 1, sizeof(char **));
-		token_expand(token, env);
-		prep_nod_array(&token, parse_temp, env);
-		ft_add_parse(&parse, parse_temp);
-		if (token)
-			token = token->next;
+		parse_temp = ft_calloc(1, sizeof(t_parse));
+		parse_temp->argv = ft_calloc(ft_lstsize(main->token) + 1, sizeof(char **));
+		token_expand(main);
+		prep_nod_array(&main->token, main, parse_temp);
+		ft_add_parse(&main->parsed, parse_temp);
+		if (main->token)
+			main->token = main->token->next;
 	}
-	token = token_pos;
-	while (token)
+	main->token = token_pos;
+	while (main->token)
 	{
-		token_pos = token->next;
-		free(token->cont);
-		free(token);
-		token = token_pos;
+		token_pos = main->token->next;
+		free(main->token->cont);
+		free(main->token);
+		main->token = token_pos;
 	}
-	return (parse);
+	// return (parse);
 }
 
 // while (parse_temp->redir_in || parse_temp->redir_out)

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/24 12:28:07 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/08 17:42:22 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 16:23:19 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,75 +42,75 @@ static bool	single_quote(t_token *token, t_exp *exp_data)
 }
 
 // +1 in skip_char " to include the quote
-static bool	double_quote(t_token *token, t_exp	*exp_data, t_env *tmp_env)
+static bool	double_quote(t_main *main, t_exp *exp_data)
 {
-	if (comp(token->cont, '"', '\'', 0) && comp(token->cont, '"', '$', 0))
+	if (comp(main->token->cont, '"', '\'', 0) && comp(main->token->cont, '"', '$', 0))
 	{
 		exp_data->in_quotes = true;
-		while (comp(token->cont, '"', '\'', 0) || exp_data->in_quotes == true)
+		while (comp(main->token->cont, '"', '\'', 0) || exp_data->in_quotes == true)
 		{
-			exp_data->i = ft_strlen_def(token->cont, '$');
-			if (token->cont[exp_data->i] == '\0')
+			exp_data->i = ft_strlen_def(main->token->cont, '$');
+			if (main->token->cont[exp_data->i] == '\0')
 				return (false);
-			if (comp(token->cont + exp_data->i + 1, '$', '"', 1))
+			if (comp(main->token->cont + exp_data->i + 1, '$', '"', 1))
 			{
-				exp_data->i = skip_char(token->cont, '"') + 1;
+				exp_data->i = skip_char(main->token->cont, '"') + 1;
 				exp_data->in_quotes = false;
 			}
 			else
-				exp_data->i += skip_char(token->cont + exp_data->i, '$');
-			tmp_join(exp_data, token, tmp_env);
+				exp_data->i += skip_char(main->token->cont + exp_data->i, '$');
+			tmp_join(exp_data, main);
 		}
 		return (true);
 	}
 	return (false);
 }
 
-static bool	dollar_expand(t_token *token, t_exp *exp_data, t_env *tmp_env)
+static bool	dollar_expand(t_main *main, t_exp *exp_data)
 {
-	if (ft_strchr(token->cont, '$'))
+	if (ft_strchr(main->token->cont, '$'))
 	{
-		while (comp(token->cont, '$', '\'', 0) \
-			&& comp(token->cont, '$', '"', 0))
+		while (comp(main->token->cont, '$', '\'', 0) \
+			&& comp(main->token->cont, '$', '"', 0))
 		{
-			exp_data->i = ft_strlen_def(token->cont, '$');
-			if (comp(token->cont, '$', '\'', 0) \
-				&& comp(token->cont, '$', '"', 0))
+			exp_data->i = ft_strlen_def(main->token->cont, '$');
+			if (comp(main->token->cont, '$', '\'', 0) \
+				&& comp(main->token->cont, '$', '"', 0))
 			{
-				if (comp(token->cont + exp_data->i + 1, '$', '"', 1))
-					exp_data->i = skip_char(token->cont, '"');
-				else if (comp(token->cont + exp_data->i + 1, '$', '\'', 1))
-					exp_data->i = skip_char(token->cont, '\'');
+				if (comp(main->token->cont + exp_data->i + 1, '$', '"', 1))
+					exp_data->i = skip_char(main->token->cont, '"');
+				else if (comp(main->token->cont + exp_data->i + 1, '$', '\'', 1))
+					exp_data->i = skip_char(main->token->cont, '\'');
 				else
-					exp_data->i += skip_char(token->cont + exp_data->i, '$');
+					exp_data->i += skip_char(main->token->cont + exp_data->i, '$');
 			}
-			tmp_join(exp_data, token, tmp_env);
+			tmp_join(exp_data, main);
 		}
 		return (true);
 	}
 	return (false);
 }
 
-void	token_expand(t_token *token, t_env *tmp_env)
+void	token_expand(t_main *main)
 {
 	t_exp	*exp_data;
+	t_token	*tmp_token;
 
 	exp_data = NULL;
+	tmp_token = main->token;
 	exp_data = exp_init(exp_data);
-	while (token)
+	while (main->token)
 	{
-	
-
 		exp_data->in_quotes = false;
-		if (single_quote(token, exp_data))
+		if (single_quote(main->token, exp_data))
 			continue ;
-		if (double_quote(token, exp_data, tmp_env))
+		if (double_quote(main, exp_data))
 			continue ;
-		if (dollar_expand(token, exp_data, tmp_env))
+		if (dollar_expand(main, exp_data))
 			continue ;
-		exp_data->tmp_exp = ft_strjoin(exp_data->tmp_str, token->cont);
-		token->cont = end_expand(token, exp_data);
-		token->cont = remove_quote_unsp(token->cont);
-		token = token->next;
+		main->token->cont = end_expand(main->token, exp_data);
+		main->token->cont = remove_quote_unsp(main->token->cont);
+		main->token = main->token->next;
 	}
+	main->token = tmp_token;
 }

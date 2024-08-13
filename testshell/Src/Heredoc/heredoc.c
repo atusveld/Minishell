@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/07 12:36:34 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 16:32:54 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*remove_quote_unsp(char *delimiter)
 	return (delimiter);
 }
 
-void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
+void	write_line(char *delimiter, int fd, bool quotes, t_main *main)
 {
 	char *line;
 
@@ -85,7 +85,7 @@ void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 		if (quotes == false)
 		{
 			while (ft_strchr(line, '$'))
-				line = expandable(line, env);
+				line = expandable(line, main);
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -95,7 +95,7 @@ void	write_line(char *delimiter, int fd, bool quotes, t_env *env)
 }
 
 
-void	heredoc(char *delimiter, int fd, t_env *env)
+void	heredoc(char *delimiter, int fd, t_main *main)
 {
 	bool	quotes;
 
@@ -105,10 +105,10 @@ void	heredoc(char *delimiter, int fd, t_env *env)
 		delimiter = remove_quote_unsp(delimiter);
 		quotes = true;
 	}
-	write_line(delimiter, fd, quotes, env);
+	write_line(delimiter, fd, quotes, main);
 }
 
-static void	init_doc(char *delimiter, t_env *env)
+static void	init_doc(char *delimiter, t_main *main)
 {
 	int	fd;
 
@@ -118,19 +118,46 @@ static void	init_doc(char *delimiter, t_env *env)
 		// dar erro, escrever funct
 		return ;
 	}
-	heredoc(delimiter, fd, env);
+	heredoc(delimiter, fd, main);
 	close(fd);
 	_exit(0);
 }
 
-void	found_here(t_parse *data, t_env *env, char *delimiter)
+// void	found_here(t_parse *data, t_env *env, char *delimiter)
+// {
+// 	int		status;
+// 	pid_t	pid;
+// 	t_red	*here;
+
+// 	here = ft_redir_new("tmp_here", HEREDOC);
+// 	ft_add_redir(&data->redir_in, here);
+// 	pid = fork();
+// 	ignore_signal();
+// 	if (here_err(pid))
+// 		return ;
+// 	if (pid == 0)
+// 	{
+// 		unset_signals();
+// 		init_doc(delimiter, env);
+// 	}
+// 	waitpid(pid, &status, 0);
+// 	if (WIFSIGNALED(status))
+// 	{
+// 		// clean after exec
+// 		return ;
+// 	}
+// 	set_signals();
+// }
+
+void	found_here(t_main *main, char *delimiter)
 {
 	int		status;
 	pid_t	pid;
 	t_red	*here;
 
 	here = ft_redir_new("tmp_here", HEREDOC);
-	ft_add_redir(&data->redir_in, here);
+	printf("parse %p\n", main->parsed);
+	ft_add_redir(&main->parsed->redir_in, here);
 	pid = fork();
 	ignore_signal();
 	if (here_err(pid))
@@ -138,7 +165,7 @@ void	found_here(t_parse *data, t_env *env, char *delimiter)
 	if (pid == 0)
 	{
 		unset_signals();
-		init_doc(delimiter, env);
+		init_doc(delimiter, main);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
