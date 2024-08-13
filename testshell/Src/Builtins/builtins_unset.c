@@ -24,7 +24,7 @@ static int	ft_unset_error(char *arg, char *msg)
 
 static bool	ft_check_var(char *str)
 {
-	if (ft_isdigit(*str) == 1)
+	if (!str || ft_isdigit(*str) == 1)
 		return (false);
 	while (*str && (*str == '_' || ft_isalnum(*str)))
 		str++;
@@ -33,31 +33,33 @@ static bool	ft_check_var(char *str)
 	return (false);
 }
 
-void	ft_unset_env(t_env **env, char *key)
+void	ft_unset_env(t_main *main, char *key)
 {
-	t_env	*keyval;
+	t_env	*val;
 
-	if (!key)
+	if (!main || !key)
 		return ;
-	keyval = ft_find_env(*env, key);
-	if (!keyval)
+	val = ft_find_env(main->env, key);
+	if (!val)
 		return ;
-	ft_del_env(env, keyval);
+	ft_del_env(&main->env, val);
 }
 
 int	ft_unset(t_main *main, char **argv)
 {
 	int	i;
 
+	if (!main || !argv)
+        return (1);
 	i = 1;
 	if (!argv[i])
-		ft_error("unset, invalid arg", main);
+		ft_error("unset", 1);
 	while (argv[i])
 	{
 		if (ft_check_var(argv[i]) == false)
 			ft_unset_error(argv[i], "': not a valid identifier\n");
 		else
-			ft_unset_env(&main->env, argv[i]);
+			ft_unset_env(main, argv[i]);
 		i++;
 	}
 	return (1);

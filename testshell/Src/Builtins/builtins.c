@@ -40,13 +40,13 @@ void	ft_echo(t_main *main)
 		ft_putchar_fd('\n', 1);
 }
 
-void	ft_pwd(t_main *main)
+void	ft_pwd(void)
 {
 	char	*temp;
 
-	temp = main->gen->owd;
+	temp = getcwd(NULL, 0);
 	if (!temp)
-		ft_error("pwd", main);
+		ft_error("pwd", 1);
 	printf("%s\n", temp);
 	free (temp);
 }
@@ -57,7 +57,7 @@ void	ft_env(t_main *main)
 
 	temp = main->env;
 	if (!temp)
-		ft_error("ft_env", main);
+		ft_error("ft_env", 1);
 	while (temp)
 	{
 		if (temp->val && temp->key)
@@ -72,9 +72,14 @@ void	ft_cd(t_main *main)
 	char	*new_p;
 	char	*path;
 
-	old_p = main->gen->owd;
+ 	 if (access(".", F_OK) == -1)
+    {
+        ft_error("Current directory does not exist", 1);
+        return;
+    }
+	old_p = getcwd(NULL, 0);
 	if (!old_p)
-		ft_error("no old pwd", main);
+		ft_error("no old pwd", 1);
 	path = ft_strjoin_three(old_p, "/", main->gen->cmd_args[1]);
 	if (!path || !*path)
 		path = ft_get_env(main->env, "HOME");
@@ -82,7 +87,7 @@ void	ft_cd(t_main *main)
 		perror("cd");
 	new_p = getcwd(NULL, 0);
 	if (!new_p)
-		ft_error("cd", main);
+		ft_error("cd", 1);
 	ft_cd_update_env(main, old_p, new_p);
 	free (old_p);
 	free (new_p);

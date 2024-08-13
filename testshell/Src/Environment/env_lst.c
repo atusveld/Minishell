@@ -30,7 +30,7 @@
 	if (envp[i])
 		new->val = ft_strdup(&envp[i + 1]);
 	if (!new->str || !new->key || !new->val)
-		ft_error("malloc", NULL);
+		ft_error("malloc failed", 1);
 	return (new);
 }
 
@@ -43,7 +43,7 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 	new = ft_find_env(env, key);
 	if (!new)
 	{
-		ft_error("env not found", NULL);
+		ft_error("env key not found", 1);
 		return ;
 	}
 	if (new && val)

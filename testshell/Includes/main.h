@@ -73,8 +73,8 @@ typedef struct s_token
 
 typedef	struct s_red
 {
-	int				fd; // return from function open, after close file
-	char			*filename; // </>/<< + arg // <<???
+	int				fd;
+	char			*filename;
 	t_type			type;
 	struct s_red	*next;
 }			t_red;
@@ -110,9 +110,7 @@ typedef struct s_gen
 	char	**env_paths;
 	char	**cmd_args;
 	char	*cmd_path;
-	char	*owd;
 	int		e_code;
-	// t_env	*env;
 }	t_gen;
 
 typedef struct s_pipe
@@ -185,9 +183,6 @@ void	ft_exe(t_parse *parsed, t_main *main);
 int		ft_fork(void);
 int		ft_exe_single(t_main *main, t_env *env);
 int		ft_exe_multi(t_main *main, t_parse *parsed, int status, int cmd_c);
-void	ft_exe_first(t_main *main, t_pipe *pipe);
-void	ft_exe_mid(t_main *main, t_pipe *pipe);
-void	ft_exe_last(t_main *main, t_pipe *pipe);
 int		ft_count_cmd(t_parse *parsed);
 void	ft_dup_exe(t_main *main, t_pipe *pipe, int i, int cmd_c);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
@@ -212,23 +207,23 @@ int		ft_export_print(char **env);
 int		ft_export(t_main *main);
 int		ft_unset(t_main *main, char **argv);
 void	ft_echo(t_main *main);
-void	ft_pwd(t_main *main);
+void	ft_pwd(void);
 void	ft_cd(t_main *main);
 void	ft_cd_update_env(t_main *main, char *old_p, char *new_p);
 void	ft_env(t_main *main);
 
 //==========[ REDIRECTION ]==========//
-void	ft_red_out(t_parse *parsed, t_main *main);
-void	ft_red_in(t_parse *parsed, t_main *main);
+void	ft_red_out(t_parse *parsed);
+void	ft_red_in(t_parse *parsed);
 int		ft_create_file(t_parse *parsed);
-void	ft_write_to_file(int fd, t_parse *parsed, t_main *main);
-void	ft_append(t_parse *parsed, t_main *main);
+void	ft_write_to_file(int fd, t_parse *parsed);
+void	ft_append(t_parse *parsed);
 
 //==========[ AUX ]==========//
 t_main	*init_main(char **envp, t_main *main);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_parse *parsed);
-void	ft_error(char *str, t_main *main);
+void	ft_error(char *str, int e_code);
 char	**get_paths(t_main *main);
 void	ft_free_gen(t_main *main);
 

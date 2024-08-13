@@ -48,7 +48,10 @@ void	ft_dup_exe(t_main *main, t_pipe *pipes, int i, int cmd_c)
     if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
     {
         ft_free_arr(env_arr);
-        exit(errno == EACCES ? 126 : 127);
+		if (errno == EACCES)
+			ft_error("Permission denied", 126);
+		else
+			ft_error("Command not found", 127);
     }
     ft_free_arr(env_arr);
 }

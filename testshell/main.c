@@ -19,7 +19,6 @@ int	main(int argv, char **argc, char **envp)
 	main = NULL;
 	(void)argv;
 	(void)argc;
-	// (void)envp;
 	main = init_main(envp, main);
 	while (1)
 	{
@@ -35,9 +34,7 @@ int	main(int argv, char **argc, char **envp)
 		if (lexer(main->token) == 1)
 			continue ;
 		main->parsed = parse(main->token, main->env);
-		// main->gen->cmd_args = main->parsed->argv;
 		ft_exe(main->parsed, main);
 	}
-	// ft_free_gen(&gen);
 	return (0);
 }
