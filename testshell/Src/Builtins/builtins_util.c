@@ -6,7 +6,7 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/08 17:37:38 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 17:25:27 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_if_builtin(t_main *main, t_parse *parsed)
 {
+	if (!main->gen->cmd_args[0])
+		return (0);
 	if ((ft_strncmp(main->gen->cmd_args[0], "echo", 5)) == 0)
 	{
 		if (parsed->redir_in)

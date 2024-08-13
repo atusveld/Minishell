@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:04:49 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 17:56:37 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,6 @@ static char	*find_env_val(t_env *tmp_env, char *str, int i)
 	return("");
 }
 
-static char *find_exit_code(t_main *main, char *str, int i)
-{
-	if (!ft_strncmp(str, "?", i))
-	{
-		str = ft_itoa(main->gen->e_code);
-		return (str);
-	}
-		// return (main->gen->e_code);
-	return (str);
-}
-
-// def = stands for default
-// char	*expandable(char *def, t_env *tmp_env)
-// {
-// 	char *str;
-// 	char *val;
-// 	char tmp;
-// 	int	j;
-// 	int	i;
-
-// 	str = ft_strchr(def, '$');
-// 	if (!str)
-// 		return (def);
-// 	// str = find_exit_code(str, i);
-// 	i = 1;
-// 	while (str[i] != '\0' && ft_isalnum(str[i]))
-// 		i++;
-// 	tmp = str[i];
-// 	str[i] = '\0';
-// 	val = find_env_val(tmp_env, str, i);
-// 	str[i] = tmp;
-// 	j = ft_strlen(def) + ft_strlen(val) - i;
-// 	str = expand_str(def, val, i, j);
-// 	return(str);
-// }
-
 char	*expandable(char *def, t_main *main)
 {
 	char *str;
@@ -88,13 +52,14 @@ char	*expandable(char *def, t_main *main)
 	if (!str)
 		return (def);
 	i = 1;
-	while (str[i] != '\0' && ft_isalnum(str[i]))
+	while (str[i] != '\0' && (ft_isalnum(str[i]) || str[i] == '?'))
 		i++;
 	tmp = str[i];
 	str[i] = '\0';
-	str = find_exit_code(main, str, i);
-	printf("str = %s\n", str+1);
-	val = find_env_val(main->env, str, i);
+	if (str[1] == '?')
+		val = ft_itoa(main->gen->e_code);
+	else
+		val = find_env_val(main->env, str, i);
 	str[i] = tmp;
 	j = ft_strlen(def) + ft_strlen(val) - i;
 	str = expand_str(def, val, i, j);

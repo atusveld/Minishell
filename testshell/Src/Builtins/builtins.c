@@ -6,7 +6,7 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/08 17:37:03 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/13 17:31:53 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	ft_pwd(void)
 	temp = getcwd(NULL, 0);
 	if (!temp)
 		ft_error("pwd", 1);
-	printf("%s\n", temp);
+	write(1, temp, ft_strlen(temp));
+	write(1, "\n", 1);
+	// printf("%s\n", temp);
 	free (temp);
 }
 

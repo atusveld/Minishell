@@ -87,6 +87,8 @@ void	ft_write_to_file(int fd, t_parse *parsed)
 
 	i = 0;
 	text = parsed->argv[1];
+	if (text == NULL)
+		return ;
 	if (fd == -1)
 		ft_error("fd, write to file", 1);
 	while (text[i])
@@ -105,5 +107,6 @@ void	ft_append(t_parse *parsed)
 	
 	filename = parsed->redir_out->filename;
 	fd = open(filename, O_CREAT | O_RDWR | O_APPEND, 0666);
+	printf("fd = %i file %s\n", fd, filename);
 	ft_write_to_file(fd, parsed);
 }
