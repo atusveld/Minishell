@@ -24,7 +24,7 @@ void	ft_exe(t_parse *parsed, t_main *main)
 	if (!parsed->next)
 		main->gen->e_code = ft_exe_single(main, main->env);
 	else
-		main->gen->e_code = ft_exe_multi(main, parsed, -1, 0);
+		main->gen->e_code = ft_exe_multi(main, parsed, -1);
 }
 
 int	ft_exe_single(t_main *main, t_env *env)
@@ -60,32 +60,39 @@ int	ft_exe_single(t_main *main, t_env *env)
 	}
 	return (main->gen->e_code);
 }
-
-int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
+int ft_init_pipes_pids(t_parse *parsed, t_pipe **pipes, int **pids)
 {
-    t_pipe	*pipes;
-    int		pid;
-    int		cmd_c;
+    int cmd_c;
 
     cmd_c = ft_count_cmd(parsed);
-    pipes = ft_init_pipes(cmd_c);
+    *pipes = ft_init_pipes(cmd_c);
+    *pids = malloc(sizeof(int) * cmd_c);
+    if (!*pids)
+    {
+        free(*pipes);
+        return (-1);
+    }
+    return (cmd_c);
+}
+void ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c)
+{
+    int pid;
+    int i = 0;
+
     while (cmd_c > i++)
     {
         pid = ft_fork();
         if (pid == 0)
+        {
             ft_dup_exe(main, pipes, i, cmd_c);
+            exit(main->gen->e_code);
+        }
         else
         {
+            pids[i - 1] = pid;
             if (i > 1)
                 close(pipes[i - 2].tube[0]);
             close(pipes[i - 1].tube[1]);
-            if (waitpid(pid, &status, WUNTRACED) == -1)
-            {
-                main->gen->e_code = ((status >> 8) & 0xFF);
-				return (main->gen->e_code);
-            }
-            else
-                main->gen->e_code = WEXITSTATUS(status);
         }
         if (parsed->next)
         {
@@ -94,6 +101,36 @@ int	ft_exe_multi(t_main *main, t_parse *parsed, int status, int i)
         }
         main->gen->cmd_args = parsed->argv;
     }
+}
+int ft_exe_multi(t_main *main, t_parse *parsed, int status)
+{
+    t_pipe *pipes;
+    int *pids;
+    int cmd_c;
+    int j = 0;
+
+    cmd_c = ft_init_pipes_pids(parsed, &pipes, &pids);
+    if (cmd_c == -1)
+        return (-1);
+    ft_fork_exe(main, parsed, pipes, pids, cmd_c);
+    while (j < cmd_c)
+    {
+        if (waitpid(pids[j], &status, WUNTRACED) == -1)
+        {
+            main->gen->e_code = ((status >> 8) & 0xFF);
+            free(pids);
+            free(pipes);
+            return (main->gen->e_code);
+        }
+        else
+            main->gen->e_code = WEXITSTATUS(status);
+        j++;
+    }
+    free(pids);
+    free(pipes);
     return (main->gen->e_code);
 }
+
+
+
 
