@@ -64,4 +64,17 @@ void ft_exec_cmd(t_main *main, char *path, char **env_arr)
     }
     ft_free_arr(env_arr);
 }
+void	close_pipes(t_pipe *pipes, int cmd_c, int i)
+{
+	int	j;
 
+	j = 0;
+	while (j < cmd_c - 1)
+	{
+		if (j != i - 1)
+			close(pipes[j].tube[1]);
+		if (j != i - 2)
+			close(pipes[j].tube[0]);
+		j++;
+	}
+}
