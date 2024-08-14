@@ -78,9 +78,10 @@ t_pipe	*ft_init_pipes(int cmd_count)
     {
         if (pipe(pipes[i].tube) == -1)
         {
-            perror("pipe");
-            exit(EXIT_FAILURE);
-        }
+			free(pipes);
+			pipes = NULL;
+			ft_error("pipe failed", 1);
+		}
         i++;
     }
     return (pipes);
