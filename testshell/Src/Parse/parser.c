@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:00:10 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/14 12:23:57 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static void	prep_nod_array(t_token **token, t_main *main, t_parse *parse_temp)
 			add_redir(token, parse_temp, redir_temp);
 		if (*token && (*token)->type == HEREDOC && (*token)->next->cont)
 		{
-			found_here(main, (*token)->next->cont);
-			(*token) = (*token)->next->next;
+			found_here(main, parse_temp, (*token)->next->cont);
+			(*token) = (*token)->next;
 		}
 		if ((*token) && (*token)->type != PIPE)
 			(*token) = (*token)->next;
@@ -83,9 +83,19 @@ void	parse(t_main *main)
 		free(main->token);
 		main->token = token_pos;
 	}
-	// return (parse);
 }
 
+	// int i = 0;
+	// while (main->parsed)
+	// {
+	// while (main->parsed->argv[i]) {
+	// 	printf("%s\n", main->parsed->argv[i]);
+	// 	++i;
+	// }
+	// main->parsed = main->parsed->next;
+	// i = 0;
+	// }
+	
 // while (parse_temp->redir_in || parse_temp->redir_out)
 // {
 // 	if (parse_temp->redir_in)

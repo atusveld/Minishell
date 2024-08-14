@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 16:48:37 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/14 13:07:09 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 // # include "main.h"
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
+# define CTRL_D "bash: warning: here-document at line 3 delimited by end-of-file (wanted `l')"
+# define CTRL_C ">^C"
 # define ECHOCTL 1000
 
 //==========[ TOKEN STRUCTS ]==========//
@@ -160,7 +162,7 @@ t_token	*ft_lstnew(void *content);
 t_token	*ft_lstlast(t_token *lst);
 
 //==========[ HEREDOC ]==========//
-void	found_here(t_main *main, char *delimiter);
+void	found_here(t_main *main, t_parse *temp_parse, char *delimiter);
 
 //==========[ EXPANSIONS ]==========//
 // char	*expandable(char *def, t_env *tmp_env);

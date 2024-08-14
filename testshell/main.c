@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:10:35 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/14 11:52:19 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	main(int argv, char **argc, char **envp)
 	{
 		main->input->input = readline("Minishell: ");
 		if (!main->input->input)
+		{
 			return (1);
+		}
 		main->input->input = ft_strtrim(main->input->input, "\n\t\f\v ");
 		if (ft_strlen(main->input->input) == 0)
 			continue ;

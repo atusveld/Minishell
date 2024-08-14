@@ -59,11 +59,11 @@ void	ft_red_in(t_parse *parsed)
 		ft_error("red_in, fd", 1);
 		return ;
 	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-	{
-		close(fd);
-		return ;
-	}
+	// if (dup2(fd, STDIN_FILENO) < 0)
+	// {
+	// 	close(fd);
+	// 	return ;
+	// }
 	if (close(fd))
 		return ;
 }

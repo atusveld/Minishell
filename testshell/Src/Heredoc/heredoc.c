@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 16:32:54 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/14 15:30:32 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,41 +123,14 @@ static void	init_doc(char *delimiter, t_main *main)
 	_exit(0);
 }
 
-// void	found_here(t_parse *data, t_env *env, char *delimiter)
-// {
-// 	int		status;
-// 	pid_t	pid;
-// 	t_red	*here;
-
-// 	here = ft_redir_new("tmp_here", HEREDOC);
-// 	ft_add_redir(&data->redir_in, here);
-// 	pid = fork();
-// 	ignore_signal();
-// 	if (here_err(pid))
-// 		return ;
-// 	if (pid == 0)
-// 	{
-// 		unset_signals();
-// 		init_doc(delimiter, env);
-// 	}
-// 	waitpid(pid, &status, 0);
-// 	if (WIFSIGNALED(status))
-// 	{
-// 		// clean after exec
-// 		return ;
-// 	}
-// 	set_signals();
-// }
-
-void	found_here(t_main *main, char *delimiter)
+void	found_here(t_main *main, t_parse *parse_temp, char *delimiter)
 {
 	int		status;
 	pid_t	pid;
 	t_red	*here;
 
 	here = ft_redir_new("tmp_here", HEREDOC);
-	printf("parse %p\n", main->parsed);
-	ft_add_redir(&main->parsed->redir_in, here);
+	ft_add_redir(&parse_temp->redir_in, here);
 	pid = fork();
 	ignore_signal();
 	if (here_err(pid))
@@ -166,6 +139,7 @@ void	found_here(t_main *main, char *delimiter)
 	{
 		unset_signals();
 		init_doc(delimiter, main);
+		exit(0);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
