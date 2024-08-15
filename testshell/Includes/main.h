@@ -13,11 +13,6 @@
 #ifndef MAIN_H
 # define MAIN_H
 
-// # include "main.h"
-// # include "main.h"
-// # include "main.h"
-// # include "main.h"
-
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../Libft/libft.h"
@@ -29,7 +24,6 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <errno.h>
-// # include "main.h"
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
 # define CTRL_D "bash: warning: here-document at line 3 delimited by end-of-file (wanted `l')"
@@ -187,14 +181,14 @@ int 	ft_init_pipes_pids(t_parse *parsed, t_pipe **pipes, int **pids);
 void	ft_fork_exe(t_main *main, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c);
 void	ft_exe(t_parse *parsed, t_main *main);
 int		ft_fork(void);
-int		ft_exe_single(t_main *main, t_env *env);
+void 	close_pipes(t_pipe *pipes, int cmd_c, int i);
+int		ft_exe_single(t_main *main, char *path, char **arr);
 int 	ft_exe_multi(t_main *main, t_parse *parsed, int status);
 int		ft_count_cmd(t_parse *parsed);
 void 	ft_dup_exe(t_main *main, t_pipe *pipes, int i, int cmd_c);
 void 	ft_dup_pipes(t_pipe *pipes, int i, int cmd_c);
 void 	ft_exec_cmd(t_main *main, char *path, char **env_arr);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
-void	ft_e_code(t_main *main);
 
 //==========[ ENVIRONMENT ]==========//
 t_env	*ft_find_env(t_env *env, char *key);
@@ -236,7 +230,5 @@ char	**get_paths(t_main *main);
 void	ft_free_gen(t_main *main);
 
 //==========[  ]==========//
-// char	*expandable(char *def, t_env *tmp_env);
-// void	found_here(t_parse *data, t_env *env, char *delimiter);
 
 #endif
