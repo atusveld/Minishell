@@ -19,10 +19,6 @@
 
 	i = 0;
 	new = (t_env *)ft_calloc(1, sizeof(t_env));
-	// new->next = NULL;
-	// new->str = NULL;
-	// new->key = NULL;
-	// new->val = NULL;
 	new->str = strdup(envp);
 	while (envp[i] && envp[i] != '=')
 		i++;

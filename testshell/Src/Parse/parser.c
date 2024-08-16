@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/14 12:23:57 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/15 13:35:55 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	parse(t_main *main)
 	while (main->token)
 	{
 		parse_temp = ft_calloc(1, sizeof(t_parse));
+		// printf("main %p\n", main);
+		// printf("main->token %p\n", main->token);
 		parse_temp->argv = ft_calloc(ft_lstsize(main->token) + 1, sizeof(char **));
 		token_expand(main);
 		prep_nod_array(&main->token, main, parse_temp);
@@ -78,6 +80,7 @@ void	parse(t_main *main)
 	main->token = token_pos;
 	while (main->token)
 	{
+		printf("token %s\n", main->token->cont);
 		token_pos = main->token->next;
 		free(main->token->cont);
 		free(main->token);

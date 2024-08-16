@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/06 11:01:05 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/14 10:47:35 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/15 13:45:05 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 char	*end_expand(t_token *token, t_exp *exp_data)
 {
+	char *tmp;
+
+	tmp = token->cont;
 	if (ft_strlen(token->cont) == 0)
 	{
 		token->cont = ft_strdup(exp_data->tmp_str);
@@ -29,6 +32,7 @@ char	*end_expand(t_token *token, t_exp *exp_data)
 		free(exp_data->tmp_str);
 		exp_data->tmp_str = ft_strdup("");
 	}
+	free(tmp);
 	return (token->cont);
 }
 

@@ -42,13 +42,14 @@ char	**get_paths(t_main *main)
 	char	*temp;
 	char	**paths;
 
-	main->env->val = ft_get_env(main->env, "PATH");
-	if(!main->env->val)
+	// main->env->val = ft_get_env(main->env, "PATH");
+	temp = ft_get_env(main->env, "PATH");
+	if(!temp)
 	{
 		ft_error("PATH not found", 1);
 		return (NULL);
 	}
-	temp = main->env->val;
+	// temp = main->env->val;
 	if (!temp)
 	{
 		if (access(main->gen->cmd_args[0], X_OK) == -1)

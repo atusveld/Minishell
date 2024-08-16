@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/14 13:07:09 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/15 13:55:44 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <errno.h>
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
-# define CTRL_D "bash: warning: here-document at line 3 delimited by end-of-file (wanted `l')"
+# define CTRL_D "minishell: warning: here-document delimited by end-of-file (wanted `"
 # define CTRL_C ">^C"
 # define ECHOCTL 1000
 
@@ -151,12 +151,14 @@ void	ft_lstclear_mod(t_token **lst);
 void	ft_lstdelone_mod(t_token *lst);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 void	ft_lstadd_front(t_token **lst, t_token *new);
+// void	ft_lstclear(t_token **lst, void (*del)(void*));
+// void	ft_lstdelone(t_token *lst, void (*del)(void *));
 t_token	*ft_token(char *s);
 t_token	*ft_lstnew(void *content);
 t_token	*ft_lstlast(t_token *lst);
 
 //==========[ HEREDOC ]==========//
-void	found_here(t_main *main, t_parse *temp_parse, char *delimiter);
+int	found_here(t_main *main, t_parse *temp_parse, char *delimiter);
 
 //==========[ EXPANSIONS ]==========//
 // char	*expandable(char *def, t_env *tmp_env);
@@ -164,16 +166,14 @@ char	*expandable(char *def, t_main *main);
 char	*remove_quote(char *delimiter, char quote);
 char	*remove_quote_unsp(char *delimiter);
 char	*end_expand(t_token *token, t_exp *exp_data);
-// void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env);
 void	tmp_join(t_exp *exp_data, t_main *main);
 void	token_expand(t_main *main);
 t_exp	*exp_init(t_exp *exp_data);
 
 //==========[ SIGNALS ]==========//
 void	set_signals(void);
-void	unset_signals(void);
+void	unset_signals(int sig);
 void	ignore_signal(void);
-void	signal_ctrl_c(int sig);
 
 // ==========[ EXECUTION ]==========//
 t_pipe	*ft_init_pipes(int cmd_count);
@@ -224,7 +224,7 @@ void	ft_append(t_parse *parsed);
 //==========[ AUX ]==========//
 t_main	*init_main(char **envp, t_main *main);
 void	*ft_free_arr(char **arr);
-void	ft_exit(t_parse *parsed);
+void	ft_exit(t_main *main);
 void	ft_error(char *str, int e_code);
 char	**get_paths(t_main *main);
 void	ft_free_gen(t_main *main);

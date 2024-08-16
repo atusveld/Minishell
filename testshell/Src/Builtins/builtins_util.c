@@ -6,7 +6,7 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:25:27 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/15 12:24:43 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_if_builtin(t_main *main, t_parse *parsed)
 	if (!ft_strncmp(main->gen->cmd_args[0], "cd", 3))
 		return (ft_cd(main), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "exit", 5))
-		return (ft_exit(parsed), 0);
+		return (ft_exit(main), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "unset", 6))
 		return (ft_unset(main, main->gen->cmd_args + 1), 0);
 	if (!ft_strncmp(main->gen->cmd_args[0], "export", 7))

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/24 12:28:07 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 16:23:19 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/15 12:33:02 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,9 @@ void	token_expand(t_main *main)
 		main->token->cont = remove_quote_unsp(main->token->cont);
 		main->token = main->token->next;
 	}
+	// need proper free function
+	free((exp_data->tmp_str));
+	free((exp_data->tmp_exp));
+	free(exp_data);
 	main->token = tmp_token;
 }

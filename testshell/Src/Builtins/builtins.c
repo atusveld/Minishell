@@ -6,7 +6,7 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:31:53 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/15 13:09:53 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ void	ft_cd(t_main *main)
 	free (path);
 }
 
-void	ft_exit(t_parse *parsed)
+void	ft_exit(t_main *main)
 {
 	int	status;
 
 	status = 0;
-	if (parsed->next)
+	if (main->parsed->next)
 		printf("exit\n");
 	exit(status);
 }
