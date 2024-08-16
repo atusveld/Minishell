@@ -42,6 +42,11 @@ char	**get_paths(t_shell *shell)
 	char	*temp;
 	char	**paths;
 
+	if (!shell->env)
+	{
+		ft_error("Error getting paths", shell, 1);
+		return (NULL);
+	}
 	shell->env->val = ft_get_env(shell->env, "PATH");
 	if(!shell->env->val)
 	{

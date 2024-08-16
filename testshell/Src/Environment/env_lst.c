@@ -37,7 +37,7 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 	t_env	*new;
 
 	new = ft_find_env(env, key);
-	if (!new)
+	if (!new || !val || !key) 
 		return ;
 	if (new && val)
 	{
@@ -46,6 +46,7 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 		new->val = ft_strdup(val);
 		new->str = ft_strjoin_three(key, "=", val);
 	}
+	return ;
 }
 
 void	ft_env_add_front(t_env **env, t_env *new)

@@ -29,6 +29,8 @@ char	*ft_get_env(t_env *env, char *key)
 {
 	t_env	*ret;
 
+	if (!env || !key)
+		return (NULL);
 	ret = ft_find_env(env, key);
 	if (!ret)
 		return (NULL);
