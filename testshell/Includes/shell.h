@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef SHELL_H
+# define SHELL_H
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -156,7 +156,7 @@ t_token	*ft_lstnew(void *content);
 t_token	*ft_lstlast(t_token *lst);
 
 //==========[ HEREDOC ]==========//
-int	found_here(t_shell *main, t_parse *temp_parse, char *delimiter);
+int	found_here(t_shell *shell, t_parse *temp_parse, char *delimiter);
 
 //==========[ EXPANSIONS ]==========//
 // char	*expandable(char *def, t_env *tmp_env);
@@ -175,18 +175,18 @@ void	unset_signals(int sig);
 void	ignore_signal(void);
 
 // ==========[ EXECUTION ]==========//
-t_pipe	*ft_init_pipes(int cmd_count);
-int 	ft_init_pipes_pids(t_parse *parsed, t_pipe **pipes, int **pids);
-void	ft_fork_exe(t_shell *main, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c);
-void	ft_exe(t_parse *parsed, t_shell *main);
-int		ft_fork(void);
+t_pipe	*ft_init_pipes(t_shell *shell, int cmd_count);
+int 	ft_init_pipes_pids(t_shell *shell, t_pipe **pipes, int **pids);
+void	ft_fork_exe(t_shell *shell, t_parse *parsed, t_pipe *pipes, int *pids, int cmd_c);
+void	ft_exe(t_parse *parsed, t_shell *shell);
+int		ft_fork(t_shell *shell);
 void 	close_pipes(t_pipe *pipes, int cmd_c, int i);
-int		ft_exe_single(t_shell *main, char *path, char **arr);
-int 	ft_exe_multi(t_shell *main, t_parse *parsed, int status);
+int		ft_exe_single(t_shell *shell, char *path, char **arr);
+int 	ft_exe_multi(t_shell *shell, t_parse *parsed, int status);
 int		ft_count_cmd(t_parse *parsed);
-void 	ft_dup_exe(t_shell *main, t_pipe *pipes, int i, int cmd_c);
+void 	ft_dup_exe(t_shell *shell, t_pipe *pipes, int i, int cmd_c);
 void 	ft_dup_pipes(t_pipe *pipes, int i, int cmd_c);
-void 	ft_exec_cmd(t_shell *main, char *path, char **env_arr);
+void 	ft_exec_cmd(t_shell *shell, char *path, char **env_arr);
 char	*ft_strjoin_three(char *s1, char *s2, char *s3);
 
 //==========[ ENVIRONMENT ]==========//
@@ -200,33 +200,33 @@ void	ft_env_add_front(t_env **env, t_env *new);
 void	ft_free_env_ele(t_env *env);
 void	ft_free_env(t_env **env);
 void	ft_del_env(t_env **env, t_env *temp);
-char	*get_cmd_path(t_shell *main);
+char	*get_cmd_path(t_shell *shell);
 
 //==========[ BUILTINS ]==========//
-int		ft_if_builtin(t_shell *main, t_parse *parsed);
+int		ft_if_builtin(t_shell *shell);
 int		ft_export_print(char **env);
-int		ft_export(t_shell *main);
-int		ft_unset(t_shell *main, char **argv);
-void	ft_echo(t_shell *main);
-void	ft_pwd(void);
-void	ft_cd(t_shell *main);
-void	ft_cd_update_env(t_shell *main, char *old_p, char *new_p);
-void	ft_env(t_shell *main);
+int		ft_export(t_shell *shell);
+int		ft_unset(t_shell *shell, char **argv);
+void	ft_echo(t_shell *shell);
+void	ft_pwd(t_shell *shell);
+void	ft_cd(t_shell *shell);
+void	ft_cd_update_env(t_shell *shell, char *old_p, char *new_p);
+void	ft_env(t_shell *shell);
 
 //==========[ REDIRECTION ]==========//
-void	ft_red_out(t_parse *parsed);
-void	ft_red_in(t_parse *parsed);
-int		ft_create_file(t_parse *parsed);
-void	ft_write_to_file(int fd, t_parse *parsed);
-void	ft_append(t_parse *parsed);
+void	ft_red_out(t_shell *shell);
+void	ft_red_in(t_shell *shell);
+int		ft_create_file(t_shell *shell);
+void	ft_write_to_file(int fd, t_shell *shell);
+void	ft_append(t_shell *shell);
 
 //==========[ AUX ]==========//
-t_shell	*init_main(char **envp, t_shell *shell);
+t_shell	*init_shell(char **envp, t_shell *shell);
 void	*ft_free_arr(char **arr);
-void	ft_exit(t_parse *parsed);
-void	ft_error(char *str, int e_code);
-char	**get_paths(t_shell *main);
-void	ft_free_gen(t_shell *main);
+void	ft_exit(t_shell *shell);
+void	ft_error(char *str, t_shell *shell, int e_code);
+char	**get_paths(t_shell *shell);
+void	ft_free_gen(t_shell *shell);
 
 //==========[  ]==========//
 

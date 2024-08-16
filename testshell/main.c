@@ -12,16 +12,16 @@
 
 #include "Includes/shell.h"
 
-t_shell	*init_shell(char **envp, t_shell *shell)
-{
-	shell = ft_calloc(1, sizeof(t_shell));
-	shell->env = ft_build_env(envp);
-	shell->input = malloc(sizeof(t_data));
-	shell->gen = malloc(sizeof(t_gen));
-	shell->gen->env_paths = get_paths(shell);
-	shell->gen->e_code = 0;
-	return (shell);
-}
+// t_shell	*init_shell(char **envp, t_shell *shell)
+// {
+// 	shell = ft_calloc(1, sizeof(t_shell));
+// 	shell->env = ft_build_env(envp);
+// 	shell->input = malloc(sizeof(t_data));
+// 	shell->gen = malloc(sizeof(t_gen));
+// 	shell->gen->env_paths = get_paths(shell);
+// 	shell->gen->e_code = 0;
+// 	return (shell);
+// }
 
 void	main_clean(t_shell *shell)
 {
