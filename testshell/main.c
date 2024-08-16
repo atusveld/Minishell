@@ -6,76 +6,75 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:20:32 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:45:32 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Includes/shell.h"
 
-t_main	*par_init(char **envp, t_main *main)
+t_shell	*init_shell(char **envp, t_shell *shell)
 {
-	main = ft_calloc(1, sizeof(t_main));
-	main->env = ft_build_env(envp);
-	main->input = malloc(sizeof(t_data));
-	main->gen = malloc(sizeof(t_gen));
-	main->gen->env_paths = get_paths(main);
-	main->gen->e_code = 0;
-	return (main);
+	shell = ft_calloc(1, sizeof(t_shell));
+	shell->env = ft_build_env(envp);
+	shell->input = malloc(sizeof(t_data));
+	shell->gen = malloc(sizeof(t_gen));
+	shell->gen->env_paths = get_paths(shell);
+	shell->gen->e_code = 0;
+	return (shell);
 }
 
-void	main_clean(t_main *main)
+void	main_clean(t_shell *shell)
 {
 	t_env *tmp;
 	int i;
 
 	i = 0;
-	while (main->env)
+	while (shell->env)
 	{
-		tmp = main->env->next;
-		free(main->env->key);
-		printf("val: %s\n", main->env->val);
-		free(main->env->val);
-		free(main->env->str);
-		free(main->env);
-		main->env = tmp;
+		tmp = shell->env->next;
+		free(shell->env->key);
+		printf("val: %s\n", shell->env->val);
+		free(shell->env->val);
+		free(shell->env->str);
+		free(shell->env);
+		shell->env = tmp;
 	}
 	rl_clear_history();
-	while(main->gen->env_paths[i] != NULL)
+	while(shell->gen->env_paths[i] != NULL)
 	{
-		free(main->gen->env_paths[i]);
+		free(shell->gen->env_paths[i]);
 		i++;
 	}
-	free(main->gen->env_paths);
-	free(main->input);
-	free(main->gen);
-	free(main);
+	free(shell->gen->env_paths);
+	free(shell->input);
+	free(shell->gen);
+	free(shell);
 }
 
-void	parse_clean(t_main *main)
+void	parse_clean(t_shell *shell)
 {
 	t_parse *tmp;
 	int i;
 
-	while (main->parsed)
+	while (shell->parsed)
 	{
 		i = 0;
-		tmp = main->parsed->next;
-		// while (main->parsed->argv[i++])
-		while (main->parsed->argv[i] != NULL)
+		tmp = shell->parsed->next;
+		// while (shell->parsed->argv[i++])
+		while (shell->parsed->argv[i] != NULL)
 		{
-			free(main->parsed->argv[i]);
+			free(shell->parsed->argv[i]);
 			i++;
 		}
-		free(main->parsed->argv);
-		free(main->parsed);
-		main->parsed = tmp;
+		free(shell->parsed->argv);
+		free(shell->parsed);
+		shell->parsed = tmp;
 	}
 }
 
 int	main(int argv, char **argc, char **envp)
 {
 	t_shell *shell;
-	char *tmp;
 
 	shell = NULL;
 	(void)argv;
@@ -93,14 +92,14 @@ int	main(int argv, char **argc, char **envp)
 			continue ;
 		add_history(shell->input->input);
 		shell->token = ft_token(shell->input->input);
-		free(main->input->input);
+		free(shell->input->input);
 		asign_token(shell->token);
 		if (lexer(shell->token) == 1)
 			continue ;
-		shell->parsed = parse(shell->token, shell->env);
+		parse(shell);
 		ft_exe(shell->parsed, shell);
 	}
-	main_clean(main);
+	main_clean(shell);
 	set_signals();
 	return (0);
 }

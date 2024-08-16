@@ -9,7 +9,8 @@
 /*   Updated: 2022/09/07 17:40:34 by atusveld      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../Includes/shell.h"
+
+#include "shell.h"
 
 char	**ft_env_to_array(t_env *env)
 {
