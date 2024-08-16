@@ -6,11 +6,25 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/08 17:46:23 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/14 11:52:19 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Includes/shell.h"
+
+t_main	*par_init(char **envp, t_main *main)
+{
+	main = malloc(sizeof(t_main));
+	main->env = ft_build_env(envp);
+	main->parsed = NULL;
+	main->input = malloc(sizeof(t_data));
+	main->token = ft_calloc(1, sizeof(t_token));
+	main->token->next = NULL;
+	main->gen = malloc(sizeof(t_gen));
+	main->gen->env_paths = get_paths(main);
+	main->gen->e_code = 0;
+	return (main);
+}
 
 int	main(int argv, char **argc, char **envp)
 {

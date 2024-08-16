@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/08 17:35:32 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/14 13:07:09 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <errno.h>
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
+# define CTRL_D "bash: warning: here-document at line 3 delimited by end-of-file (wanted `l')"
+# define CTRL_C ">^C"
 # define ECHOCTL 1000
 
 //==========[ TOKEN STRUCTS ]==========//
@@ -130,7 +132,7 @@ void	ft_redir_del(t_red *lst);
 t_red	*ft_redir_last(t_red *lst);
 t_red	*ft_redir_new(char *filename, t_type type);
 t_parse	*ft_parse_last(t_parse *lst);
-t_parse	*parse(t_token *token, t_env *env);
+void	parse(t_main *main);
 
 // ==========[ LEXING ]==========//
 int		lexer(t_token	*token);
@@ -154,15 +156,17 @@ t_token	*ft_lstnew(void *content);
 t_token	*ft_lstlast(t_token *lst);
 
 //==========[ HEREDOC ]==========//
-void	found_here(t_parse *data, t_env *env, char *delimiter);
+void	found_here(t_main *main, t_parse *temp_parse, char *delimiter);
 
 //==========[ EXPANSIONS ]==========//
-char	*expandable(char *def, t_env *tmp_env);
+// char	*expandable(char *def, t_env *tmp_env);
+char	*expandable(char *def, t_main *main);
 char	*remove_quote(char *delimiter, char quote);
 char	*remove_quote_unsp(char *delimiter);
 char	*end_expand(t_token *token, t_exp *exp_data);
-void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env);
-void	token_expand(t_token *token, t_env *tmp_env);
+// void	tmp_join(t_exp *exp_data, t_token *token, t_env *tmp_env);
+void	tmp_join(t_exp *exp_data, t_main *main);
+void	token_expand(t_main *main);
 t_exp	*exp_init(t_exp *exp_data);
 
 //==========[ SIGNALS ]==========//
