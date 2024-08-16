@@ -10,31 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Includes/main.h"
+#include "Includes/shell.h"
 
 int	main(int argv, char **argc, char **envp)
 {
-	t_main	*main;
+	t_shell *shell;
 
-	main = NULL;
+	shell = NULL;
 	(void)argv;
 	(void)argc;
-	main = init_main(envp, main);
+	shell = init_shell(envp, shell);
 	while (1)
 	{
-		main->input->input = readline("Minishell: ");
-		if (!main->input->input)
+		shell->input->input = readline("Minishell: ");
+		if (!shell->input->input)
 			return (1);
-		main->input->input = ft_strtrim(main->input->input, "\n\t\f\v ");
-		if (ft_strlen(main->input->input) == 0)
+		shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");
+		if (ft_strlen(shell->input->input) == 0)
 			continue ;
-		add_history(main->input->input);
-		main->token = ft_token(main->input->input);
-		asign_token(main->token);
-		if (lexer(main->token) == 1)
+		add_history(shell->input->input);
+		shell->token = ft_token(shell->input->input);
+		asign_token(shell->token);
+		if (lexer(shell->token) == 1)
 			continue ;
-		main->parsed = parse(main->token, main->env);
-		ft_exe(main->parsed, main);
+		shell->parsed = parse(shell->token, shell->env);
+		ft_exe(shell->parsed, shell);
 	}
 	return (0);
 }

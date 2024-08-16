@@ -10,37 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
-int	ft_fork(void)
+int	ft_fork(t_shell *shell)
 {
 	int	pid;
 
 	pid = fork();
 	if (pid < 0)
-		ft_error("Fork failed", 1);
+		ft_error("Fork failed, ft_fork", shell, 1);
 	return (pid);
 }
 
-void ft_dup_exe(t_main *main, t_pipe *pipes, int i, int cmd_c)
+void ft_dup_exe(t_shell *shell, t_pipe *pipes, int i, int cmd_c)
 {
     char *path;
     char **env_arr;
 
-    env_arr = ft_env_to_array(main->env);
+    env_arr = ft_env_to_array(shell->env);
 	if (!env_arr)
 	{
 		ft_free_arr(env_arr);
-		ft_error("Error env to array, dup_exe", 1);
+		ft_error("Error env to array, dup_exe", shell, 1);
 	}
-    path = get_cmd_path(main);
+    path = get_cmd_path(shell);
 	if (!path)
 	{
 		free(path);
-		ft_error("Error getting path, dup_exe", 1);
+		ft_error("Error getting path, dup_exe", shell, 1);
 	}
     ft_dup_pipes(pipes, i, cmd_c);
-    ft_exec_cmd(main, path, env_arr);
+    ft_exec_cmd(shell, path, env_arr);
 	ft_free_arr(env_arr);
 }
 
@@ -65,15 +65,15 @@ void ft_dup_pipes(t_pipe *pipes, int i, int cmd_c)
     }
 }
 
-void ft_exec_cmd(t_main *main, char *path, char **env_arr)
+void ft_exec_cmd(t_shell *shell, char *path, char **env_arr)
 {
-    if ((execve(path, main->gen->cmd_args, env_arr)) < 0)
+    if ((execve(path, shell->gen->cmd_args, env_arr)) < 0)
     {
         ft_free_arr(env_arr);
         if (errno == EACCES)
-            ft_error("Permission denied", 126);
+            ft_error("Permission denied", shell, 126);
         else
-            ft_error("Command not found", 127);
+            ft_error("Command not found", shell, 127);
     }
     ft_free_arr(env_arr);
 }

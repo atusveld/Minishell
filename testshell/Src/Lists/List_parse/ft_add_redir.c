@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "shell.h"
 
 void	ft_add_redir(t_red **lst, t_red *new)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "shell.h"
 // condition compare
 static bool	comp(char *str, char del, char ex_del, int action)
 {

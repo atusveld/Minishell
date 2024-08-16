@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "shell.h"
 
 char	*end_expand(t_token *token, t_exp *exp_data)
 {

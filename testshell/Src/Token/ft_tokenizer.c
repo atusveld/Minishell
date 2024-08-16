@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 // #include "../Includes/main.h"
 
 static void	meta_char(char *meta_character[5])

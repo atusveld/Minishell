@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "shell.h"
 
 static int	ft_unset_error(char *arg, char *msg)
 {
@@ -33,33 +33,33 @@ static bool	ft_check_var(char *str)
 	return (false);
 }
 
-void	ft_unset_env(t_main *main, char *key)
+void	ft_unset_env(t_shell *shell, char *key)
 {
 	t_env	*val;
 
-	if (!main || !key)
-		return ;
-	val = ft_find_env(main->env, key);
+	if (!shell || !key)
+		ft_error("unset", shell, 1);
+	val = ft_find_env(shell->env, key);
 	if (!val)
-		return ;
-	ft_del_env(&main->env, val);
+		ft_error("unset", shell, 1);
+	ft_del_env(&shell->env, val);
 }
 
-int	ft_unset(t_main *main, char **argv)
+int	ft_unset(t_shell *shell, char **argv)
 {
 	int	i;
 
-	if (!main || !argv)
+	if (!shell || !argv)
         return (1);
 	i = 1;
 	if (!argv[i])
-		ft_error("unset", 1);
+		ft_error("unset", shell, 1);
 	while (argv[i])
 	{
 		if (ft_check_var(argv[i]) == false)
 			ft_unset_error(argv[i], "': not a valid identifier\n");
 		else
-			ft_unset_env(main, argv[i]);
+			ft_unset_env(shell, argv[i]);
 		i++;
 	}
 	return (1);

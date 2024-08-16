@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/main.h"
+#include "../Includes/shell.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>
