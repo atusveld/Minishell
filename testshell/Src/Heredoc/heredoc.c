@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/14 15:30:32 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:46:15 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*remove_quote_unsp(char *delimiter)
 	return (delimiter);
 }
 
-void	write_line(char *delimiter, int fd, bool quotes, t_main *main)
+void	write_line(char *delimiter, int fd, bool quotes, t_shell *shell)
 {
 	char *line;
 
@@ -85,17 +85,19 @@ void	write_line(char *delimiter, int fd, bool quotes, t_main *main)
 		if (quotes == false)
 		{
 			while (ft_strchr(line, '$'))
-				line = expandable(line, main);
+				line = expandable(line, shell);
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		line = readline("> ");
 	}
+	if (!line)
+		printf("%s%s')\n", CTRL_D, delimiter);
 	free(line);
 }
 
 
-void	heredoc(char *delimiter, int fd, t_main *main)
+void	heredoc(char *delimiter, int fd, t_shell *shell)
 {
 	bool	quotes;
 
@@ -105,10 +107,10 @@ void	heredoc(char *delimiter, int fd, t_main *main)
 		delimiter = remove_quote_unsp(delimiter);
 		quotes = true;
 	}
-	write_line(delimiter, fd, quotes, main);
+	write_line(delimiter, fd, quotes, shell);
 }
 
-static void	init_doc(char *delimiter, t_main *main)
+static void	init_doc(char *delimiter, t_shell *shell)
 {
 	int	fd;
 
@@ -118,34 +120,51 @@ static void	init_doc(char *delimiter, t_main *main)
 		// dar erro, escrever funct
 		return ;
 	}
-	heredoc(delimiter, fd, main);
+	heredoc(delimiter, fd, shell);
 	close(fd);
 	_exit(0);
 }
 
-void	found_here(t_main *main, t_parse *parse_temp, char *delimiter)
+int	found_here(t_shell *shell, t_parse *parse_temp, char *delimiter)
 {
 	int		status;
 	pid_t	pid;
 	t_red	*here;
 
 	here = ft_redir_new("tmp_here", HEREDOC);
+	if (!here)
+		return (1);
 	ft_add_redir(&parse_temp->redir_in, here);
 	pid = fork();
 	ignore_signal();
 	if (here_err(pid))
-		return ;
+		return (1);
 	if (pid == 0)
 	{
-		unset_signals();
-		init_doc(delimiter, main);
+		unset_signals(1);
+		init_doc(delimiter, shell);
 		exit(0);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
 	{
-		// clean after exec
-		return ;
+		// add cleaning if fail
+		return (1);
 	}
-	set_signals();
+	unset_signals(0);
+	return (1);
 }
+
+// t_token	*tmp;
+
+// tmp = NULL;
+// if (token == NULL)
+// 	return ;
+// tmp = token;
+// while (token)
+// {
+// 	tmp = token;
+// 	free(tmp->cont);
+// 	token = token->next;
+// 	free(tmp);
+// }

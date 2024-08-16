@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/13 17:56:37 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:42:36 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*find_env_val(t_env *tmp_env, char *str, int i)
 	return("");
 }
 
-char	*expandable(char *def, t_main *main)
+char	*expandable(char *def, t_shell *shell)
 {
 	char *str;
 	char *val;
@@ -57,9 +57,9 @@ char	*expandable(char *def, t_main *main)
 	tmp = str[i];
 	str[i] = '\0';
 	if (str[1] == '?')
-		val = ft_itoa(main->gen->e_code);
+		val = ft_itoa(shell->gen->e_code);
 	else
-		val = find_env_val(main->env, str, i);
+		val = find_env_val(shell->env, str, i);
 	str[i] = tmp;
 	j = ft_strlen(def) + ft_strlen(val) - i;
 	str = expand_str(def, val, i, j);
