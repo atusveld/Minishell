@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/main.h"
+#include "../../../Includes/shell.h"
 
 // void	ft_lstclear(t_token **lst, void (*del)(void*))
 // {

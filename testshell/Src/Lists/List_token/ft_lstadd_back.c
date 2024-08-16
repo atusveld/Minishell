@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/main.h"
+#include "../../../Includes/shell.h"
 
 void	ft_lstadd_back(t_token **lst, t_token *new)
 {

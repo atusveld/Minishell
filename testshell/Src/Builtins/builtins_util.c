@@ -6,44 +6,42 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/15 12:24:43 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:21:24 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
-int	ft_if_builtin(t_main *main, t_parse *parsed)
+int	ft_if_builtin(t_shell *shell)
 {
-	if (!main->gen->cmd_args[0])
-		return (0);
-	if ((ft_strncmp(main->gen->cmd_args[0], "echo", 5)) == 0)
+	if ((ft_strncmp(shell->gen->cmd_args[0], "echo", 5)) == 0)
 	{
-		if (parsed->redir_in)
-			return (ft_red_in(parsed), 0);
-		if (parsed->redir_out)
-			return (ft_red_out(parsed), 0);
+		if (shell->parsed->redir_in)
+			return (ft_red_in(shell), shell->gen->e_code);
+		if (shell->parsed->redir_out)
+			return (ft_red_out(shell), shell->gen->e_code);
 		else
-			return (ft_echo(main), 0);
+			return (ft_echo(shell), shell->gen->e_code);
 	}
-	if (!ft_strncmp(main->gen->cmd_args[0], "pwd", 4))
-		return (ft_pwd(), 0);
-	if (!ft_strncmp(main->gen->cmd_args[0], "env", 4))
-		return (ft_env(main), 0);
-	if (!ft_strncmp(main->gen->cmd_args[0], "cd", 3))
-		return (ft_cd(main), 0);
-	if (!ft_strncmp(main->gen->cmd_args[0], "exit", 5))
-		return (ft_exit(main), 0);
-	if (!ft_strncmp(main->gen->cmd_args[0], "unset", 6))
-		return (ft_unset(main, main->gen->cmd_args + 1), 0);
-	if (!ft_strncmp(main->gen->cmd_args[0], "export", 7))
-		return (ft_export(main), 0);
+	if (!ft_strncmp(shell->gen->cmd_args[0], "pwd", 4))
+		return (ft_pwd(shell), shell->gen->e_code);
+	if (!ft_strncmp(shell->gen->cmd_args[0], "env", 4))
+		return (ft_env(shell), shell->gen->e_code);
+	if (!ft_strncmp(shell->gen->cmd_args[0], "cd", 3))
+		return (ft_cd(shell), shell->gen->e_code);
+	if (!ft_strncmp(shell->gen->cmd_args[0], "exit", 5))
+		return (ft_exit(shell), shell->gen->e_code);
+	if (!ft_strncmp(shell->gen->cmd_args[0], "unset", 6))
+		return (ft_unset(shell, shell->gen->cmd_args + 1), shell->gen->e_code);
+	if (!ft_strncmp(shell->gen->cmd_args[0], "export", 7))
+		return (ft_export(shell), shell->gen->e_code);
 	return (1);
 }
 
-void	ft_cd_update_env(t_main *main, char *old_p, char *new_p)
+void	ft_cd_update_env(t_shell *shell, char *old_p, char *new_p)
 {
-	if (ft_find_env(main->env, "OLD_PWD"))
-		ft_add_envtry(main->env, "OLD_PWD", old_p);
-	if (ft_find_env(main->env, "NEW_PWD"))
-		ft_add_envtry(main->env, "NEW_PWD", new_p);
+	if (ft_find_env(shell->env, "OLD_PWD"))
+		ft_add_envtry(shell->env, "OLD_PWD", old_p);
+	if (ft_find_env(shell->env, "NEW_PWD"))
+		ft_add_envtry(shell->env, "NEW_PWD", new_p);
 }

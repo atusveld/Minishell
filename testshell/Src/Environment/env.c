@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
 t_env	*ft_build_env(char **envp)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
 static int	ft_max_strlen(char *s1, char *s2)
 {

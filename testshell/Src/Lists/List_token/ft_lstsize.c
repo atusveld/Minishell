@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/main.h"
+#include "../../../Includes/shell.h"
 
 int	ft_lstsize(t_token *lst)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
 char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 {
@@ -65,7 +65,7 @@ int	ft_count_cmd(t_parse *parsed)
 	return (i);
 }
 
-t_pipe	*ft_init_pipes(int cmd_count)
+t_pipe	*ft_init_pipes(t_shell *shell, int cmd_count)
 {
     t_pipe	*pipes;
     int		i;
@@ -80,20 +80,20 @@ t_pipe	*ft_init_pipes(int cmd_count)
         {
 			free(pipes);
 			pipes = NULL;
-			ft_error("pipe failed", 1);
+			ft_error("pipe failed", shell, 1);
 		}
         i++;
     }
     return (pipes);
 }
 
-void	ft_free_gen(t_main *main)
+void	ft_free_gen(t_shell *shell)
 {
-	ft_free_env(&main->env);
-	if (main->gen->cmd_args)
-		ft_free_arr(main->gen->cmd_args);
-	if (main->gen->env_paths)
-		ft_free_arr(main->gen->env_paths);
-	if (main->gen->cmd_path)
-		free(main->gen->cmd_path);
+	ft_free_env(&shell->env);
+	if (shell->gen->cmd_args)
+		ft_free_arr(shell->gen->cmd_args);
+	if (shell->gen->env_paths)
+		ft_free_arr(shell->gen->env_paths);
+	if (shell->gen->cmd_path)
+		free(shell->gen->cmd_path);
 }

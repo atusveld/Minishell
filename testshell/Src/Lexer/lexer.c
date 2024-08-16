@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
 static int	syntax_checker(t_token	*temp)
 {

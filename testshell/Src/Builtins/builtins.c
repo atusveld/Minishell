@@ -6,19 +6,19 @@
 /*   By: atusveld <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 15:26:55 by atusveld      #+#    #+#                 */
-/*   Updated: 2024/08/15 13:09:53 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:22:19 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
-void	ft_echo(t_main *main)
+void	ft_echo(t_shell *shell)
 {
 	char	**arr;
 	bool	nl;
 
 	nl = true;
-	arr = (main->gen->cmd_args + 1);
+	arr = (shell->gen->cmd_args + 1);
 	if (!*arr)
 	{
 		ft_putchar_fd('\n', 1);
@@ -40,26 +40,24 @@ void	ft_echo(t_main *main)
 		ft_putchar_fd('\n', 1);
 }
 
-void	ft_pwd(void)
+void	ft_pwd(t_shell *shell)
 {
 	char	*temp;
 
 	temp = getcwd(NULL, 0);
 	if (!temp)
-		ft_error("pwd", 1);
-	write(1, temp, ft_strlen(temp));
-	write(1, "\n", 1);
-	// printf("%s\n", temp);
+		ft_error("pwd", shell, 1);
+	printf("%s\n", temp);
 	free (temp);
 }
 
-void	ft_env(t_main *main)
+void	ft_env(t_shell *shell)
 {
 	t_env	*temp;
 
-	temp = main->env;
+	temp = shell->env;
 	if (!temp)
-		ft_error("ft_env", 1);
+		ft_error("ft_env", shell, 1);
 	while (temp)
 	{
 		if (temp->val && temp->key)
@@ -68,7 +66,7 @@ void	ft_env(t_main *main)
 	}
 }
 
-void	ft_cd(t_main *main)
+void	ft_cd(t_shell *shell)
 {
 	char	*old_p;
 	char	*new_p;
@@ -76,32 +74,32 @@ void	ft_cd(t_main *main)
 
  	 if (access(".", F_OK) == -1)
     {
-        ft_error("Current directory does not exist", 1);
+        ft_error("Current directory does not exist", shell, 1);
         return;
     }
 	old_p = getcwd(NULL, 0);
 	if (!old_p)
-		ft_error("no old pwd", 1);
-	path = ft_strjoin_three(old_p, "/", main->gen->cmd_args[1]);
+		ft_error("no old pwd", shell, 1);
+	path = ft_strjoin_three(old_p, "/", shell->gen->cmd_args[1]);
 	if (!path || !*path)
-		path = ft_get_env(main->env, "HOME");
+		path = ft_get_env(shell->env, "HOME");
 	if (chdir(path) == -1)
-		perror("cd");
+		ft_error("cd", shell, 1);
 	new_p = getcwd(NULL, 0);
 	if (!new_p)
-		ft_error("cd", 1);
-	ft_cd_update_env(main, old_p, new_p);
+		ft_error("cd", shell, 1);
+	ft_cd_update_env(shell, old_p, new_p);
 	free (old_p);
 	free (new_p);
 	free (path);
 }
 
-void	ft_exit(t_main *main)
+void	ft_exit(t_shell *shell)
 {
 	int	status;
 
 	status = 0;
-	if (main->parsed->next)
+	if (shell->parsed->next)
 		printf("exit\n");
 	exit(status);
 }

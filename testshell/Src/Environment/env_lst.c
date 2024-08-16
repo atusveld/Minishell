@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "../../Includes/main.h"
+ #include "../../Includes/shell.h"
 
  t_env	*ft_new_envtry(char *envp)
 {
@@ -26,7 +26,7 @@
 	if (envp[i])
 		new->val = ft_strdup(&envp[i + 1]);
 	if (!new->str || !new->key || !new->val)
-		ft_error("malloc failed", 1);
+		return (NULL);
 	return (new);
 }
 
@@ -38,10 +38,7 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 
 	new = ft_find_env(env, key);
 	if (!new)
-	{
-		ft_error("env key not found", 1);
 		return ;
-	}
 	if (new && val)
 	{
 		free (new->val);
@@ -49,15 +46,15 @@ void	ft_add_envtry(t_env *env, char *key, char *val)
 		new->val = ft_strdup(val);
 		new->str = ft_strjoin_three(key, "=", val);
 	}
-	// ft_free_env(new);
-	// return ;
 }
 
 void	ft_env_add_front(t_env **env, t_env *new)
 {
 	if (*env && new)
+	{
 		new->next = *env;
-	*env = new;
+		*env = new;
+	}
 	return ;
 }
 

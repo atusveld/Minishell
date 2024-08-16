@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "shell.h"
 
 static bool	ft_check_var(char *str)
 {
@@ -53,21 +53,21 @@ static void	ft_export_add_env(t_env **env, char *str)
 	free(key);
 }
 
-int	ft_export(t_main *main)
+int	ft_export(t_shell *shell)
 {
 	char **argv;
 	int	i;
 
 	i = 1;
-	argv = (main->gen->cmd_args + 1);
+	argv = (shell->gen->cmd_args + 1);
 	while (argv[i] && !*argv[i])
 		i++;
 	if (!argv[i])
-		return (ft_export_print(ft_env_to_array(main->env)));
+		return (ft_export_print(ft_env_to_array(shell->env)));
 	while (argv[i])
 	{
 		if (*argv[i])
-			ft_export_add_env(&main->env, argv[i]);
+			ft_export_add_env(&shell->env, argv[i]);
 		i++;
 	}
 	return (1);

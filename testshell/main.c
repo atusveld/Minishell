@@ -6,11 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/15 16:42:26 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:20:32 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Includes/main.h"
+#include "Includes/shell.h"
 
 t_main	*par_init(char **envp, t_main *main)
 {
@@ -74,51 +74,31 @@ void	parse_clean(t_main *main)
 
 int	main(int argv, char **argc, char **envp)
 {
-	t_main	*main;
+	t_shell *shell;
 	char *tmp;
 
-	main = NULL;
+	shell = NULL;
 	(void)argv;
 	(void)argc;
-	main = par_init(envp, main);
+	shell = init_shell(envp, shell);
 	ignore_signal();
 	unset_signals(0);
 	while (1)
 	{
-		main->input->input = readline("Minishell: ");
-		if (!main->input->input)
-		{
-			// 	t_env *tmp;
-
-			// while (main->env)
-			// {
-			// tmp = main->env->next;
-			// free(main->env->key);
-			// free(main->env->val);
-			// free(main->env->str);
-			// free(main->env);
-			// main->env = tmp;
-			// }
-			// free(main->input->input);
-			// free(main->input);
-			// free(main);
-			break ;
-		}
-		tmp = main->input->input;
-		main->input->input = ft_strtrim(main->input->input, "\n\t\f\v ");
-		free(tmp);
-		if (ft_strlen(main->input->input) == 0)
+		shell->input->input = readline("Minishell: ");
+		if (!shell->input->input)
+			return (1);
+		shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");
+		if (ft_strlen(shell->input->input) == 0)
 			continue ;
-		add_history(main->input->input);
-		main->token = ft_token(main->input->input);
+		add_history(shell->input->input);
+		shell->token = ft_token(shell->input->input);
 		free(main->input->input);
-		asign_token(main->token);
-		if (lexer(main->token) == 1)
+		asign_token(shell->token);
+		if (lexer(shell->token) == 1)
 			continue ;
-		parse(main);
-		ft_lstclear_mod(&main->token);
-		ft_exe(main->parsed, main);
-		parse_clean(main);
+		shell->parsed = parse(shell->token, shell->env);
+		ft_exe(shell->parsed, shell);
 	}
 	main_clean(main);
 	set_signals();

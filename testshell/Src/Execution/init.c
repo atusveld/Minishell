@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/main.h"
+#include "../../Includes/shell.h"
 
-t_main	*init_main(char **envp, t_main *main)
+t_shell	*init_shell(char **envp, t_shell *shell)
 {
-	main = malloc(sizeof(t_main));
-	main->parsed = NULL;
-	main->input = malloc(sizeof(t_data));
-	main->token = ft_calloc(1, sizeof(t_token));
-	main->token->next = NULL;
-	main->gen = malloc(sizeof(t_gen));
-	main->env = ft_build_env(envp);
-	main->gen->env_paths = get_paths(main);
-	main->gen->e_code = 0;
-	return (main);
+	shell = malloc(sizeof(t_shell));
+	shell->parsed = NULL;
+	shell->input = malloc(sizeof(t_data));
+	shell->token = ft_calloc(1, sizeof(t_token));
+	shell->token->next = NULL;
+	shell->gen = malloc(sizeof(t_gen));
+	shell->env = ft_build_env(envp);
+	shell->gen->env_paths = get_paths(shell);
+	shell->gen->e_code = 0;
+	return (shell);
 }

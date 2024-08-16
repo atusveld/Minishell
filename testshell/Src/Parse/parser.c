@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "shell.h"
 
 static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 {

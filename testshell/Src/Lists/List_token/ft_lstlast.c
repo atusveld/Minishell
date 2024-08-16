@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../Includes/main.h"
+#include "../../../Includes/shell.h"
 
 t_token	*ft_lstlast(t_token *lst)
 {
