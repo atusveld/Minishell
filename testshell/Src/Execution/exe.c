@@ -24,10 +24,12 @@ void	ft_exe(t_parse *parsed, t_shell *shell)
 		ft_red_in(shell);
 	if (parsed->redir_out)
 		ft_red_out(shell);
-	if (ft_if_builtin(shell) == 0)
-		return ;
 	if (!parsed->next)
+	{
+		if (ft_if_builtin(shell) == 0)
+			return ;
 		shell->gen->e_code = ft_exe_single(shell, path, arr);
+	}
 	else
 		shell->gen->e_code = ft_exe_multi(shell, parsed, -1);
 }
@@ -40,15 +42,15 @@ int	ft_exe_single(t_shell *shell, char *path, char **arr)
 	status = -1;
 	pid = fork();
 	if (pid < 0)
-		ft_error("Fork failed", shell, 1);
+		ft_error("Fork failed, single", shell, 1);
 	if (pid == 0)
 	{
 		if ((execve(path, shell->gen->cmd_args, arr)) < 0)
 		{
 			if (errno == EACCES)
-				ft_error("Permission denied", shell, 126);
+				ft_error("Permission denied, single cmd", shell, 126);
 			else
-				ft_error("Command not found", shell, 127);
+				ft_error("Command not found, single cmd", shell, 127);
 		}
 	}
 	else
@@ -68,6 +70,8 @@ int	ft_exe_multi(t_shell *shell, t_parse *parsed, int status)
 	int		j;
 
 	j = 0;
+	if (ft_if_builtin(shell) == 0)
+		return (shell->gen->e_code);
 	cmd_c = ft_init_pipes_pids(shell, &pipes, &pids);
 	if (cmd_c == -1)
 		return (-1);
