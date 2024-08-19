@@ -19,8 +19,6 @@ void	ft_exe(t_parse *parsed, t_shell *shell)
 
 	shell->gen->cmd_args = parsed->argv;
 	path = get_cmd_path(shell);
-	if (path == NULL)
-		ft_error_ne("Error getting command path, exe", shell, 1);
 	arr = ft_env_to_array(shell->env);
 	if (arr == NULL)
 		ft_error_ne("Error creating environment array, exe", shell, 1);
