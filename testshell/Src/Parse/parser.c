@@ -80,7 +80,7 @@ void	parse(t_shell *shell)
 	shell->token = token_pos;
 	while (shell->token)
 	{
-		printf("token %s\n", shell->token->cont);
+		// printf("token %s\n", shell->token->cont);
 		token_pos = shell->token->next;
 		free(shell->token->cont);
 		free(shell->token);

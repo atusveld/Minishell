@@ -26,12 +26,19 @@ char	**ft_env_to_array(t_env *env)
 		i++;
 	}
 	arr = (char **)malloc((i + 1) * sizeof(char *));
+	if (!arr)
+		return (NULL);
 	arr[i] = NULL;
 	i--;
 	temp = env;
 	while (i >= 0)
 	{
 		arr[i] = ft_strdup(temp->str);
+		if (!arr[i])
+		{
+			ft_free_arr(arr);
+			return (NULL);
+		}
 		temp = temp->next;
 		i--;
 	}
@@ -71,11 +78,22 @@ char	*get_cmd_path(t_shell *shell)
 	int		i;
 
 	i = 0;
-	if (shell->gen->cmd_args)
-		tmp_cmd = ft_strjoin("/", shell->gen->cmd_args[0]);
+	if(!shell->gen->cmd_args)
+		ft_error("Error getting command path, get_cmd_path", shell, 1);
+	tmp_cmd = ft_strjoin("/", shell->gen->cmd_args[0]);
+	if (!tmp_cmd)
+	{
+		free(tmp_cmd);
+		ft_error("Error creating command path, get_cmd_path", shell, 1);
+	}
 	while (shell->gen->env_paths[i])
 	{
 		cmd_path = ft_strjoin(shell->gen->env_paths[i], tmp_cmd);
+		if (!cmd_path)
+		{
+			free(tmp_cmd);
+			ft_error("Error creating command path, get_cmd_path", shell, 1);
+		}
 		if (access(cmd_path, X_OK) == 0)
 		{
 			free (tmp_cmd);

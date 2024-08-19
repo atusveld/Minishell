@@ -33,7 +33,7 @@ void	main_clean(t_shell *shell)
 	{
 		tmp = shell->env->next;
 		free(shell->env->key);
-		printf("val: %s\n", shell->env->val);
+		// printf("val: %s\n", shell->env->val);
 		free(shell->env->val);
 		free(shell->env->str);
 		free(shell->env);
@@ -94,7 +94,7 @@ int	main(int argv, char **argc, char **envp)
 	{
 		shell->input->input = readline("Minishell: ");
 		if (!shell->input->input)
-			return (1);
+			ft_error("Parsing error, main", shell, 1);
 		shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");
 		if (ft_strlen(shell->input->input) == 0)
 			continue ;
