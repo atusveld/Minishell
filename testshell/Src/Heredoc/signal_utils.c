@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:22 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:38:31 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:50:42 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	parent_ctrl_c(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
@@ -51,7 +52,7 @@ void	unset_signals(int sig)
 	else
 	{
 		signal(SIGINT, parent_ctrl_c);
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 

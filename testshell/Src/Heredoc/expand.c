@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:42:36 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:06:40 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ static char	*find_env_val(t_env *tmp_env, char *str, int i)
 	return("");
 }
 
+static char	*find_e_code(t_shell *shell)
+{
+	char *str;
+	char *val;
+
+	str = ft_itoa(shell->gen->e_code);
+	val = str;
+	free(str);
+	return (str);
+}
+
 char	*expandable(char *def, t_shell *shell)
 {
 	char *str;
@@ -57,7 +68,7 @@ char	*expandable(char *def, t_shell *shell)
 	tmp = str[i];
 	str[i] = '\0';
 	if (str[1] == '?')
-		val = ft_itoa(shell->gen->e_code);
+		val = find_e_code(shell);
 	else
 		val = find_env_val(shell->env, str, i);
 	str[i] = tmp;
@@ -65,3 +76,4 @@ char	*expandable(char *def, t_shell *shell)
 	str = expand_str(def, val, i, j);
 	return(str);
 }
+// val = ft_itoa(shell->gen->e_code); // needs to be fixed allowing extra text after $? plus leak fix
