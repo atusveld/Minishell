@@ -25,8 +25,8 @@
 	new->key = ft_substr(envp, 0, i);
 	if (envp[i])
 		new->val = ft_strdup(&envp[i + 1]);
-	if (!new->str || !new->key || !new->val)
-		return (NULL);
+	// if (!new->str || !new->key || !new->val)
+	// 	return (NULL);
 	return (new);
 }
 
