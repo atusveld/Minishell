@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"parse.h": "c",
-		"termbits.h": "c",
-		"libft.h": "c"
-	}
-}

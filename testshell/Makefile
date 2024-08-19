@@ -6,7 +6,7 @@
 #    By: atusveld <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/08 15:54:56 by atusveld      #+#    #+#                  #
-#    Updated: 2024/08/15 16:13:26 by jovieira      ########   odam.nl          #
+#    Updated: 2024/08/19 12:15:50 by jovieira      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ DR_LIBFT	=		Libft/
 LIBFT		=		Libft/libft.a
 
 CFLAGS		=		-Wall -Wextra -Werror -g
-# CFLAGS		+=		-g -fsanitize=address
+CFLAGS		+=		-fsanitize=address
 
 INC			=		-ILibft/ -IIncludes/
 OBJ			=		$(SRC:.c=.o)

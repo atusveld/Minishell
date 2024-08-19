@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:45:32 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:40:24 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	parse_clean(t_shell *shell)
 	{
 		i = 0;
 		tmp = shell->parsed->next;
-		// while (shell->parsed->argv[i++])
 		while (shell->parsed->argv[i] != NULL)
 		{
 			free(shell->parsed->argv[i]);
@@ -69,6 +68,15 @@ void	parse_clean(t_shell *shell)
 		free(shell->parsed->argv);
 		free(shell->parsed);
 		shell->parsed = tmp;
+	}
+}
+
+void	print_env(t_shell	*shell) {
+	t_env *tmp = shell->env;
+	while (tmp) {
+		printf("key: %s", tmp->key);
+		printf(": val: %s\n", tmp->val);
+		tmp = tmp->next;
 	}
 }
 
@@ -98,6 +106,7 @@ int	main(int argv, char **argc, char **envp)
 			continue ;
 		parse(shell);
 		ft_exe(shell->parsed, shell);
+		parse_clean(shell);
 	}
 	main_clean(shell);
 	set_signals();
