@@ -19,7 +19,11 @@ void	ft_exe(t_parse *parsed, t_shell *shell)
 
 	shell->gen->cmd_args = parsed->argv;
 	path = get_cmd_path(shell);
+	if (path == NULL)
+		ft_error("Error getting command path, exe", shell, 1);
 	arr = ft_env_to_array(shell->env);
+	if (arr == NULL)
+		ft_error("Error creating environment array, exe", shell, 1);
 	if (parsed->redir_in)
 		ft_red_in(shell);
 	if (parsed->redir_out)
@@ -32,6 +36,8 @@ void	ft_exe(t_parse *parsed, t_shell *shell)
 	}
 	else
 		shell->gen->e_code = ft_exe_multi(shell, parsed, -1);
+	ft_free_arr(arr);
+	free(path);
 }
 
 int	ft_exe_single(t_shell *shell, char *path, char **arr)
