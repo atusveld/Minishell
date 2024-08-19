@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:46:41 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:25:23 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,5 +229,7 @@ char	**get_paths(t_shell *shell);
 void	ft_free_gen(t_shell *shell);
 
 //==========[  ]==========//
+
+void	print_env(t_shell	*shell);
 
 #endif

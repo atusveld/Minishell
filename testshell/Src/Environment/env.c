@@ -19,7 +19,10 @@ t_env	*ft_build_env(char **envp)
 	new = NULL;
 	while (*envp)
 	{
-		ft_env_add_front(&new, ft_new_envtry(*envp));
+		if (!new)
+			new = ft_new_envtry(*envp);
+		else
+			ft_env_add_front(&new, ft_new_envtry(*envp));
 		envp++;
 	}
 	return (new);
@@ -43,7 +46,6 @@ t_env	*ft_find_env(t_env *env, char *key)
 		return (NULL);
 	while (env)
 	{
-		
 		if (env->key && !ft_strncmp(env->key, key, ft_strlen(key) + 1))
 			return (env);
 		env = env->next;

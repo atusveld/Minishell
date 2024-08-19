@@ -48,13 +48,12 @@ char	**get_paths(t_shell *shell)
 		ft_error("Error getting paths, get_paths", shell, 1);
 		return (NULL);
 	}
-	shell->env->val = ft_get_env(shell->env, "PATH");
-	if(!shell->env->val)
-	{
-		ft_error("PATH not found", shell, 1);
-		return (NULL);
-	}
-	temp = shell->env->val;
+	temp = ft_get_env(shell->env, "PATH");
+	// if(!temp)
+	// {
+	// 	ft_error("PATH not found", shell, 1);
+	// 	return (NULL);
+	// }
 	if (!temp)
 	{
 		if (access(shell->gen->cmd_args[0], X_OK) == -1)

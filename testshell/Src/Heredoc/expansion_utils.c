@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/06 11:01:05 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:39:09 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:40:08 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,17 @@ t_exp	*exp_init(t_exp *exp_data)
 
 void	tmp_join(t_exp *exp_data, t_shell *shell)
 {
-		exp_data->tmp_exp = ft_substr(shell->token->cont, 0, exp_data->i);
-		ft_memmove (shell->token->cont, shell->token->cont + exp_data->i, \
-		ft_strlen(shell->token->cont));
-		exp_data->tmp_exp = expandable(exp_data->tmp_exp, shell);
-		exp_data->tmp_str = ft_strjoin(exp_data->tmp_str, \
-		exp_data->tmp_exp);
+	char *tmp;
+
+	free(exp_data->tmp_exp);
+	exp_data->tmp_exp = ft_substr(shell->token->cont, 0, exp_data->i);
+	ft_memmove (shell->token->cont, shell->token->cont + exp_data->i, \
+	ft_strlen(shell->token->cont));
+	tmp = exp_data->tmp_exp;
+	exp_data->tmp_exp = expandable(exp_data->tmp_exp, shell);
+	free(tmp);
+	tmp = exp_data->tmp_str;
+	exp_data->tmp_str = ft_strjoin(exp_data->tmp_str, \
+	exp_data->tmp_exp);
+	free(tmp);
 }
