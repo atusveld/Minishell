@@ -225,6 +225,7 @@ t_shell	*init_shell(char **envp, t_shell *shell);
 void	*ft_free_arr(char **arr);
 void	ft_exit(t_shell *shell);
 void	ft_error(char *str, t_shell *shell, int e_code);
+void	ft_error_ne(char *str, t_shell *shell, int e_code);
 char	**get_paths(t_shell *shell);
 void	ft_free_gen(t_shell *shell);
 
