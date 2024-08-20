@@ -6,22 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/20 10:15:18 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/20 17:44:19 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Includes/shell.h"
-
-// t_shell	*init_shell(char **envp, t_shell *shell)
-// {
-// 	shell = ft_calloc(1, sizeof(t_shell));
-// 	shell->env = ft_build_env(envp);
-// 	shell->input = malloc(sizeof(t_data));
-// 	shell->gen = malloc(sizeof(t_gen));
-// 	shell->gen->env_paths = get_paths(shell);
-// 	shell->gen->e_code = 0;
-// 	return (shell);
-// }
 
 void	main_clean(t_shell *shell)
 {
@@ -33,7 +22,6 @@ void	main_clean(t_shell *shell)
 	{
 		tmp = shell->env->next;
 		free(shell->env->key);
-		// printf("val: %s\n", shell->env->val);
 		free(shell->env->val);
 		free(shell->env->str);
 		free(shell->env);

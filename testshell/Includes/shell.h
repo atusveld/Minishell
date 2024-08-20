@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:25:23 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/20 17:50:30 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <errno.h>
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
-# define CTRL_D "bash: warning: here-document at line 3 delimited by end-of-file (wanted `l')"
+# define CTRL_D "minishell: warning: here-document delimited by end-of-file (wanted `"
 # define CTRL_C ">^C"
 # define ECHOCTL 1000
 
