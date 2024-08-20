@@ -18,3 +18,8 @@ void	ft_error(char *str, t_shell *shell, int e_code)
 	shell->gen->e_code = e_code;
 	exit (e_code);
 }
+void	ft_error_ne(char *str, t_shell *shell, int e_code)
+{
+	perror(str);
+	shell->gen->e_code = e_code;
+}
