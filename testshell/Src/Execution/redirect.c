@@ -46,6 +46,11 @@ void	ft_red_in(t_shell *shell)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		ft_error("invalid fd, red_in", shell, 1);
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		close(fd);
+		ft_error("dup2 failed, red_in", shell, 1);
+	}
 	if (close(fd) == -1)
 		ft_error("error closing fd, red_in", shell, 1);
 }
@@ -72,7 +77,6 @@ void	ft_write_to_file(int fd, t_shell *shell)
 	int		i;
 
 	i = 0;
-	printf("=[%s]=\n", shell->parsed->argv[0]);
 	text = shell->parsed->argv[1];
 	if (fd == -1)
 		ft_error("fd, write to file", shell, 1);
