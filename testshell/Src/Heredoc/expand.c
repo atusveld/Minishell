@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/20 14:40:18 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:06:40 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/20 11:18:22 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static char	*find_env_val(t_env *tmp_env, char *str, int i)
 static char	*find_e_code(t_shell *shell)
 {
 	char *str;
-	char *val;
+	// char *val;
 
+	// val = str;
 	str = ft_itoa(shell->gen->e_code);
-	val = str;
-	free(str);
+	// free(str);
 	return (str);
 }
 
@@ -66,6 +66,7 @@ char	*expandable(char *def, t_shell *shell)
 	while (str[i] != '\0' && (ft_isalnum(str[i]) || str[i] == '?'))
 		i++;
 	tmp = str[i];
+	printf("str: %c\n", str[i]);
 	str[i] = '\0';
 	if (str[1] == '?')
 		val = find_e_code(shell);

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:26:45 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/20 10:15:18 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	print_env(t_shell	*shell) {
 int	main(int argv, char **argc, char **envp)
 {
 	t_shell *shell;
-	char *input;
 
 	shell = NULL;
 	(void)argv;
@@ -96,8 +95,7 @@ int	main(int argv, char **argc, char **envp)
 		shell->input->input = readline("Minishell: ");
 		if (!shell->input->input)
 			ft_error("Parsing error, main", shell, 1);
-		shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");
-		free(input);
+		shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");// still leaks
 		if (ft_strlen(shell->input->input) == 0)
 			continue ;
 		add_history(shell->input->input);
