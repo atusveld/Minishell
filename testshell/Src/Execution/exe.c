@@ -22,10 +22,6 @@ void	ft_exe(t_parse *parsed, t_shell *shell)
 	arr = ft_env_to_array(shell->env);
 	if (arr == NULL)
 		ft_error_ne("Error creating environment array, exe", shell, 1);
-	if (parsed->redir_in)
-		ft_red_in(shell);
-	if (parsed->redir_out)
-		ft_red_out(shell);
 	if (!parsed->next)
 	{
 		if (ft_if_builtin(shell) == 0)
@@ -42,13 +38,21 @@ int	ft_exe_single(t_shell *shell, char *path, char **arr)
 {
 	pid_t	pid;
 	int		status;
+	int		fd;
 
+	printf("=[SINGLE]=\n");
 	status = -1;
+	// if (shell->parsed->redir_in)
+	// 	return (ft_red_in(shell), shell->gen->e_code);
+	if (shell->parsed->redir_out)
+		fd = ft_red_single(shell);
 	pid = fork();
 	if (pid < 0)
 		ft_error("Fork failed, single", shell, 1);
 	if (pid == 0)
 	{
+		if (shell->parsed->redir_out)
+			close(fd);
 		if ((execve(path, shell->gen->cmd_args, arr)) < 0)
 		{
 			if (errno == EACCES)
@@ -59,6 +63,8 @@ int	ft_exe_single(t_shell *shell, char *path, char **arr)
 	}
 	else
 	{
+		if (shell->parsed->redir_out)
+			close(fd);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 			waitpid(pid, &status, WUNTRACED);
 		shell->gen->e_code = ((status >> 8) & 0xFF);
@@ -74,8 +80,7 @@ int	ft_exe_multi(t_shell *shell, t_parse *parsed, int status)
 	int		j;
 
 	j = 0;
-	if (ft_if_builtin(shell) == 0)
-		return (shell->gen->e_code);
+	printf("=[MULTI]=\n");
 	cmd_c = ft_init_pipes_pids(shell, &pipes, &pids);
 	if (cmd_c == -1)
 		return (-1);

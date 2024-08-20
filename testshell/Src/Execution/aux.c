@@ -49,44 +49,6 @@ void	*ft_free_arr(char **arr)
 	return (NULL);
 }
 
-int	ft_count_cmd(t_parse *parsed)
-{
-	t_parse	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = parsed;
-	while (tmp != NULL)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	free(tmp);
-	return (i);
-}
-
-t_pipe	*ft_init_pipes(t_shell *shell, int cmd_count)
-{
-    t_pipe	*pipes;
-    int		i;
-
-    pipes = malloc(sizeof(t_pipe) * (cmd_count - 1));
-    if (!pipes)
-        return (NULL);
-    i = 0;
-    while (i < cmd_count - 1)
-    {
-        if (pipe(pipes[i].tube) == -1)
-        {
-			free(pipes);
-			pipes = NULL;
-			ft_error("pipe failed", shell, 1);
-		}
-        i++;
-    }
-    return (pipes);
-}
-
 void	ft_free_gen(t_shell *shell)
 {
 	ft_free_env(&shell->env);

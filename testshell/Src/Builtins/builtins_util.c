@@ -16,6 +16,7 @@ int	ft_if_builtin(t_shell *shell)
 {
 	if ((ft_strncmp(shell->gen->cmd_args[0], "echo", 5)) == 0)
 	{
+		printf("=[BUILTIN]=\n");
 		if (shell->parsed->redir_in)
 			return (ft_red_in(shell), shell->gen->e_code);
 		if (shell->parsed->redir_out)

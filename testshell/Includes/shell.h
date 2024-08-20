@@ -216,6 +216,7 @@ void	ft_env(t_shell *shell);
 //==========[ REDIRECTION ]==========//
 void	ft_red_out(t_shell *shell);
 void	ft_red_in(t_shell *shell);
+int		ft_red_single(t_shell *shell);
 int		ft_create_file(t_shell *shell);
 void	ft_write_to_file(int fd, t_shell *shell);
 void	ft_append(t_shell *shell);
