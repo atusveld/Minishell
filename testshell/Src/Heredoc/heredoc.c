@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/20 17:57:54 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 12:06:44 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int	found_here(t_shell *shell, t_parse *parse_temp, char *delimiter)
 		exit(0);
 	}
 	waitpid(pid, &status, 0);
-	shell->gen->e_code = status;
+	shell->gen->e_code = status; // also wrong
 	if (WIFSIGNALED(status))
 	{
 		// add cleaning if fail

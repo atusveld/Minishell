@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/22 11:47:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 17:36:44 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 17:21:32 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static bool	check_closed_quotes(char *token)
 	size_t	i;
 	char	*c;
 
+	c = ft_strdup("");
 	i = 0;
 	while (*(token + i) != '\0')
 	{
@@ -33,6 +34,8 @@ static bool	check_closed_quotes(char *token)
 		}
 		i++;
 	}
+	if (c)
+		free(c);
 	return (true);
 }
 

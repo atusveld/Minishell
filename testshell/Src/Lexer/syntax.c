@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/26 17:40:51 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 17:36:44 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 15:46:03 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	single_char_check(t_token *temp)
 {
 	while (temp)
 	{
-		if (!temp->next && (temp->type >= PIPEPIPE && temp->type <= HEREDOC))
+		if (!temp->next && (temp->type >= PIPE && temp->type <= HEREDOC))
 		{
 			lexer_error(2, temp->cont);
 			return (false);
@@ -57,7 +57,8 @@ bool	check_double(t_token *temp)
 	while (temp)
 	{
 		if ((temp->cont[0] == '&' && temp->cont[1] == '&') || \
-		(temp->cont[0] == '$' && temp->cont[1] == '$'))
+		(temp->cont[0] == '$' && temp->cont[1] == '$') || \
+		(temp->cont[0] == '|' && temp->cont[1] == '|'))
 		{
 			lexer_error(2, temp->cont);
 			return (false);
@@ -66,22 +67,3 @@ bool	check_double(t_token *temp)
 	}
 	return (true);
 }
-
-// int	parent_check(t_token *temp)
-// {
-// 	while (temp)
-// 	{
-// 		if (ft_strchr(head->cont, '('))
-// 		{
-// 			if (!ft_strchr(head->cont, ')') && temp->next)
-// 				temp = temp->next;
-// 			else
-// 			{
-// 				lexer_error(2, ")");
-// 				return (1);
-// 			}
-// 		}
-// 		temp = temp->next;
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/20 17:50:30 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 13:58:22 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 */
 typedef enum e_type
 {
-	EMPTY,
 	DEFAULT,
 	PIPEPIPE,
 	PIPE,
