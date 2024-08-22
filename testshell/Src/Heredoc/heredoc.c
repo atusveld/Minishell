@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/21 12:06:44 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 14:11:50 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,17 @@ int	found_here(t_shell *shell, t_parse *parse_temp, char *delimiter)
 	pid_t	pid;
 	t_red	*here;
 
-	here = ft_redir_new("tmp_here", HEREDOC);
+	here = ft_redir_new("tmp_here", HEREDOC);//leak
 	if (!here)
 		return (1);
 	ft_add_redir(&parse_temp->redir_in, here);
 	pid = fork();
 	ignore_signal();
 	if (here_err(pid))
+	{
+		free(here);
 		return (1);
+	}
 	if (pid == 0)
 	{
 		unset_signals(1);
@@ -156,10 +159,12 @@ int	found_here(t_shell *shell, t_parse *parse_temp, char *delimiter)
 	if (WIFSIGNALED(status))
 	{
 		// add cleaning if fail
+		free(here);
 		return (1);
 	}
 	shell->gen->e_code = WIFSIGNALED(status); //nao funciona assim, tenho de checkar com status
 	unset_signals(0);
+	free(here);
 	return (1);
 }
 

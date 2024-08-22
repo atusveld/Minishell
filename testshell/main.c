@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/21 17:56:43 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 12:05:40 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	main_clean(t_shell *shell)
 		i++;
 	}
 	free(shell->gen->env_paths);
-	free(shell->input);
 	free(shell->gen);
 	free(shell);
 }
@@ -71,24 +70,27 @@ void	print_env(t_shell	*shell) {
 int	ft_readline(t_shell *shell)
 {
 	char *line_tmp;
+	char *line;
 
 	line_tmp = readline("Minishell: ");
 	if (!line_tmp)
 		ft_error("Parsing error, main", shell, 1);
-	shell->input->input = ft_strtrim(line_tmp, "\n\t\f\v ");
-	if (ft_strlen(shell->input->input) == 0)
+	line = ft_strtrim(line_tmp, "\n\t\f\v ");
+	if (ft_strlen(line) == 0)
 		return (1);
 	add_history(line_tmp);
 	free(line_tmp);
-	shell->token = ft_token(shell->input->input);
-	free(shell->input->input);
+	printf("line: %s\n", line);
+	shell->token = ft_token(line);
+	printf("token: %s\n", shell->token->cont);
+	free(line);
 	return (0);
 }
 
 int	lexing(t_shell *shell)
 {
 	asign_token(shell->token);
-	if (lexer(shell->token) == 1)
+	if (lexer(shell->token))
 		return (1);
 	return (0);
 }
@@ -110,9 +112,6 @@ int	main(int argv, char **argc, char **envp)
 		// ----------------------------------------
 		if (lexing(shell))
 			continue;
-		// asign_token(shell->token);
-		// if (lexer(shell->token) == 1)
-		// 	continue ;
 		// -----------------------------------------
 		parse(shell);
 		ft_exe(shell->parsed, shell);
