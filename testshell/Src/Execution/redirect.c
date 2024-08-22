@@ -16,21 +16,18 @@ void	ft_red_out(t_shell *shell)
 {
 	int	fd;
 	
+	printf("=[REDOUT]=\n");
 	if (!shell->parsed || !shell->parsed->redir_out)
         ft_error("parsing error, red_out", shell, 1);
 	while (shell->parsed->redir_out)
 	{
 		if (shell->parsed->redir_out->type == APPEND)
 			ft_append(shell);
-		if (shell->parsed->redir_out->next)
-		{
-			fd = ft_create_file(shell);
-			if (fd == -1)
-				ft_error("invalid fd, red_out", shell, 1);
+		fd = ft_create_file(shell);
+		if (fd == -1)
+			ft_error("invalid fd, red_out", shell, 1);
+		if (!shell->parsed->redir_out->next)
 			ft_write_to_file(fd, shell);
-			if (close(fd) == -1)
-				ft_error("error closing fd, red_out", shell, 1);
-		}
 		shell->parsed->redir_out = shell->parsed->redir_out->next;
 	}
 }
@@ -40,6 +37,7 @@ void	ft_red_in(t_shell *shell)
 	char	*filename;
 	int		fd;
 
+	printf("=[REDIN]=\n");
 	if (!shell->parsed || !shell->parsed->redir_in)
         ft_error("parsing error, red_in", shell, 1);
 	filename = shell->parsed->redir_in->filename;
@@ -48,6 +46,11 @@ void	ft_red_in(t_shell *shell)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		ft_error("invalid fd, red_in", shell, 1);
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		close(fd);
+		ft_error("dup2 failed, red_in", shell, 1);
+	}
 	if (close(fd) == -1)
 		ft_error("error closing fd, red_in", shell, 1);
 }
@@ -64,7 +67,7 @@ int	ft_create_file(t_shell *shell)
 		ft_error("invalid filename, create file", shell, 1);
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0666);
 	if (fd == -1)
-		ft_error("invlid fd, create file", shell, 1);
+		ft_error("invalid fd, create file", shell, 1);
 	return (fd);
 }
 

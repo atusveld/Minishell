@@ -67,6 +67,11 @@ void ft_dup_pipes(t_pipe *pipes, int i, int cmd_c)
 
 void ft_exec_cmd(t_shell *shell, char *path, char **env_arr)
 {
+	if (shell->parsed->redir_out)
+		ft_red_out(shell);
+	if (shell->parsed->redir_in)
+		ft_red_in(shell);
+	shell->gen->e_code = ft_if_builtin(shell);
     if ((execve(path, shell->gen->cmd_args, env_arr)) < 0)
     {
         ft_free_arr(env_arr);
