@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 19:30:10 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/06 14:21:43 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 18:30:26 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_red	*ft_redir_new(char *filename, t_type type)
 		exit(EXIT_FAILURE);
 	}
 	head->filename = filename;
+	free(filename);// leaking?
 	head->type = type;
 	head->next = NULL;
 	return (head);

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 17:12:23 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/20 17:47:08 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 18:36:07 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 	char *filename;
 
 	filename = ft_strdup((*temp)->next->cont);
+	if (!filename)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
 	if ((*temp)->type == IN)
 	{
 		redir_temp = ft_redir_new(filename, (*temp)->type);
@@ -25,10 +30,11 @@ static void	add_redir(t_token **temp, t_parse *parse, t_red *redir_temp)
 	}
 	else if ((*temp)->type == OUT || (*temp)->type == APPEND)
 	{
-		redir_temp = ft_redir_new(filename, (*temp)->type);
+		redir_temp = ft_redir_new(filename, (*temp)->type); // leaking dont know why?
 		ft_add_redir(&parse->redir_out, redir_temp);
 		(*temp) = (*temp)->next;
 	}
+	// free(filename);
 }
 
 static void	prep_nod_array(t_token **token, t_shell *shell, t_parse *parse_temp)
@@ -46,7 +52,10 @@ static void	prep_nod_array(t_token **token, t_shell *shell, t_parse *parse_temp)
 			*token = (*token)->next;
 		}
 		if (*token && ((*token)->type >= IN && (*token)->type <= APPEND))
+		{
 			add_redir(token, parse_temp, redir_temp);
+			free(redir_temp);
+		}
 		if (*token && (*token)->type == HEREDOC && (*token)->next->cont)
 		{
 			found_here(shell, parse_temp, (*token)->next->cont);

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/21 15:45:42 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/21 17:56:43 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,19 @@ void	print_env(t_shell	*shell) {
 		tmp = tmp->next;
 	}
 }
-
+			
 int	ft_readline(t_shell *shell)
 {
-	shell->input->input = readline("Minishell: ");
-	if (!shell->input->input)
+	char *line_tmp;
+
+	line_tmp = readline("Minishell: ");
+	if (!line_tmp)
 		ft_error("Parsing error, main", shell, 1);
-	shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");// still leaks
+	shell->input->input = ft_strtrim(line_tmp, "\n\t\f\v ");
 	if (ft_strlen(shell->input->input) == 0)
 		return (1);
-	add_history(shell->input->input);
+	add_history(line_tmp);
+	free(line_tmp);
 	shell->token = ft_token(shell->input->input);
 	free(shell->input->input);
 	return (0);
