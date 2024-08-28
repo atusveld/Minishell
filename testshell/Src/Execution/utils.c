@@ -97,4 +97,3 @@ void	close_pipes(t_pipe *pipes, int cmd_c, int i)
 		j++;
 	}
 }
-

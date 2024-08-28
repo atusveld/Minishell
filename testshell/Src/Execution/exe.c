@@ -42,8 +42,12 @@ int	ft_exe_single(t_shell *shell, char *path, char **arr)
 
 	printf("=[SINGLE]=\n");
 	status = -1;
-	// if (shell->parsed->redir_in)
-	// 	return (ft_red_in(shell), shell->gen->e_code);
+	if (shell->parsed->redir_in)
+	{
+		ft_red_in(shell);
+		if (shell->gen->e_code != 0)
+			return (shell->gen->e_code);
+	}
 	if (shell->parsed->redir_out)
 		fd = ft_red_single(shell);
 	pid = fork();
@@ -126,6 +130,13 @@ void	ft_fork_exe(t_shell *shell, t_parse *parsed, t_pipe *pipes, int *pids, int 
 	i = 0;
 	while (cmd_c > i++)
 	{
+		if (ft_if_builtin(shell) == 0)
+		{
+			shell->gen->e_code = ft_if_builtin(shell);
+			if (parsed->next)
+				parsed = parsed->next;
+			shell->gen->cmd_args = parsed->argv;
+		}
 		pid = ft_fork(shell);
 		if (pid < 0)
 		{

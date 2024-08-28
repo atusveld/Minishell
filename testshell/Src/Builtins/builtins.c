@@ -80,7 +80,10 @@ void	ft_cd(t_shell *shell)
 	old_p = getcwd(NULL, 0);
 	if (!old_p)
 		ft_error("no old pwd", shell, 1);
-	path = ft_strjoin_three(old_p, "/", shell->gen->cmd_args[1]);
+	if (!shell->gen->cmd_args[1] || !*shell->gen->cmd_args[1])
+		path = ft_get_env(shell->env, "HOME");
+	else
+		path = ft_strjoin_three(old_p, "/", shell->gen->cmd_args[1]);
 	if (!path || !*path)
 		path = ft_get_env(shell->env, "HOME");
 	if (chdir(path) == -1)
