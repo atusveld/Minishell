@@ -6,22 +6,11 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 13:15:34 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:40:24 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 12:05:40 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Includes/shell.h"
-
-// t_shell	*init_shell(char **envp, t_shell *shell)
-// {
-// 	shell = ft_calloc(1, sizeof(t_shell));
-// 	shell->env = ft_build_env(envp);
-// 	shell->input = malloc(sizeof(t_data));
-// 	shell->gen = malloc(sizeof(t_gen));
-// 	shell->gen->env_paths = get_paths(shell);
-// 	shell->gen->e_code = 0;
-// 	return (shell);
-// }
 
 void	main_clean(t_shell *shell)
 {
@@ -33,7 +22,6 @@ void	main_clean(t_shell *shell)
 	{
 		tmp = shell->env->next;
 		free(shell->env->key);
-		// printf("val: %s\n", shell->env->val);
 		free(shell->env->val);
 		free(shell->env->str);
 		free(shell->env);
@@ -46,7 +34,6 @@ void	main_clean(t_shell *shell)
 		i++;
 	}
 	free(shell->gen->env_paths);
-	free(shell->input);
 	free(shell->gen);
 	free(shell);
 }
@@ -79,31 +66,53 @@ void	print_env(t_shell	*shell) {
 		tmp = tmp->next;
 	}
 }
+			
+int	ft_readline(t_shell *shell)
+{
+	char *line_tmp;
+	char *line;
+
+	line_tmp = readline("Minishell: ");
+	if (!line_tmp)
+		ft_error("Parsing error, main", shell, 1);
+	line = ft_strtrim(line_tmp, "\n\t\f\v ");
+	if (ft_strlen(line) == 0)
+		return (1);
+	add_history(line_tmp);
+	free(line_tmp);
+	printf("line: %s\n", line);
+	shell->token = ft_token(line);
+	printf("token: %s\n", shell->token->cont);
+	free(line);
+	return (0);
+}
+
+int	lexing(t_shell *shell)
+{
+	asign_token(shell->token);
+	if (lexer(shell->token))
+		return (1);
+	return (0);
+}
 
 int	main(int argv, char **argc, char **envp)
 {
 	t_shell *shell;
 
-	shell = NULL;
 	(void)argv;
 	(void)argc;
+	shell = NULL;
 	shell = init_shell(envp, shell);
 	ignore_signal();
 	unset_signals(0);
 	while (1)
 	{
-		shell->input->input = readline("Minishell: ");
-		if (!shell->input->input)
-			ft_error("Parsing error, main", shell, 1);
-		shell->input->input = ft_strtrim(shell->input->input, "\n\t\f\v ");
-		if (ft_strlen(shell->input->input) == 0)
+		if (ft_readline(shell))
 			continue ;
-		add_history(shell->input->input);
-		shell->token = ft_token(shell->input->input);
-		free(shell->input->input);
-		asign_token(shell->token);
-		if (lexer(shell->token) == 1)
-			continue ;
+		// ----------------------------------------
+		if (lexing(shell))
+			continue;
+		// -----------------------------------------
 		parse(shell);
 		ft_exe(shell->parsed, shell);
 		parse_clean(shell);

@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 15:57:14 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/15 13:38:12 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 12:06:42 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 static void	meta_char(char *meta_character[5])
 {
-	meta_character[0] = "|";
-	meta_character[1] = "<<";
-	meta_character[2] = ">>";
-	meta_character[3] = ">";
-	meta_character[4] = "<";
+	meta_character[0] = "||";
+	meta_character[1] = "|";
+	meta_character[2] = "<<";
+	meta_character[3] = ">>";
+	meta_character[4] = ">";
+	meta_character[5] = "<";
 }
 
 static char	*is_meta_char(char *s, char *meta_character[6])
@@ -27,7 +28,7 @@ static char	*is_meta_char(char *s, char *meta_character[6])
 	int	i;
 
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	{
 		if (ft_strncmp(s, meta_character[i], ft_strlen(meta_character[i])) == 0)
 			return (meta_character[i]);
@@ -74,7 +75,7 @@ static void	check_quotes(char *s, int *i)
 t_token	*ft_token(char *s)
 {
 	t_token	*token;
-	char	*meta_character[5];
+	char	*meta_character[6];
 	int		i;
 
 	meta_char(meta_character);

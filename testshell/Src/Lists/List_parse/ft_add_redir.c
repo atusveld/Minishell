@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/27 21:34:46 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/14 10:41:20 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 14:07:51 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_add_redir(t_red **lst, t_red *new)
 {
 	t_red	*tail;
-
+	
 	if (!lst)
 		return ;
 	if (*lst == NULL)

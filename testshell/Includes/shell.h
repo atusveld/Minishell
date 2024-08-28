@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/22 14:22:49 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:25:23 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 14:08:01 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <errno.h>
 
 # define NEAR_TOKEN "minishell: syntax error near unexpected token `"
-# define CTRL_D "bash: warning: here-document at line 3 delimited by end-of-file (wanted `l')"
+# define CTRL_D "minishell: warning: here-document delimited by end-of-file (wanted `"
 # define CTRL_C ">^C"
 # define ECHOCTL 1000
 
@@ -40,7 +40,6 @@
 */
 typedef enum e_type
 {
-	EMPTY,
 	DEFAULT,
 	PIPEPIPE,
 	PIPE,
@@ -51,17 +50,12 @@ typedef enum e_type
 	END,
 }			t_type;
 
-typedef struct s_data
-{
-	char			*input;
-}	t_data;
-
 typedef struct s_token
 {
 	char				*cont;
 	t_type				type;
-	int					infile;
-	int					operator;
+	// int					infile;
+	// int					operator;
 	struct s_token		*next;
 }	t_token;
 
@@ -117,7 +111,6 @@ typedef struct s_pipe
 
 typedef struct s_shell
 {
-	t_data	*input;
 	t_token	*token;
 	t_parse	*parsed;
 	t_env	*env;
@@ -136,9 +129,7 @@ void	parse(t_shell *shell);
 
 // ==========[ LEXING ]==========//
 int		lexer(t_token	*token);
-void	lexer_error(int error, char *word);
-void	valid_operator(t_token *temp);
-void	redirect_check(t_token *temp);
+void	lexer_error(char *word);
 bool	check_double(t_token *temp);
 bool	exit_cond_valid(t_token *temp);
 bool	single_char_check(t_token *temp);

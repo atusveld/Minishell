@@ -6,7 +6,7 @@
 /*   By: jovieira <jovieira@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/29 12:08:58 by jovieira      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:46:15 by jovieira      ########   odam.nl         */
+/*   Updated: 2024/08/22 14:11:50 by jovieira      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	here_err(pid_t PID)
 	}
 	return (0);
 }
+
 
 char	*remove_quote(char *delimiter, char quote)
 {
@@ -110,6 +111,11 @@ void	heredoc(char *delimiter, int fd, t_shell *shell)
 	write_line(delimiter, fd, quotes, shell);
 }
 
+void	fd_error(char *str)
+{
+	perror(str);
+}
+
 static void	init_doc(char *delimiter, t_shell *shell)
 {
 	int	fd;
@@ -117,7 +123,7 @@ static void	init_doc(char *delimiter, t_shell *shell)
 	fd = open("tmp_here", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		// dar erro, escrever funct
+		fd_error("Error opening file");
 		return ;
 	}
 	heredoc(delimiter, fd, shell);
@@ -131,14 +137,17 @@ int	found_here(t_shell *shell, t_parse *parse_temp, char *delimiter)
 	pid_t	pid;
 	t_red	*here;
 
-	here = ft_redir_new("tmp_here", HEREDOC);
+	here = ft_redir_new("tmp_here", HEREDOC);//leak
 	if (!here)
 		return (1);
 	ft_add_redir(&parse_temp->redir_in, here);
 	pid = fork();
 	ignore_signal();
 	if (here_err(pid))
+	{
+		free(here);
 		return (1);
+	}
 	if (pid == 0)
 	{
 		unset_signals(1);
@@ -146,12 +155,16 @@ int	found_here(t_shell *shell, t_parse *parse_temp, char *delimiter)
 		exit(0);
 	}
 	waitpid(pid, &status, 0);
+	shell->gen->e_code = status; // also wrong
 	if (WIFSIGNALED(status))
 	{
 		// add cleaning if fail
+		free(here);
 		return (1);
 	}
+	shell->gen->e_code = WIFSIGNALED(status); //nao funciona assim, tenho de checkar com status
 	unset_signals(0);
+	free(here);
 	return (1);
 }
 
