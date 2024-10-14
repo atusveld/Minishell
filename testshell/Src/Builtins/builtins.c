@@ -47,7 +47,11 @@ void	ft_pwd(t_shell *shell)
 	temp = getcwd(NULL, 0);
 	if (!temp)
 		ft_error("pwd", shell, 1);
-	printf("%s\n", temp);
+	if (!shell->parsed->next)
+	{
+		write(STDOUT_FILENO, temp, ft_strlen(temp));
+		write(STDOUT_FILENO, "\n", 1);
+	}
 	free (temp);
 }
 

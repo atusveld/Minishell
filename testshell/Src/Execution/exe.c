@@ -130,13 +130,6 @@ void	ft_fork_exe(t_shell *shell, t_parse *parsed, t_pipe *pipes, int *pids, int 
 	i = 0;
 	while (cmd_c > i++)
 	{
-		if (ft_if_builtin(shell) == 0)
-		{
-			shell->gen->e_code = ft_if_builtin(shell);
-			if (parsed->next)
-				parsed = parsed->next;
-			shell->gen->cmd_args = parsed->argv;
-		}
 		pid = ft_fork(shell);
 		if (pid < 0)
 		{
@@ -147,6 +140,12 @@ void	ft_fork_exe(t_shell *shell, t_parse *parsed, t_pipe *pipes, int *pids, int 
 		{
 			close_pipes(pipes, cmd_c, i);
 			ft_dup_exe(shell, pipes, i, cmd_c);
+			if (ft_if_builtin(shell) == 0)
+				exit(shell->gen->e_code);
+			if (parsed->next)
+				parsed = parsed->next;
+			shell->gen->cmd_args = parsed->argv;
+			ft_exec_cmd(shell, get_cmd_path(shell), ft_env_to_array(shell->env));
 			exit(shell->gen->e_code);
 		}
 		else
