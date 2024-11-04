@@ -42,19 +42,20 @@ int	ft_exe_single(t_shell *shell, char *path, char **arr)
 
 	printf("=[SINGLE]=\n");
 	status = -1;
-	if (shell->parsed->redir_in)
-	{
-		ft_red_in(shell);
-		if (shell->gen->e_code != 0)
-			return (shell->gen->e_code);
-	}
-	if (shell->parsed->redir_out)
-		fd = ft_red_single(shell);
+	fd = 0;
 	pid = fork();
 	if (pid < 0)
 		ft_error("Fork failed, single", shell, 1);
 	if (pid == 0)
 	{
+		if (shell->parsed->redir_in)
+		{
+			ft_red_in(shell);
+			if (shell->gen->e_code != 0)
+				return (shell->gen->e_code);
+		}
+		if (shell->parsed->redir_out)
+			fd = ft_red_single(shell);
 		if (shell->parsed->redir_out)
 			close(fd);
 		if ((execve(path, shell->gen->cmd_args, arr)) < 0)
@@ -67,8 +68,6 @@ int	ft_exe_single(t_shell *shell, char *path, char **arr)
 	}
 	else
 	{
-		if (shell->parsed->redir_out)
-			close(fd);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 			waitpid(pid, &status, WUNTRACED);
 		shell->gen->e_code = ((status >> 8) & 0xFF);

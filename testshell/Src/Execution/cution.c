@@ -14,14 +14,22 @@
 
 int	ft_red_single(t_shell *shell)
 {
-	int fd;
+	char	*filename;
+	int 	fd;
 
-	fd = open(shell->parsed->redir_out->filename, O_CREAT | O_RDWR | O_TRUNC, 0666);
+	printf("=[REDSINGLE]=\n");
+	if (!shell->parsed || !shell->parsed->redir_out)
+        ft_error("parsing error, red_single", shell, 1);
+	filename = shell->parsed->redir_out->filename;
+	if (!filename)
+		ft_error("invalid filename, red_single", shell, 1);
+	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0666);
 	if (fd < 0)
 		return (ft_error("invalid fd, red_single", shell, 1), -1);
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
-		close(fd);
+		if (close(fd) == -1)
+			ft_error("error closing fd, red_single", shell, 1);
 		return (ft_error("dup2 failed, red_single", shell, 1), -1);
 	}
 	return (fd);
