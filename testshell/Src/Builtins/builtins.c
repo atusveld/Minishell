@@ -21,7 +21,7 @@ void	ft_echo(t_shell *shell)
 	arr = (shell->gen->cmd_args + 1);
 	if (!*arr)
 	{
-		ft_putchar_fd('\n', 1);
+		write(STDOUT_FILENO, "\n", 1);
 		return ;
 	}
 	if (!ft_strncmp(arr[0], "-n", 3))
@@ -31,13 +31,13 @@ void	ft_echo(t_shell *shell)
 	}
 	while (*arr)
 	{
-		ft_putstr_fd(*arr, 1);
+		write(STDOUT_FILENO, &arr, 1);
 		if (*(arr + 1) && **arr)
-			ft_putchar_fd(' ', 1);
+			write(STDOUT_FILENO, " ", 1);
 		arr++;
 	}
 	if (nl)
-		ft_putchar_fd('\n', 1);
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 void	ft_pwd(t_shell *shell)

@@ -116,7 +116,9 @@ int	main(int argv, char **argc, char **envp)
 		parse(shell);
 		ft_exe(shell->parsed, shell);
 		parse_clean(shell);
+		// break;
 	}
+	// printf("cleaning\n");
 	main_clean(shell);
 	set_signals();
 	return (0);

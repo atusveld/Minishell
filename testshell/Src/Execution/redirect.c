@@ -18,7 +18,7 @@ void	ft_red_out(t_shell *shell)
 	
 	printf("=[REDOUT]=\n");
 	if (!shell->parsed || !shell->parsed->redir_out)
-        ft_error("parsing error, red_out", shell, 1);
+		ft_error("parsing error, red_out", shell, 1);
 	while (shell->parsed->redir_out)
 	{
 		if (shell->parsed->redir_out->type == APPEND)
